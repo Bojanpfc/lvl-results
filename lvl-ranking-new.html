@@ -1765,8 +1765,8 @@ function buildRanking(){
   /*
     Include ACTIVE and FINISHED.
 
-    This allows LVL 999 to be
-    visible while testing.
+    This allows the current LVL to
+    appear immediately while testing.
   */
 
   const includedTournaments =
@@ -1825,7 +1825,21 @@ function buildRanking(){
 
 
   /*
-    Valid submitted results
+    ONLY REAL SUBMISSIONS
+    ======================
+
+    A row counts only when:
+      1. Tournament exists
+      2. Player exists
+      3. Status is SUBMITTED
+      4. Score is a valid number
+
+    Waiting / empty player rows
+    are completely ignored.
+
+    This prevents players who have
+    not submitted from receiving 0
+    games or affecting their AVG.
   */
 
   const validResults =
@@ -1845,6 +1859,14 @@ function buildRanking(){
           clean(
             result[
               "Player ID"
+            ]
+          );
+
+
+        const status =
+          normalize(
+            result[
+              "Status"
             ]
           );
 
@@ -1869,6 +1891,27 @@ function buildRanking(){
           !tournamentMap.has(
             tournamentId
           )
+        ){
+
+          return false;
+
+        }
+
+
+        /*
+          IMPORTANT FIX
+
+          Only SUBMITTED rows count.
+
+          Therefore:
+
+          SUBMITTED + 0 = valid result
+
+          WAITING / EMPTY = ignored
+        */
+
+        if(
+          status !== "submitted"
         ){
 
           return false;
@@ -1951,6 +1994,11 @@ function buildRanking(){
           resultsByPlayer
             .get(playerId) || [];
 
+
+        /*
+          Only real submitted
+          results reach this point.
+        */
 
         const scores =
 
@@ -2512,7 +2560,8 @@ function filterPlayers(){
 
             normalize(
               player.id
-            ).includes(search)
+            ).includes(search
+            )
 
           );
 
