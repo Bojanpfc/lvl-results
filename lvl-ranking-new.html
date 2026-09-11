@@ -1829,17 +1829,25 @@ function buildRanking(){
     ======================
 
     A row counts only when:
+
       1. Tournament exists
       2. Player exists
-      3. Status is SUBMITTED
-      4. Score is a valid number
+      3. Score is a valid number
+      4. Submitted At is filled
 
-    Waiting / empty player rows
-    are completely ignored.
+    We intentionally DO NOT check
+    the Status column.
 
-    This prevents players who have
-    not submitted from receiving 0
-    games or affecting their AVG.
+    This makes the ranking independent
+    of the exact Status text used by
+    the backend.
+
+    Important:
+
+    Score 0 + Submitted At = valid
+
+    Empty Score / Empty Submitted At
+    = waiting player, ignored.
   */
 
   const validResults =
@@ -1863,29 +1871,42 @@ function buildRanking(){
           );
 
 
-        const status =
-          normalize(
-            result[
-              "Status"
-            ]
-          );
-
-
         const score =
           numberValue(
             result["Score"]
           );
 
 
+        const submittedAt =
+          clean(
+            result[
+              "Submitted At"
+            ]
+          );
+
+
+        /*
+          Tournament must exist
+        */
+
         if(!tournamentId){
           return false;
         }
 
 
+        /*
+          Player must exist
+        */
+
         if(!playerId){
           return false;
         }
 
+
+        /*
+          Tournament must be
+          ACTIVE or FINISHED
+        */
 
         if(
           !tournamentMap.has(
@@ -1899,27 +1920,26 @@ function buildRanking(){
 
 
         /*
-          IMPORTANT FIX
+          Score must be a real number.
 
-          Only SUBMITTED rows count.
-
-          Therefore:
-
-          SUBMITTED + 0 = valid result
-
-          WAITING / EMPTY = ignored
+          0 IS VALID.
         */
 
-        if(
-          status !== "submitted"
-        ){
-
+        if(score === null){
           return false;
-
         }
 
 
-        if(score === null){
+        /*
+          This is the important part.
+
+          A real submission has
+          Submitted At filled.
+
+          Waiting players do not.
+        */
+
+        if(!submittedAt){
           return false;
         }
 
