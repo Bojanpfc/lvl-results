@@ -1239,65 +1239,182 @@ let countdownTimer = null;
 
 
 /* ==================================================
-   API GET
+   JSONP GET
 ================================================== */
 
-async function apiGet(action){
+function apiGet(action){
 
-    const response =
-        await fetch(
+    return new Promise(function(resolve,reject){
+
+        const callbackName =
+            "jsonpCallback_" +
+            Date.now() +
+            "_" +
+            Math.floor(
+                Math.random() * 100000
+            );
+
+
+        const script =
+            document.createElement("script");
+
+
+        let completed = false;
+
+
+        const timeout =
+            setTimeout(function(){
+
+                if(completed){
+                    return;
+                }
+
+
+                completed =
+                    true;
+
+
+                cleanup();
+
+
+                reject(
+                    new Error(
+                        "API request timed out."
+                    )
+                );
+
+            },15000);
+
+
+        window[callbackName] =
+            function(response){
+
+                if(completed){
+                    return;
+                }
+
+
+                completed =
+                    true;
+
+
+                clearTimeout(
+                    timeout
+                );
+
+
+                cleanup();
+
+
+                resolve(
+                    response
+                );
+
+            };
+
+
+        function cleanup(){
+
+            clearTimeout(
+                timeout
+            );
+
+
+            delete window[
+                callbackName
+            ];
+
+
+            if(
+                script.parentNode
+            ){
+
+                script.parentNode.removeChild(
+                    script
+                );
+
+            }
+
+        }
+
+
+        script.onerror =
+            function(){
+
+                if(completed){
+                    return;
+                }
+
+
+                completed =
+                    true;
+
+
+                cleanup();
+
+
+                reject(
+                    new Error(
+                        "Could not connect to API."
+                    )
+                );
+
+            };
+
+
+        script.src =
             API_URL +
             "?action=" +
-            encodeURIComponent(action)
+            encodeURIComponent(
+                action
+            ) +
+            "&callback=" +
+            encodeURIComponent(
+                callbackName
+            ) +
+            "&_=" +
+            Date.now();
+
+
+        document.body.appendChild(
+            script
         );
 
-
-    if(!response.ok){
-
-        throw new Error(
-            "API request failed."
-        );
-
-    }
-
-
-    const data =
-        await response.json();
-
-
-    if(!data.success){
-
-        throw new Error(
-            data.error ||
-            "API error."
-        );
-
-    }
-
-
-    return data.data;
+    });
 
 }
 
 
 /* ==================================================
-   LOAD LIVE LVL
+   LOAD CURRENT LVL
 ================================================== */
 
 async function loadLiveLVL(){
 
     try{
 
-        const data =
+        setLoading(
+            "Checking current LVL..."
+        );
+
+
+        /*
+         * First check ACTIVE tournament.
+         *
+         * This is the same endpoint used
+         * by the working admin page.
+         */
+
+        const activeResponse =
             await apiGet(
-                "liveLVL"
+                "activeTournament"
             );
 
 
         if(
-            !data ||
-            !data.active ||
-            !data.tournament
+            !activeResponse ||
+            !activeResponse.success ||
+            !activeResponse.data
         ){
 
             showNoActiveLVL();
@@ -1307,22 +1424,105 @@ async function loadLiveLVL(){
         }
 
 
-        tournament =
-            data.tournament;
+        /*
+         * We have an ACTIVE tournament.
+         */
+
+        const activeTournament =
+            activeResponse.data;
 
 
-        players =
-            data.players || [];
+        /*
+         * Now get live LVL information.
+         */
+
+        const liveResponse =
+            await apiGet(
+                "liveLVL"
+            );
 
 
-        updateTournamentUI(
-            data
-        );
+        if(
+            liveResponse &&
+            liveResponse.success &&
+            liveResponse.data &&
+            liveResponse.data.active
+        ){
+
+            tournament =
+                normalizeTournament(
+                    liveResponse.data.tournament
+                );
 
 
-        populatePlayers(
-            players
-        );
+            players =
+                liveResponse.data.players || [];
+
+
+            updateTournamentUI(
+                liveResponse.data
+            );
+
+
+            populatePlayers(
+                players
+            );
+
+        }else{
+
+            /*
+             * Fallback:
+             * use activeTournament directly.
+             */
+
+            tournament =
+                normalizeTournament(
+                    activeTournament
+                );
+
+
+            updateTournamentFromActive(
+                tournament
+            );
+
+
+            /*
+             * Try loading player list separately.
+             */
+
+            try{
+
+                const playerResponse =
+                    await apiGet(
+                        "players"
+                    );
+
+
+                if(
+                    playerResponse &&
+                    playerResponse.success
+                ){
+
+                    players =
+                        playerResponse.data || [];
+
+
+                    populateSimplePlayers(
+                        players
+                    );
+
+                }
+
+            }catch(playerError){
+
+                console.log(
+                    "Player loading failed:",
+                    playerError
+                );
+
+            }
+
+        }
 
 
         document.getElementById(
@@ -1346,12 +1546,13 @@ async function loadLiveLVL(){
     }catch(error){
 
         console.error(
+            "LVL loading error:",
             error
         );
 
 
         showError(
-            "Unable to load the current LVL. Please try again."
+            "Unable to connect to the LVL system. Please try again."
         );
 
     }
@@ -1360,107 +1561,124 @@ async function loadLiveLVL(){
 
 
 /* ==================================================
-   SHOW NO ACTIVE LVL
+   NORMALIZE TOURNAMENT
 ================================================== */
 
-function showNoActiveLVL(){
+function normalizeTournament(t){
 
-    document.getElementById(
-        "loading"
-    ).style.display =
-        "none";
-
-
-    document.getElementById(
-        "matchContent"
-    ).style.display =
-        "block";
+    if(!t){
+        return null;
+    }
 
 
-    document.getElementById(
-        "matchContent"
-    ).innerHTML = `
+    return {
 
-        <div class="no-lvl">
-
-            <div class="no-lvl-icon">
-                🏆
-            </div>
-
-            <div class="no-lvl-title">
-                NO ACTIVE LVL
-            </div>
-
-            <div class="no-lvl-text">
-                There is currently no active
-                LVL tournament.<br>
-                Please check again later.
-            </div>
-
-        </div>
-
-    `;
+        tournamentId:
+            t.tournamentId ||
+            t["Tournament ID"] ||
+            t.id ||
+            "",
 
 
-    document.getElementById(
-        "formCard"
-    ).style.display =
-        "none";
+        lvl:
+            t.lvl ||
+            t["LVL"] ||
+            "—",
 
 
-    document.getElementById(
-        "lvlNumber"
-    ).textContent =
-        "—";
+        opponent:
+            t.opponent ||
+            t["Opponent"] ||
+            "OPPONENT",
 
 
-    document.getElementById(
-        "totalPlayers"
-    ).textContent =
-        "0";
+        startTime:
+            t.startTime ||
+            t["Start Time"] ||
+            "",
+
+
+        endTime:
+            t.endTime ||
+            t["End Time"] ||
+            "",
+
+
+        ourScore:
+            Number(
+                t.ourScore ??
+                t["Our Score"] ??
+                0
+            ),
+
+
+        opponentScore:
+            Number(
+                t.opponentScore ??
+                t["Opponent Score"] ??
+                0
+            )
+
+    };
 
 }
 
 
 /* ==================================================
-   SHOW ERROR
+   UPDATE FROM ACTIVE TOURNAMENT
 ================================================== */
 
-function showError(message){
+function updateTournamentFromActive(t){
 
     document.getElementById(
-        "loading"
-    ).style.display =
-        "none";
-
-
-    document.getElementById(
-        "matchContent"
-    ).style.display =
-        "block";
+        "ourScore"
+    ).textContent =
+        Number(
+            t.ourScore || 0
+        );
 
 
     document.getElementById(
-        "matchContent"
-    ).innerHTML = `
+        "opponentScore"
+    ).textContent =
+        Number(
+            t.opponentScore || 0
+        );
 
-        <div class="no-lvl">
 
-            <div class="no-lvl-icon">
-                ⚠️
-            </div>
+    document.getElementById(
+        "opponentName"
+    ).textContent =
+        t.opponent ||
+        "OPPONENT";
 
-            <div class="no-lvl-title">
-                CONNECTION ERROR
-            </div>
 
-            <div class="no-lvl-text">
-                ${message}
-            </div>
+    document.getElementById(
+        "lvlNumber"
+    ).textContent =
+        t.lvl ||
+        "—";
 
-        </div>
 
-    `;
+    document.getElementById(
+        "progressNumber"
+    ).textContent =
+        "0 / 32";
+
+
+    document.getElementById(
+        "progressBar"
+    ).style.width =
+        "0%";
+
+
+    document.getElementById(
+        "totalPlayers"
+    ).textContent =
+        "32";
+
+
+    startCountdown();
 
 }
 
@@ -1469,19 +1687,25 @@ function showError(message){
    UPDATE TOURNAMENT UI
 ================================================== */
 
-function updateTournamentUI(
-    data
-){
+function updateTournamentUI(data){
 
     const t =
-        data.tournament;
+        normalizeTournament(
+            data.tournament
+        );
+
+
+    tournament =
+        t;
 
 
     document.getElementById(
         "ourScore"
     ).textContent =
         Number(
-            data.ourScore || 0
+            data.ourScore ??
+            t.ourScore ??
+            0
         );
 
 
@@ -1489,7 +1713,9 @@ function updateTournamentUI(
         "opponentScore"
     ).textContent =
         Number(
-            data.opponentScore || 0
+            data.opponentScore ??
+            t.opponentScore ??
+            0
         );
 
 
@@ -1522,7 +1748,9 @@ function updateTournamentUI(
     document.getElementById(
         "progressNumber"
     ).textContent =
-        `${submitted} / ${total}`;
+        submitted +
+        " / " +
+        total;
 
 
     document.getElementById(
@@ -1531,36 +1759,207 @@ function updateTournamentUI(
         total;
 
 
-    let percentage =
-        0;
-
-
-    if(total > 0){
-
-        percentage =
-            (
-                submitted /
-                total
-            ) * 100;
-
-    }
+    const percentage =
+        total > 0
+        ? (
+            submitted /
+            total
+        ) * 100
+        : 0;
 
 
     document.getElementById(
         "progressBar"
     ).style.width =
-        percentage + "%";
-
-
-    /*
-     * Save end time
-     */
-
-    tournament.endTime =
-        t.endTime;
+        percentage +
+        "%";
 
 
     startCountdown();
+
+}
+
+
+/* ==================================================
+   SIMPLE PLAYERS
+================================================== */
+
+function populateSimplePlayers(
+    playerRows
+){
+
+    const select =
+        document.getElementById(
+            "player"
+        );
+
+
+    select.innerHTML =
+        "";
+
+
+    const first =
+        document.createElement(
+            "option"
+        );
+
+
+    first.value =
+        "";
+
+
+    first.textContent =
+        "Choose player...";
+
+
+    select.appendChild(
+        first
+    );
+
+
+    playerRows.forEach(
+        function(player){
+
+            const id =
+                player["Player ID"] ||
+                player.id ||
+                player["ID"];
+
+
+            const name =
+                player["FC Name"] ||
+                player.name ||
+                player["Player Name"] ||
+                "Unknown Player";
+
+
+            if(!id){
+                return;
+            }
+
+
+            const option =
+                document.createElement(
+                    "option"
+                );
+
+
+            option.value =
+                id;
+
+
+            option.textContent =
+                name;
+
+
+            select.appendChild(
+                option
+            );
+
+        }
+    );
+
+}
+
+
+/* ==================================================
+   PLAYERS FROM LIVE LVL
+================================================== */
+
+function populatePlayers(
+    playerRows
+){
+
+    const select =
+        document.getElementById(
+            "player"
+        );
+
+
+    select.innerHTML =
+        "";
+
+
+    const first =
+        document.createElement(
+            "option"
+        );
+
+
+    first.value =
+        "";
+
+
+    first.textContent =
+        "Choose player...";
+
+
+    select.appendChild(
+        first
+    );
+
+
+    playerRows.forEach(
+        function(row){
+
+            const player =
+                row.player || {};
+
+
+            const id =
+                row.playerId ||
+                player["Player ID"] ||
+                player.id;
+
+
+            const name =
+                player["FC Name"] ||
+                player.name ||
+                player["Player Name"] ||
+                "Unknown Player";
+
+
+            if(!id){
+                return;
+            }
+
+
+            const option =
+                document.createElement(
+                    "option"
+                );
+
+
+            option.value =
+                id;
+
+
+            option.textContent =
+                name;
+
+
+            if(
+                row.status ===
+                "SUBMITTED"
+            ){
+
+                option.disabled =
+                    true;
+
+
+                option.textContent =
+                    name +
+                    " ✓";
+
+            }
+
+
+            select.appendChild(
+                option
+            );
+
+        }
+    );
 
 }
 
@@ -1624,7 +2023,7 @@ function updateCountdown(){
         Date.now();
 
 
-    let remaining =
+    const remaining =
         end - now;
 
 
@@ -1673,22 +2072,32 @@ function updateCountdown(){
 
 
     hours =
-        String(hours)
-            .padStart(2,"0");
+        String(hours).padStart(
+            2,
+            "0"
+        );
 
 
     minutes =
-        String(minutes)
-            .padStart(2,"0");
+        String(minutes).padStart(
+            2,
+            "0"
+        );
 
 
     seconds =
-        String(seconds)
-            .padStart(2,"0");
+        String(seconds).padStart(
+            2,
+            "0"
+        );
 
 
     countdown.textContent =
-        `${hours}:${minutes}:${seconds}`;
+        hours +
+        ":" +
+        minutes +
+        ":" +
+        seconds;
 
 
     countdown.classList.remove(
@@ -1718,6 +2127,7 @@ function updateCountdown(){
             "warning"
         );
 
+
         countdown.classList.add(
             "danger"
         );
@@ -1728,107 +2138,129 @@ function updateCountdown(){
 
 
 /* ==================================================
-   POPULATE PLAYERS
+   NO ACTIVE LVL
 ================================================== */
 
-function populatePlayers(
-    playerRows
-){
+function showNoActiveLVL(){
 
-    const select =
+    document.getElementById(
+        "loading"
+    ).style.display =
+        "none";
+
+
+    document.getElementById(
+        "matchContent"
+    ).style.display =
+        "block";
+
+
+    document.getElementById(
+        "matchContent"
+    ).innerHTML = `
+
+        <div class="no-lvl">
+
+            <div class="no-lvl-icon">
+                🏆
+            </div>
+
+            <div class="no-lvl-title">
+                NO ACTIVE LVL
+            </div>
+
+            <div class="no-lvl-text">
+                There is currently no active
+                LVL tournament.<br>
+                Please check again later.
+            </div>
+
+        </div>
+
+    `;
+
+
+    document.getElementById(
+        "formCard"
+    ).style.display =
+        "none";
+
+
+    document.getElementById(
+        "lvlNumber"
+    ).textContent =
+        "—";
+
+
+    document.getElementById(
+        "totalPlayers"
+    ).textContent =
+        "0";
+
+}
+
+
+/* ==================================================
+   LOADING
+================================================== */
+
+function setLoading(message){
+
+    const loading =
         document.getElementById(
-            "player"
+            "loading"
         );
 
 
-    select.innerHTML = "";
+    loading.style.display =
+        "block";
 
 
-    const firstOption =
-        document.createElement(
-            "option"
-        );
+    loading.textContent =
+        message;
+
+}
 
 
-    firstOption.value = "";
+/* ==================================================
+   ERROR
+================================================== */
 
-    firstOption.textContent =
-        "Choose player...";
+function showError(message){
 
-
-    select.appendChild(
-        firstOption
-    );
-
-
-    playerRows.forEach(
-        function(row){
-
-            /*
-             * Backend returns:
-             *
-             * row.player.id
-             * row.player.name
-             *
-             */
-
-            const player =
-                row.player || {};
+    document.getElementById(
+        "loading"
+    ).style.display =
+        "none";
 
 
-            const option =
-                document.createElement(
-                    "option"
-                );
+    document.getElementById(
+        "matchContent"
+    ).style.display =
+        "block";
 
 
-            option.value =
-                row.playerId ||
-                player.id;
+    document.getElementById(
+        "matchContent"
+    ).innerHTML = `
 
+        <div class="no-lvl">
 
-            /*
-             * IMPORTANT:
-             * Use FC Name if available.
-             */
+            <div class="no-lvl-icon">
+                ⚠️
+            </div>
 
-            let name =
-                player["FC Name"] ||
-                player.name ||
-                player["Player Name"] ||
-                "Unknown Player";
+            <div class="no-lvl-title">
+                CONNECTION ERROR
+            </div>
 
+            <div class="no-lvl-text">
+                ${message}
+            </div>
 
-            option.textContent =
-                name;
+        </div>
 
-
-            /*
-             * If already submitted,
-             * disable the player.
-             */
-
-            if(
-                row.status ===
-                "SUBMITTED"
-            ){
-
-                option.disabled =
-                    true;
-
-                option.textContent =
-                    name +
-                    " ✓";
-
-            }
-
-
-            select.appendChild(
-                option
-            );
-
-        }
-    );
+    `;
 
 }
 
@@ -1879,36 +2311,32 @@ async function submitResult(){
         "";
 
 
-    /*
-     * Validate player
-     */
-
     if(!playerId){
 
         status.textContent =
             "Please select your name.";
 
+
         status.classList.add(
             "error"
         );
+
 
         return;
 
     }
 
 
-    /*
-     * Validate goals
-     */
-
     if(goals === ""){
 
         status.textContent =
             "Please enter the number of goals.";
 
+
         status.classList.add(
             "error"
         );
+
 
         return;
 
@@ -1916,45 +2344,32 @@ async function submitResult(){
 
 
     const numericGoals =
-        Number(goals);
+        Number(
+            goals
+        );
 
 
     if(
         !Number.isInteger(
             numericGoals
         ) ||
-        numericGoals < 0
+        numericGoals < 0 ||
+        numericGoals > 99
     ){
 
         status.textContent =
-            "Goals must be a whole number greater than or equal to 0.";
+            "Please enter a valid goal number.";
+
 
         status.classList.add(
             "error"
         );
 
-        return;
-
-    }
-
-
-    if(numericGoals > 99){
-
-        status.textContent =
-            "Goals cannot be greater than 99.";
-
-        status.classList.add(
-            "error"
-        );
 
         return;
 
     }
 
-
-    /*
-     * Confirm
-     */
 
     const selectedOption =
         playerSelect.options[
@@ -1970,22 +2385,16 @@ async function submitResult(){
             );
 
 
-    const confirmed =
-        confirm(
+    if(
+        !confirm(
             `Submit ${numericGoals} goals for ${playerName}?`
-        );
-
-
-    if(!confirmed){
+        )
+    ){
 
         return;
 
     }
 
-
-    /*
-     * Disable button
-     */
 
     button.disabled =
         true;
@@ -1996,14 +2405,6 @@ async function submitResult(){
 
 
     try{
-
-        /*
-         * IMPORTANT:
-         *
-         * URL encoded POST
-         * avoids unnecessary
-         * CORS preflight.
-         */
 
         const body =
             new URLSearchParams();
@@ -2038,7 +2439,8 @@ async function submitResult(){
                 API_URL,
                 {
 
-                    method:"POST",
+                    method:
+                        "POST",
 
                     headers:{
                         "Content-Type":
@@ -2056,7 +2458,9 @@ async function submitResult(){
             await response.json();
 
 
-        if(!data.success){
+        if(
+            !data.success
+        ){
 
             throw new Error(
                 data.error ||
@@ -2066,12 +2470,9 @@ async function submitResult(){
         }
 
 
-        /*
-         * SUCCESS
-         */
-
         status.textContent =
             `✓ Result submitted successfully — ${playerName}: ${numericGoals} goals`;
+
 
         status.classList.add(
             "success"
@@ -2090,10 +2491,6 @@ async function submitResult(){
             "✓ RESULT SUBMITTED";
 
 
-        /*
-         * Refresh data
-         */
-
         setTimeout(
             refreshLVL,
             800
@@ -2103,6 +2500,7 @@ async function submitResult(){
     }catch(error){
 
         console.error(
+            "Submit error:",
             error
         );
 
@@ -2110,6 +2508,7 @@ async function submitResult(){
         status.textContent =
             error.message ||
             "Something went wrong. Please try again.";
+
 
         status.classList.add(
             "error"
@@ -2136,106 +2535,121 @@ async function refreshLVL(){
 
     try{
 
-        const data =
+        const liveResponse =
             await apiGet(
                 "liveLVL"
             );
 
 
         if(
-            !data ||
-            !data.active
+            liveResponse &&
+            liveResponse.success &&
+            liveResponse.data &&
+            liveResponse.data.active
         ){
 
-            showNoActiveLVL();
+            const currentPlayer =
+                document.getElementById(
+                    "player"
+                ).value;
+
+
+            tournament =
+                normalizeTournament(
+                    liveResponse.data.tournament
+                );
+
+
+            players =
+                liveResponse.data.players || [];
+
+
+            updateTournamentUI(
+                liveResponse.data
+            );
+
+
+            populatePlayers(
+                players
+            );
+
+
+            const playerSelect =
+                document.getElementById(
+                    "player"
+                );
+
+
+            if(currentPlayer){
+
+                const option =
+                    Array.from(
+                        playerSelect.options
+                    ).find(
+                        function(option){
+
+                            return option.value ===
+                                currentPlayer;
+
+                        }
+                    );
+
+
+                if(option){
+
+                    playerSelect.value =
+                        currentPlayer;
+
+                }
+
+            }
+
 
             return;
 
         }
 
 
-        tournament =
-            data.tournament;
-
-
-        players =
-            data.players || [];
-
-
-        updateTournamentUI(
-            data
-        );
-
-
         /*
-         * Preserve current player
+         * If liveLVL says there is no active LVL,
+         * verify with activeTournament.
          */
 
-        const currentPlayer =
-            document.getElementById(
-                "player"
-            ).value;
-
-
-        populatePlayers(
-            players
-        );
-
-
-        /*
-         * If player already submitted,
-         * disable form.
-         */
-
-        const playerRow =
-            players.find(
-                function(row){
-
-                    return String(
-                        row.playerId
-                    ) ===
-                    String(
-                        currentPlayer
-                    );
-
-                }
+        const activeResponse =
+            await apiGet(
+                "activeTournament"
             );
 
 
         if(
-            playerRow &&
-            playerRow.status ===
-            "SUBMITTED"
+            activeResponse &&
+            activeResponse.success &&
+            activeResponse.data
         ){
 
-            document.getElementById(
-                "player"
-            ).disabled =
-                true;
+            tournament =
+                normalizeTournament(
+                    activeResponse.data
+                );
 
 
-            document.getElementById(
-                "goals"
-            ).disabled =
-                true;
+            updateTournamentFromActive(
+                tournament
+            );
 
 
-            document.getElementById(
-                "submitBtn"
-            ).disabled =
-                true;
-
-
-            document.getElementById(
-                "submitBtn"
-            ).textContent =
-                "✓ RESULT SUBMITTED";
+            return;
 
         }
+
+
+        showNoActiveLVL();
+
 
     }catch(error){
 
         console.error(
+            "Refresh error:",
             error
         );
 
@@ -2259,7 +2673,6 @@ setInterval(
 ================================================== */
 
 loadLiveLVL();
-
 
 </script>
 
