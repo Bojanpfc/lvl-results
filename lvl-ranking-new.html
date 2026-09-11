@@ -7,9 +7,9 @@
 <title>LVL Ranking • FC Mobile</title>
 
 <style>
+
 :root{
   --bg:#030814;
-  --bg2:#071225;
   --card:#0b1730;
   --card2:#101f3e;
   --line:#1d3156;
@@ -27,76 +27,112 @@
   box-sizing:border-box;
 }
 
+html,
 body{
   margin:0;
+  padding:0;
+  width:100%;
+  min-height:100%;
+}
+
+body{
   font-family:Arial,Helvetica,sans-serif;
   background:
-    radial-gradient(circle at top right,rgba(39,215,255,.10),transparent 30%),
-    radial-gradient(circle at bottom left,rgba(77,124,255,.10),transparent 35%),
+    radial-gradient(
+      circle at top right,
+      rgba(39,215,255,.09),
+      transparent 30%
+    ),
+    radial-gradient(
+      circle at bottom left,
+      rgba(77,124,255,.09),
+      transparent 35%
+    ),
     var(--bg);
   color:var(--text);
-  min-height:100vh;
 }
 
-button,
-input{
-  font:inherit;
-}
+
+/* =========================================================
+   MAIN
+========================================================= */
 
 .container{
-  width:min(1200px,94%);
+  width:100%;
+  max-width:1150px;
   margin:0 auto;
-  padding:25px 0 50px;
+  padding:18px 10px 35px;
 }
 
-/* HEADER */
+
+/* =========================================================
+   HEADER
+========================================================= */
 
 .header{
-  background:linear-gradient(135deg,#0b1832,#081124);
+  background:linear-gradient(
+    135deg,
+    #0b1832,
+    #081124
+  );
+
   border:1px solid var(--line);
-  border-radius:22px;
-  padding:24px;
+  border-radius:18px;
+
+  padding:15px 17px;
+
   box-shadow:var(--shadow);
-  margin-bottom:18px;
+
+  margin-bottom:12px;
 }
 
 .header-top{
   display:flex;
   justify-content:space-between;
   align-items:center;
-  gap:15px;
-  flex-wrap:wrap;
+  gap:10px;
 }
 
 .logo{
   display:flex;
   align-items:center;
-  gap:13px;
+  gap:11px;
 }
 
 .logo-icon{
-  width:48px;
-  height:48px;
-  border-radius:14px;
+  width:42px;
+  height:42px;
+
+  border-radius:12px;
+
   display:flex;
   align-items:center;
   justify-content:center;
-  background:linear-gradient(135deg,var(--accent2),var(--accent));
-  font-size:25px;
+
+  background:
+    linear-gradient(
+      135deg,
+      var(--accent2),
+      var(--accent)
+    );
+
+  font-size:21px;
   font-weight:900;
-  box-shadow:0 8px 25px rgba(39,215,255,.20);
+
+  box-shadow:
+    0 8px 22px rgba(39,215,255,.18);
 }
 
 .title{
-  font-size:25px;
+  font-size:21px;
   font-weight:900;
   letter-spacing:.5px;
 }
 
 .subtitle{
   color:var(--muted);
-  font-size:12px;
-  margin-top:4px;
+  font-size:9px;
+  margin-top:3px;
   letter-spacing:1px;
 }
 
@@ -104,144 +140,102 @@ input{
   border:1px solid var(--line);
   background:#0d1b35;
   color:white;
-  padding:11px 17px;
-  border-radius:12px;
-  cursor:pointer;
-  font-weight:700;
-}
 
-.refresh-btn:active{
-  transform:scale(.97);
+  padding:9px 13px;
+
+  border-radius:10px;
+
+  cursor:pointer;
+
+  font-size:11px;
+  font-weight:800;
 }
 
 .refresh-btn:hover{
   border-color:var(--accent);
 }
 
-/* STATUS */
 
-.status-bar{
-  margin-top:20px;
-  display:flex;
-  gap:10px;
-  flex-wrap:wrap;
-}
-
-.status-pill{
-  padding:8px 12px;
-  border-radius:999px;
-  background:#08152b;
-  border:1px solid var(--line);
-  color:var(--muted);
-  font-size:12px;
-  font-weight:700;
-}
-
-.status-pill span{
-  color:white;
-}
-
-.status-pill.live{
-  border-color:rgba(32,223,136,.35);
-}
-
-.status-pill.live span{
-  color:var(--green);
-}
-
-/* STATS */
-
-.stats{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:14px;
-  margin-bottom:18px;
-}
-
-.stat-card{
-  background:linear-gradient(145deg,var(--card),#081327);
-  border:1px solid var(--line);
-  border-radius:18px;
-  padding:20px;
-  box-shadow:var(--shadow);
-}
-
-.stat-label{
-  color:var(--muted);
-  font-size:11px;
-  text-transform:uppercase;
-  letter-spacing:1.2px;
-  font-weight:800;
-}
-
-.stat-value{
-  margin-top:8px;
-  font-size:28px;
-  font-weight:900;
-}
-
-.stat-value.accent{
-  color:var(--accent);
-}
-
-.stat-value.green{
-  color:var(--green);
-}
-
-/* TABLE CARD */
+/* =========================================================
+   TABLE CARD
+========================================================= */
 
 .card{
-  background:linear-gradient(145deg,var(--card),#081327);
+  background:
+    linear-gradient(
+      145deg,
+      var(--card),
+      #081327
+    );
+
   border:1px solid var(--line);
-  border-radius:22px;
+
+  border-radius:18px;
+
   box-shadow:var(--shadow);
+
   overflow:hidden;
 }
 
 .card-header{
-  padding:20px 22px;
+  padding:13px 15px;
+
   border-bottom:1px solid var(--line);
+
   display:flex;
+
   justify-content:space-between;
   align-items:center;
-  gap:15px;
-  flex-wrap:wrap;
+
+  gap:10px;
 }
 
 .card-title{
-  font-size:18px;
+  font-size:15px;
   font-weight:900;
 }
 
 .card-subtitle{
   color:var(--muted);
-  font-size:12px;
-  margin-top:4px;
+  font-size:9px;
+  margin-top:3px;
 }
 
 .search-box{
   background:#08152b;
   border:1px solid var(--line);
+
   color:white;
-  padding:11px 14px;
-  border-radius:12px;
+
+  padding:8px 10px;
+
+  border-radius:9px;
+
   outline:none;
-  width:220px;
+
+  width:180px;
+
+  font-size:11px;
 }
 
 .search-box:focus{
   border-color:var(--accent);
 }
 
+
+/* =========================================================
+   TABLE
+========================================================= */
+
 .table-wrap{
   width:100%;
-  overflow-x:auto;
+  overflow:hidden;
 }
 
 table{
   width:100%;
   border-collapse:collapse;
-  min-width:720px;
+  table-layout:fixed;
 }
 
 thead{
@@ -249,19 +243,70 @@ thead{
 }
 
 th{
-  text-align:left;
-  padding:14px 15px;
+  text-align:center;
+
+  padding:10px 4px;
+
   color:var(--muted);
-  font-size:10px;
+
+  font-size:8px;
+
   text-transform:uppercase;
-  letter-spacing:1px;
+
+  letter-spacing:.6px;
+
   border-bottom:1px solid var(--line);
 }
 
+th:nth-child(1){
+  width:6%;
+}
+
+th:nth-child(2){
+  width:28%;
+  text-align:left;
+}
+
+th:nth-child(3){
+  width:9%;
+}
+
+th:nth-child(4){
+  width:10%;
+}
+
+th:nth-child(5){
+  width:10%;
+}
+
+th:nth-child(6){
+  width:10%;
+}
+
+th:nth-child(7){
+  width:9%;
+}
+
+th:nth-child(8){
+  width:18%;
+}
+
+
 td{
-  padding:15px;
-  border-bottom:1px solid rgba(29,49,86,.65);
-  font-size:14px;
+  padding:10px 4px;
+
+  border-bottom:
+    1px solid rgba(29,49,86,.65);
+
+  font-size:11px;
+
+  text-align:center;
+
+  overflow:hidden;
+}
+
+td:nth-child(2){
+  text-align:left;
 }
 
 tbody tr{
@@ -270,43 +315,76 @@ tbody tr{
 }
 
 tbody tr:hover{
-  background:rgba(39,215,255,.045);
+  background:
+    rgba(39,215,255,.045);
 }
 
+
+/* =========================================================
+   RANK
+========================================================= */
+
 .rank{
-  width:50px;
   color:var(--muted);
   font-weight:900;
 }
 
 .rank.top1{
   color:#ffd700;
-  font-size:18px;
+  font-size:14px;
 }
 
 .rank.top2{
   color:#c0c0c0;
-  font-size:18px;
+  font-size:14px;
 }
 
 .rank.top3{
   color:#cd7f32;
-  font-size:18px;
+  font-size:14px;
 }
+
+
+/* =========================================================
+   PLAYER
+========================================================= */
 
 .player-name{
   font-weight:900;
+
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+
+  max-width:100%;
 }
 
 .player-id{
   display:block;
-  color:#667da4;
-  font-size:10px;
-  margin-top:3px;
+
+  color:#536987;
+
+  font-size:7px;
+
+  margin-top:2px;
+
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
 }
+
+
+/* =========================================================
+   NUMBERS
+========================================================= */
 
 .number{
   font-weight:800;
+}
+
+.total{
+  color:white;
+  font-weight:900;
 }
 
 .avg{
@@ -324,74 +402,136 @@ tbody tr:hover{
   font-weight:900;
 }
 
+
+/* =========================================================
+   LAST FIVE
+========================================================= */
+
 .last-five{
   display:flex;
-  gap:5px;
-  flex-wrap:wrap;
+
+  justify-content:center;
+
+  gap:3px;
+
+  flex-wrap:nowrap;
 }
 
 .last-score{
-  min-width:27px;
-  height:27px;
-  padding:0 6px;
-  border-radius:8px;
+  min-width:22px;
+  width:22px;
+  height:22px;
+
+  border-radius:6px;
+
   display:flex;
+
   justify-content:center;
   align-items:center;
+
   background:#102143;
+
   border:1px solid #203860;
-  font-size:11px;
+
+  font-size:9px;
+
   font-weight:900;
 }
 
-/* EMPTY / LOADING */
+
+/* =========================================================
+   LOADING
+========================================================= */
 
 .loading{
-  padding:50px 20px;
+  padding:40px 15px;
+
   text-align:center;
+
   color:var(--muted);
 }
 
 .spinner{
-  width:30px;
-  height:30px;
+  width:26px;
+  height:26px;
+
   border:3px solid #1c3155;
+
   border-top-color:var(--accent);
+
   border-radius:50%;
+
   animation:spin 1s linear infinite;
-  margin:0 auto 15px;
+
+  margin:0 auto 12px;
 }
 
 @keyframes spin{
-  to{transform:rotate(360deg)}
+  to{
+    transform:rotate(360deg);
+  }
 }
+
+
+/* =========================================================
+   ERROR
+========================================================= */
 
 .error{
-  margin:20px;
-  padding:16px;
-  border-radius:12px;
-  background:rgba(255,77,109,.08);
-  border:1px solid rgba(255,77,109,.30);
+  margin:15px;
+
+  padding:14px;
+
+  border-radius:10px;
+
+  background:
+    rgba(255,77,109,.08);
+
+  border:
+    1px solid rgba(255,77,109,.30);
+
   color:#ff8da2;
+
+  font-size:11px;
 }
+
+
+/* =========================================================
+   EMPTY
+========================================================= */
 
 .empty{
-  padding:45px 20px;
+  padding:35px 15px;
+
   text-align:center;
+
   color:var(--muted);
+
+  font-size:12px;
 }
 
-/* POPUP */
+
+/* =========================================================
+   MODAL
+========================================================= */
 
 .modal{
   position:fixed;
+
   inset:0;
-  background:rgba(0,0,0,.72);
+
+  background:
+    rgba(0,0,0,.72);
+
   backdrop-filter:blur(8px);
+
   display:none;
+
   align-items:center;
   justify-content:center;
-  padding:18px;
+
+  padding:15px;
+
   z-index:9999;
 }
 
@@ -400,216 +540,428 @@ tbody tr:hover{
 }
 
 .modal-box{
-  width:min(760px,100%);
+  width:min(700px,100%);
+
   max-height:92vh;
+
   overflow-y:auto;
-  background:linear-gradient(145deg,#0b1832,#071225);
+
+  background:
+    linear-gradient(
+      145deg,
+      #0b1832,
+      #071225
+    );
+
   border:1px solid var(--line);
-  border-radius:24px;
-  box-shadow:0 25px 80px rgba(0,0,0,.55);
+
+  border-radius:20px;
+
+  box-shadow:
+    0 25px 80px rgba(0,0,0,.55);
 }
 
 .modal-header{
-  padding:22px;
+  padding:17px;
+
   border-bottom:1px solid var(--line);
+
   display:flex;
+
   justify-content:space-between;
   align-items:center;
-  gap:15px;
+
+  gap:10px;
 }
 
 .modal-title{
-  font-size:22px;
+  font-size:19px;
   font-weight:900;
 }
 
 .modal-close{
-  width:38px;
-  height:38px;
-  border-radius:11px;
+  width:34px;
+  height:34px;
+
+  border-radius:9px;
+
   border:1px solid var(--line);
+
   background:#0d1b35;
+
   color:white;
+
   cursor:pointer;
-  font-size:20px;
+
+  font-size:19px;
 }
 
 .modal-body{
-  padding:22px;
+  padding:17px;
 }
+
+
+/* =========================================================
+   PROFILE STATS
+========================================================= */
 
 .profile-top{
   display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:10px;
-  margin-bottom:20px;
+
+  grid-template-columns:
+    repeat(5,1fr);
+
+  gap:7px;
+
+  margin-bottom:18px;
 }
 
 .profile-stat{
   background:#08152b;
+
   border:1px solid var(--line);
-  border-radius:14px;
-  padding:14px;
+
+  border-radius:10px;
+
+  padding:11px 7px;
+
+  text-align:center;
 }
 
 .profile-stat-label{
-  font-size:9px;
+  font-size:7px;
+
   color:var(--muted);
+
   text-transform:uppercase;
-  letter-spacing:1px;
+
+  letter-spacing:.7px;
 }
 
 .profile-stat-value{
-  margin-top:6px;
-  font-size:20px;
+  margin-top:5px;
+
+  font-size:16px;
+
   font-weight:900;
 }
 
+
+/* =========================================================
+   PROFILE SECTION
+========================================================= */
+
 .section-title{
-  font-size:13px;
+  font-size:10px;
+
   font-weight:900;
+
   letter-spacing:1px;
+
   text-transform:uppercase;
-  margin:22px 0 10px;
+
+  margin:18px 0 8px;
 }
 
 .match-list{
   display:flex;
+
   flex-direction:column;
-  gap:8px;
+
+  gap:6px;
 }
 
 .match-row{
   display:flex;
+
   justify-content:space-between;
   align-items:center;
+
   gap:10px;
+
   background:#08152b;
+
   border:1px solid var(--line);
-  border-radius:12px;
-  padding:12px 14px;
+
+  border-radius:9px;
+
+  padding:10px 12px;
 }
 
 .match-left{
   display:flex;
+
   flex-direction:column;
-  gap:3px;
+
+  gap:2px;
 }
 
 .match-lvl{
   font-weight:900;
+  font-size:11px;
 }
 
 .match-opponent{
   color:var(--muted);
-  font-size:11px;
+  font-size:9px;
 }
 
 .match-score{
-  font-size:20px;
+  font-size:18px;
+
   font-weight:900;
+
   color:var(--accent);
 }
 
+
+/* =========================================================
+   ACHIEVEMENTS
+========================================================= */
+
 .achievement-grid{
   display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:10px;
+
+  grid-template-columns:
+    repeat(2,1fr);
+
+  gap:7px;
 }
 
 .achievement{
   background:#08152b;
+
   border:1px solid var(--line);
-  border-radius:14px;
-  padding:14px;
+
+  border-radius:10px;
+
+  padding:11px;
 }
 
 .achievement-title{
   font-weight:900;
-  font-size:12px;
+
+  font-size:10px;
 }
 
 .achievement-value{
-  margin-top:5px;
+  margin-top:4px;
+
   color:var(--muted);
-  font-size:11px;
+
+  font-size:9px;
 }
 
-/* MOBILE */
 
-@media(max-width:700px){
-
-  .container{
-    width:95%;
-    padding-top:15px;
-  }
-
-  .header{
-    padding:18px;
-    border-radius:18px;
-  }
-
-  .title{
-    font-size:20px;
-  }
-
-  .logo-icon{
-    width:42px;
-    height:42px;
-    font-size:21px;
-  }
-
-  .stats{
-    grid-template-columns:1fr;
-  }
-
-  .stat-card{
-    padding:16px;
-  }
-
-  .stat-value{
-    font-size:24px;
-  }
-
-  .card{
-    border-radius:18px;
-  }
-
-  .card-header{
-    padding:17px;
-  }
-
-  .search-box{
-    width:100%;
-  }
-
-  .profile-top{
-    grid-template-columns:repeat(2,1fr);
-  }
-
-  .achievement-grid{
-    grid-template-columns:1fr;
-  }
-
-}
-
-/* FOOTER */
+/* =========================================================
+   FOOTER
+========================================================= */
 
 .footer{
   text-align:center;
+
   color:#536987;
-  font-size:10px;
-  margin-top:20px;
+
+  font-size:8px;
+
+  margin-top:13px;
+
   letter-spacing:.5px;
 }
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media(max-width:600px){
+
+  .container{
+    padding:
+      10px
+      5px
+      25px;
+  }
+
+  .header{
+    border-radius:13px;
+
+    padding:
+      10px
+      11px;
+
+    margin-bottom:8px;
+  }
+
+  .logo-icon{
+    width:34px;
+    height:34px;
+
+    border-radius:9px;
+
+    font-size:17px;
+  }
+
+  .title{
+    font-size:16px;
+  }
+
+  .subtitle{
+    font-size:7px;
+  }
+
+  .refresh-btn{
+    padding:
+      7px
+      9px;
+
+    font-size:9px;
+  }
+
+  .card{
+    border-radius:13px;
+  }
+
+  .card-header{
+    padding:
+      10px;
+  }
+
+  .card-title{
+    font-size:12px;
+  }
+
+  .card-subtitle{
+    font-size:7px;
+  }
+
+  .search-box{
+    width:125px;
+
+    padding:
+      7px
+      8px;
+
+    font-size:9px;
+  }
+
+  th{
+    font-size:7px;
+    padding:8px 2px;
+  }
+
+  td{
+    font-size:10px;
+    padding:9px 2px;
+  }
+
+  th:nth-child(1){
+    width:6%;
+  }
+
+  th:nth-child(2){
+    width:27%;
+  }
+
+  th:nth-child(3){
+    width:8%;
+  }
+
+  th:nth-child(4){
+    width:10%;
+  }
+
+  th:nth-child(5){
+    width:10%;
+  }
+
+  th:nth-child(6){
+    width:10%;
+  }
+
+  th:nth-child(7){
+    width:8%;
+  }
+
+  th:nth-child(8){
+    width:21%;
+  }
+
+  .player-name{
+    font-size:10px;
+  }
+
+  .player-id{
+    display:none;
+  }
+
+  .last-score{
+    min-width:19px;
+    width:19px;
+    height:19px;
+
+    border-radius:5px;
+
+    font-size:8px;
+  }
+
+  .profile-top{
+    grid-template-columns:
+      repeat(3,1fr);
+  }
+
+}
+
+
+/* =========================================================
+   VERY SMALL PHONES
+========================================================= */
+
+@media(max-width:390px){
+
+  .container{
+    padding-left:3px;
+    padding-right:3px;
+  }
+
+  .search-box{
+    width:105px;
+  }
+
+  th{
+    font-size:6px;
+  }
+
+  td{
+    font-size:9px;
+  }
+
+  .player-name{
+    font-size:9px;
+  }
+
+  .last-score{
+    min-width:17px;
+    width:17px;
+    height:17px;
+
+    font-size:7px;
+  }
+
+}
+
 </style>
 </head>
 
+
 <body>
+
 
 <div class="container">
 
+
   <!-- HEADER -->
+
   <div class="header">
 
     <div class="header-top">
@@ -621,72 +973,50 @@ tbody tr:hover{
         </div>
 
         <div>
-          <div class="title">LVL RANKING</div>
-          <div class="subtitle">FC MOBILE • LIVE TOURNAMENT SYSTEM</div>
+
+          <div class="title">
+            LVL RANKING
+          </div>
+
+          <div class="subtitle">
+            FC MOBILE • PERFORMANCE RANKING
+          </div>
+
         </div>
 
       </div>
 
-      <button class="refresh-btn" onclick="loadAll(true)">
+
+      <button
+        class="refresh-btn"
+        onclick="loadAll(true)"
+      >
         ↻ REFRESH
       </button>
 
-    </div>
-
-    <div class="status-bar">
-
-      <div class="status-pill">
-        PLAYERS:
-        <span id="playersCount">—</span>
-      </div>
-
-      <div class="status-pill">
-        LVLs:
-        <span id="lvlsCount">—</span>
-      </div>
-
-      <div class="status-pill live">
-        DATA:
-        <span id="dataStatus">LOADING</span>
-      </div>
-
-    </div>
-
-  </div>
-
-
-  <!-- STATS -->
-  <div class="stats">
-
-    <div class="stat-card">
-      <div class="stat-label">Players</div>
-      <div class="stat-value accent" id="statPlayers">—</div>
-    </div>
-
-    <div class="stat-card">
-      <div class="stat-label">LVLs Included</div>
-      <div class="stat-value" id="statLvls">—</div>
-    </div>
-
-    <div class="stat-card">
-      <div class="stat-label">Total Results</div>
-      <div class="stat-value green" id="statResults">—</div>
     </div>
 
   </div>
 
 
   <!-- RANKING -->
+
   <div class="card">
 
     <div class="card-header">
 
       <div>
-        <div class="card-title">PLAYER RANKING</div>
-        <div class="card-subtitle">
-          Current LVL performance • Active + Finished tournaments
+
+        <div class="card-title">
+          PLAYER RANKING
         </div>
+
+        <div class="card-subtitle">
+          Active & finished LVLs
+        </div>
+
       </div>
+
 
       <input
         id="searchInput"
@@ -698,6 +1028,7 @@ tbody tr:hover{
 
     </div>
 
+
     <div class="table-wrap">
 
       <table>
@@ -705,26 +1036,44 @@ tbody tr:hover{
         <thead>
 
           <tr>
+
             <th>#</th>
-            <th>Player</th>
+
+            <th>PLAYER</th>
+
             <th>GP</th>
+
+            <th>TOTAL</th>
+
             <th>AVG</th>
+
             <th>MAX</th>
+
             <th>MIN</th>
-            <th>Last 5</th>
+
+            <th>LAST 5</th>
+
           </tr>
 
         </thead>
 
+
         <tbody id="rankingBody">
 
           <tr>
-            <td colspan="7">
+
+            <td colspan="8">
+
               <div class="loading">
+
                 <div class="spinner"></div>
+
                 Loading ranking...
+
               </div>
+
             </td>
+
           </tr>
 
         </tbody>
@@ -737,91 +1086,195 @@ tbody tr:hover{
 
 
   <div class="footer">
-    FC MOBILE LVL SYSTEM • NEW RANKING
+    FC MOBILE LVL SYSTEM
   </div>
+
 
 </div>
 
 
-<!-- PROFILE MODAL -->
+<!-- =======================================================
+     PROFILE MODAL
+======================================================== -->
 
-<div class="modal" id="profileModal">
+<div
+  class="modal"
+  id="profileModal"
+>
 
   <div class="modal-box">
 
+
     <div class="modal-header">
 
-      <div class="modal-title" id="profileName">
+      <div
+        class="modal-title"
+        id="profileName"
+      >
         PLAYER
       </div>
 
-      <button class="modal-close" onclick="closeProfile()">
+
+      <button
+        class="modal-close"
+        onclick="closeProfile()"
+      >
         ×
       </button>
 
     </div>
 
+
     <div class="modal-body">
+
+
+      <!-- PROFILE STATS -->
 
       <div class="profile-top">
 
-        <div class="profile-stat">
-          <div class="profile-stat-label">Rank</div>
-          <div class="profile-stat-value" id="profileRank">—</div>
-        </div>
 
         <div class="profile-stat">
-          <div class="profile-stat-label">Games</div>
-          <div class="profile-stat-value" id="profileGames">—</div>
+
+          <div class="profile-stat-label">
+            Rank
+          </div>
+
+          <div
+            class="profile-stat-value"
+            id="profileRank"
+          >
+            —
+          </div>
+
         </div>
 
-        <div class="profile-stat">
-          <div class="profile-stat-label">Average</div>
-          <div class="profile-stat-value" id="profileAvg">—</div>
-        </div>
 
         <div class="profile-stat">
-          <div class="profile-stat-label">Best</div>
-          <div class="profile-stat-value" id="profileBest">—</div>
+
+          <div class="profile-stat-label">
+            Games
+          </div>
+
+          <div
+            class="profile-stat-value"
+            id="profileGames"
+          >
+            —
+          </div>
+
         </div>
+
+
+        <div class="profile-stat">
+
+          <div class="profile-stat-label">
+            Total
+          </div>
+
+          <div
+            class="profile-stat-value"
+            id="profileTotal"
+          >
+            —
+          </div>
+
+        </div>
+
+
+        <div class="profile-stat">
+
+          <div class="profile-stat-label">
+            Average
+          </div>
+
+          <div
+            class="profile-stat-value"
+            id="profileAvg"
+          >
+            —
+          </div>
+
+        </div>
+
+
+        <div class="profile-stat">
+
+          <div class="profile-stat-label">
+            Best
+          </div>
+
+          <div
+            class="profile-stat-value"
+            id="profileBest"
+          >
+            —
+          </div>
+
+        </div>
+
 
       </div>
 
+
+      <!-- PLAYER ID -->
 
       <div class="section-title">
         PLAYER INFORMATION
       </div>
 
+
       <div class="match-row">
 
         <div class="match-left">
-          <div class="match-lvl">Player ID</div>
-          <div class="match-opponent" id="profileId">
+
+          <div class="match-lvl">
+            PLAYER ID
+          </div>
+
+          <div
+            class="match-opponent"
+            id="profileId"
+          >
             —
           </div>
+
         </div>
 
-        <div class="match-score" id="profileLowest">
+
+        <div
+          class="match-score"
+          id="profileLowest"
+        >
           —
         </div>
 
       </div>
 
 
+      <!-- RESULTS -->
+
       <div class="section-title">
         LAST RESULTS
       </div>
 
-      <div class="match-list" id="profileMatches">
+
+      <div
+        class="match-list"
+        id="profileMatches"
+      >
         —
       </div>
 
+
+      <!-- ACHIEVEMENTS -->
 
       <div class="section-title">
         ACHIEVEMENTS
       </div>
 
+
       <div class="achievement-grid">
+
 
         <div class="achievement">
 
@@ -829,11 +1282,15 @@ tbody tr:hover{
             40+ GOALS CLUB
           </div>
 
-          <div class="achievement-value" id="achievement40">
+          <div
+            class="achievement-value"
+            id="achievement40"
+          >
             —
           </div>
 
         </div>
+
 
         <div class="achievement">
 
@@ -841,13 +1298,18 @@ tbody tr:hover{
             BEST PERFORMANCE
           </div>
 
-          <div class="achievement-value" id="achievementBest">
+          <div
+            class="achievement-value"
+            id="achievementBest"
+          >
             —
           </div>
 
         </div>
 
+
       </div>
+
 
     </div>
 
@@ -858,6 +1320,7 @@ tbody tr:hover{
 
 <script>
 
+
 /* ============================================================
    CONFIG
 ============================================================ */
@@ -866,47 +1329,22 @@ const SHEET_ID =
 "16OTm4bC-YKAoJl7Rsw8bQLfrdYvUsbZ94Vic65KcMEY";
 
 
-/*
-  IMPORTANT:
-
-  These are the EXACT columns in your new sheets.
-
-  Players:
-  A Player ID
-  B FC Name
-  C Discord ID
-  D Active
-
-  Tournaments:
-  A Tournament ID
-  B LVL
-  C Opponent
-  D Start Time
-  E End Time
-  F Status
-  G Our Score
-  H Opponent Score
-  I Result
-
-  Tournament Players:
-  A Tournament ID
-  B Player ID
-  C FC Name
-  D Score
-  E Status
-  F Submitted At
-  G Edited At
-*/
-
+/* ============================================================
+   EXACT SHEET STRUCTURE
+============================================================ */
 
 const PLAYER_COLUMNS = [
+
   "Player ID",
   "FC Name",
   "Discord ID",
   "Active"
+
 ];
 
+
 const TOURNAMENT_COLUMNS = [
+
   "Tournament ID",
   "LVL",
   "Opponent",
@@ -916,9 +1354,12 @@ const TOURNAMENT_COLUMNS = [
   "Our Score",
   "Opponent Score",
   "Result"
+
 ];
 
+
 const TOURNAMENT_PLAYER_COLUMNS = [
+
   "Tournament ID",
   "Player ID",
   "FC Name",
@@ -926,6 +1367,7 @@ const TOURNAMENT_PLAYER_COLUMNS = [
   "Status",
   "Submitted At",
   "Edited At"
+
 ];
 
 
@@ -934,10 +1376,13 @@ const TOURNAMENT_PLAYER_COLUMNS = [
 ============================================================ */
 
 let players = [];
+
 let tournaments = [];
+
 let tournamentPlayers = [];
 
 let rankingData = [];
+
 let filteredRanking = [];
 
 
@@ -947,8 +1392,13 @@ let filteredRanking = [];
 
 function clean(value){
 
-  if(value === null || value === undefined){
+  if(
+    value === null ||
+    value === undefined
+  ){
+
     return "";
+
   }
 
   return String(value).trim();
@@ -965,15 +1415,26 @@ function normalize(value){
 
 function numberValue(value){
 
-  if(value === null || value === undefined || value === ""){
+  if(
+    value === null ||
+    value === undefined ||
+    value === ""
+  ){
+
     return null;
+
   }
+
 
   const n = Number(value);
 
+
   if(Number.isNaN(n)){
+
     return null;
+
   }
+
 
   return n;
 
@@ -983,6 +1444,7 @@ function numberValue(value){
 function escapeHtml(value){
 
   return String(value ?? "")
+
     .replace(/&/g,"&amp;")
     .replace(/</g,"&lt;")
     .replace(/>/g,"&gt;")
@@ -992,180 +1454,234 @@ function escapeHtml(value){
 }
 
 
-/* ============================================================
-   GOOGLE SHEETS GVIZ LOADER
-============================================================ */
+function escapeAttr(value){
 
-function loadSheet(sheetName, expectedColumns){
+  return String(value ?? "")
 
-  return new Promise((resolve,reject)=>{
-
-    const callbackName =
-      "gvizCallback_" +
-      Date.now() +
-      "_" +
-      Math.random().toString(36).substring(2);
-
-    const url =
-      "https://docs.google.com/spreadsheets/d/" +
-      SHEET_ID +
-      "/gviz/tq" +
-      "?tqx=out:json;responseHandler:" +
-      callbackName +
-      "&sheet=" +
-      encodeURIComponent(sheetName);
-
-    let finished = false;
-
-    const timeout = setTimeout(()=>{
-
-      if(finished){
-        return;
-      }
-
-      finished = true;
-
-      cleanup();
-
-      reject(
-        new Error(
-          "Timeout while loading " + sheetName
-        )
-      );
-
-    },15000);
-
-
-    function cleanup(){
-
-      clearTimeout(timeout);
-
-      try{
-        delete window[callbackName];
-      }catch(e){}
-
-      if(script && script.parentNode){
-        script.parentNode.removeChild(script);
-      }
-
-    }
-
-
-    window[callbackName] = function(json){
-
-      if(finished){
-        return;
-      }
-
-      finished = true;
-
-      cleanup();
-
-      try{
-
-        const rows =
-          (json &&
-           json.table &&
-           json.table.rows)
-          ? json.table.rows
-          : [];
-
-
-        /*
-          IMPORTANT:
-
-          We DO NOT use json.table.cols[i].label.
-
-          Google GViz can sometimes return empty labels.
-
-          We know the exact order of the columns,
-          so we map them by index.
-        */
-
-        const result = rows.map(row=>{
-
-          const obj = {};
-
-          expectedColumns.forEach((column,index)=>{
-
-            const cell =
-              row &&
-              row.c &&
-              row.c[index];
-
-            obj[column] =
-              cell && cell.v !== undefined
-              ? cell.v
-              : "";
-
-          });
-
-          return obj;
-
-        });
-
-
-        resolve(result);
-
-      }catch(error){
-
-        reject(error);
-
-      }
-
-    };
-
-
-    const script =
-      document.createElement("script");
-
-    script.src = url;
-
-    script.async = true;
-
-    script.onerror = function(){
-
-      if(finished){
-        return;
-      }
-
-      finished = true;
-
-      cleanup();
-
-      reject(
-        new Error(
-          "Could not load " + sheetName
-        )
-      );
-
-    };
-
-
-    document.head.appendChild(script);
-
-  });
+    .replace(/\\/g,"\\\\")
+    .replace(/'/g,"\\'");
 
 }
 
 
 /* ============================================================
-   LOAD ALL DATA
+   GOOGLE GVIZ
 ============================================================ */
 
-async function loadAll(manualRefresh=false){
+function loadSheet(
+  sheetName,
+  expectedColumns
+){
 
-  if(manualRefresh){
+  return new Promise(
+    (resolve,reject)=>{
 
-    document.getElementById("dataStatus").textContent =
-      "REFRESHING";
+      const callbackName =
+        "gvizCallback_" +
+        Date.now() +
+        "_" +
+        Math.random()
+          .toString(36)
+          .substring(2);
 
-  }
 
+      const url =
+
+        "https://docs.google.com/spreadsheets/d/" +
+        SHEET_ID +
+        "/gviz/tq" +
+
+        "?tqx=out:json;responseHandler:" +
+        callbackName +
+
+        "&sheet=" +
+        encodeURIComponent(sheetName);
+
+
+      let finished = false;
+
+
+      const timeout = setTimeout(
+        ()=>{
+
+          if(finished){
+            return;
+          }
+
+          finished = true;
+
+          cleanup();
+
+          reject(
+            new Error(
+              "Timeout loading " +
+              sheetName
+            )
+          );
+
+        },
+        15000
+      );
+
+
+      function cleanup(){
+
+        clearTimeout(timeout);
+
+        try{
+
+          delete window[callbackName];
+
+        }catch(e){}
+
+
+        if(
+          script &&
+          script.parentNode
+        ){
+
+          script.parentNode
+            .removeChild(script);
+
+        }
+
+      }
+
+
+      window[callbackName] =
+        function(json){
+
+          if(finished){
+            return;
+          }
+
+          finished = true;
+
+          cleanup();
+
+
+          try{
+
+            const rows =
+
+              (
+                json &&
+                json.table &&
+                json.table.rows
+              )
+
+              ? json.table.rows
+
+              : [];
+
+
+            const result =
+
+              rows.map(
+                row=>{
+
+                  const obj = {};
+
+
+                  expectedColumns
+                    .forEach(
+                      (
+                        column,
+                        index
+                      )=>{
+
+                        const cell =
+
+                          row &&
+                          row.c &&
+                          row.c[index];
+
+
+                        obj[column] =
+
+                          cell &&
+                          cell.v !== undefined
+
+                          ? cell.v
+
+                          : "";
+
+                      }
+                    );
+
+
+                  return obj;
+
+                }
+              );
+
+
+            resolve(result);
+
+
+          }catch(error){
+
+            reject(error);
+
+          }
+
+        };
+
+
+      const script =
+        document.createElement(
+          "script"
+        );
+
+
+      script.src = url;
+
+      script.async = true;
+
+
+      script.onerror =
+        function(){
+
+          if(finished){
+            return;
+          }
+
+          finished = true;
+
+          cleanup();
+
+          reject(
+            new Error(
+              "Could not load " +
+              sheetName
+            )
+          );
+
+        };
+
+
+      document.head.appendChild(
+        script
+      );
+
+    }
+  );
+
+}
+
+
+/* ============================================================
+   LOAD ALL
+============================================================ */
+
+async function loadAll(
+  manualRefresh=false
+){
 
   try{
 
-    const results =
+    const result =
+
       await Promise.all([
 
         loadSheet(
@@ -1186,25 +1702,14 @@ async function loadAll(manualRefresh=false){
       ]);
 
 
-    players = results[0];
-    tournaments = results[1];
-    tournamentPlayers = results[2];
+    players =
+      result[0];
 
+    tournaments =
+      result[1];
 
-    document.getElementById("playersCount").textContent =
-      players.length;
-
-    document.getElementById("lvlsCount").textContent =
-      tournaments.length;
-
-    document.getElementById("statPlayers").textContent =
-      players.length;
-
-    document.getElementById("statLvls").textContent =
-      tournaments.length;
-
-    document.getElementById("dataStatus").textContent =
-      "ONLINE";
+    tournamentPlayers =
+      result[2];
 
 
     buildRanking();
@@ -1214,19 +1719,36 @@ async function loadAll(manualRefresh=false){
 
     console.error(error);
 
-    document.getElementById("dataStatus").textContent =
-      "ERROR";
 
-    document.getElementById("rankingBody").innerHTML = `
-      <tr>
-        <td colspan="7">
-          <div class="error">
-            <strong>Could not load ranking.</strong><br><br>
-            ${escapeHtml(error.message)}
-          </div>
-        </td>
-      </tr>
-    `;
+    document
+      .getElementById(
+        "rankingBody"
+      )
+      .innerHTML = `
+
+        <tr>
+
+          <td colspan="8">
+
+            <div class="error">
+
+              <strong>
+                Could not load ranking.
+              </strong>
+
+              <br><br>
+
+              ${escapeHtml(
+                error.message
+              )}
+
+            </div>
+
+          </td>
+
+        </tr>
+
+      `;
 
   }
 
@@ -1239,281 +1761,431 @@ async function loadAll(manualRefresh=false){
 
 function buildRanking(){
 
+
   /*
-    TEST MODE:
+    Include ACTIVE and FINISHED.
 
-    We include BOTH ACTIVE and FINISHED tournaments.
-
-    This is important because your current LVL 999
-    is ACTIVE and you already submitted results.
+    This allows LVL 999 to be
+    visible while testing.
   */
 
   const includedTournaments =
-    tournaments.filter(t=>{
 
-      const status =
-        normalize(t["Status"]);
+    tournaments.filter(
+      tournament=>{
 
-      return (
-        status === "active" ||
-        status === "finished"
-      );
+        const status =
+          normalize(
+            tournament["Status"]
+          );
 
-    });
+
+        return (
+
+          status === "active" ||
+
+          status === "finished"
+
+        );
+
+      }
+    );
 
 
   /*
-    Create a fast lookup:
-
-    tournament ID -> tournament object
+    Tournament lookup
   */
 
-  const tournamentMap = new Map();
+  const tournamentMap =
+    new Map();
 
 
-  includedTournaments.forEach(t=>{
+  includedTournaments.forEach(
+    tournament=>{
 
-    const id =
-      clean(t["Tournament ID"]);
-
-    if(id){
-      tournamentMap.set(id,t);
-    }
-
-  });
-
-
-  /*
-    Only use Tournament Players rows that:
-
-    1. Belong to an included tournament
-    2. Have a valid player ID
-    3. Have a numeric score
-
-    We don't strictly depend on Status because
-    Score is enough to identify a submitted result.
-  */
-
-  const validResults =
-    tournamentPlayers.filter(row=>{
-
-      const tournamentId =
-        clean(row["Tournament ID"]);
-
-      const playerId =
-        clean(row["Player ID"]);
-
-      const score =
-        numberValue(row["Score"]);
-
-
-      if(!tournamentId){
-        return false;
-      }
-
-      if(!playerId){
-        return false;
-      }
-
-      if(!tournamentMap.has(tournamentId)){
-        return false;
-      }
-
-      if(score === null){
-        return false;
-      }
-
-      return true;
-
-    });
-
-
-  document.getElementById("statResults").textContent =
-    validResults.length;
-
-
-  /*
-    Group results by Player ID
-  */
-
-  const resultsByPlayer = new Map();
-
-
-  validResults.forEach(result=>{
-
-    const playerId =
-      clean(result["Player ID"]);
-
-
-    if(!resultsByPlayer.has(playerId)){
-      resultsByPlayer.set(playerId,[]);
-    }
-
-
-    resultsByPlayer
-      .get(playerId)
-      .push(result);
-
-  });
-
-
-  /*
-    Create ranking for EVERY player.
-
-    So all 34 players remain visible,
-    even players with zero submitted games.
-  */
-
-  rankingData =
-    players.map(player=>{
-
-      const playerId =
-        clean(player["Player ID"]);
-
-      const playerName =
-        clean(player["FC Name"]);
-
-
-      const results =
-        resultsByPlayer.get(playerId) || [];
-
-
-      const scores =
-        results
-          .map(r=>numberValue(r["Score"]))
-          .filter(v=>v !== null);
-
-
-      const games =
-        scores.length;
-
-
-      const total =
-        scores.reduce(
-          (sum,value)=>sum+value,
-          0
+      const id =
+        clean(
+          tournament[
+            "Tournament ID"
+          ]
         );
 
 
-      const average =
-        games > 0
-        ? total / games
-        : 0;
+      if(id){
 
+        tournamentMap.set(
+          id,
+          tournament
+        );
 
-      const maximum =
-        games > 0
-        ? Math.max(...scores)
-        : 0;
+      }
 
-
-      const minimum =
-        games > 0
-        ? Math.min(...scores)
-        : 0;
-
-
-      /*
-        Sort player's own results from newest to oldest.
-      */
-
-      const sortedResults =
-        [...results].sort((a,b)=>{
-
-          const dateA =
-            parseDate(
-              a["Submitted At"]
-            );
-
-          const dateB =
-            parseDate(
-              b["Submitted At"]
-            );
-
-          return dateB - dateA;
-
-        });
-
-
-      const lastFive =
-        sortedResults
-          .slice(0,5)
-          .map(result=>{
-
-            return {
-              score:
-                numberValue(
-                  result["Score"]
-                ),
-
-              tournamentId:
-                clean(
-                  result["Tournament ID"]
-                ),
-
-              submittedAt:
-                clean(
-                  result["Submitted At"]
-                )
-
-            };
-
-          });
-
-
-      return {
-
-        id:playerId,
-
-        name:
-          playerName ||
-          clean(player["Player ID"]),
-
-        games,
-
-        average,
-
-        maximum,
-
-        minimum,
-
-        lastFive,
-
-        allResults:sortedResults
-
-      };
-
-    });
+    }
+  );
 
 
   /*
-    Ranking order:
-
-    1. Average
-    2. Games
-    3. Maximum
-    4. Name
+    Valid submitted results
   */
 
-  rankingData.sort((a,b)=>{
+  const validResults =
 
-    if(b.average !== a.average){
-      return b.average - a.average;
-    }
+    tournamentPlayers.filter(
+      result=>{
 
-    if(b.games !== a.games){
-      return b.games - a.games;
-    }
+        const tournamentId =
+          clean(
+            result[
+              "Tournament ID"
+            ]
+          );
 
-    if(b.maximum !== a.maximum){
-      return b.maximum - a.maximum;
-    }
 
-    return a.name.localeCompare(
-      b.name
+        const playerId =
+          clean(
+            result[
+              "Player ID"
+            ]
+          );
+
+
+        const score =
+          numberValue(
+            result["Score"]
+          );
+
+
+        if(!tournamentId){
+          return false;
+        }
+
+
+        if(!playerId){
+          return false;
+        }
+
+
+        if(
+          !tournamentMap.has(
+            tournamentId
+          )
+        ){
+
+          return false;
+
+        }
+
+
+        if(score === null){
+          return false;
+        }
+
+
+        return true;
+
+      }
     );
 
-  });
+
+  /*
+    Group by Player ID
+  */
+
+  const resultsByPlayer =
+    new Map();
+
+
+  validResults.forEach(
+    result=>{
+
+      const playerId =
+        clean(
+          result["Player ID"]
+        );
+
+
+      if(
+        !resultsByPlayer
+          .has(playerId)
+      ){
+
+        resultsByPlayer.set(
+          playerId,
+          []
+        );
+
+      }
+
+
+      resultsByPlayer
+        .get(playerId)
+        .push(result);
+
+    }
+  );
+
+
+  /*
+    Build player ranking
+  */
+
+  rankingData =
+
+    players.map(
+      player=>{
+
+        const playerId =
+          clean(
+            player["Player ID"]
+          );
+
+
+        const playerName =
+          clean(
+            player["FC Name"]
+          );
+
+
+        const results =
+
+          resultsByPlayer
+            .get(playerId) || [];
+
+
+        const scores =
+
+          results
+
+            .map(
+              result=>
+                numberValue(
+                  result["Score"]
+                )
+            )
+
+            .filter(
+              value =>
+                value !== null
+            );
+
+
+        const games =
+          scores.length;
+
+
+        const total =
+
+          scores.reduce(
+            (sum,value)=>
+              sum + value,
+            0
+          );
+
+
+        const average =
+
+          games > 0
+
+          ? total / games
+
+          : 0;
+
+
+        const maximum =
+
+          games > 0
+
+          ? Math.max(...scores)
+
+          : 0;
+
+
+        const minimum =
+
+          games > 0
+
+          ? Math.min(...scores)
+
+          : 0;
+
+
+        /*
+          Newest results first
+        */
+
+        const sortedResults =
+
+          [...results].sort(
+            (a,b)=>{
+
+              return (
+
+                parseDate(
+                  b["Submitted At"]
+                )
+
+                -
+
+                parseDate(
+                  a["Submitted At"]
+                )
+
+              );
+
+            }
+          );
+
+
+        const lastFive =
+
+          sortedResults
+
+            .slice(0,5)
+
+            .map(
+              result=>{
+
+                return {
+
+                  score:
+                    numberValue(
+                      result["Score"]
+                    ),
+
+                  tournamentId:
+                    clean(
+                      result[
+                        "Tournament ID"
+                      ]
+                    ),
+
+                  submittedAt:
+                    clean(
+                      result[
+                        "Submitted At"
+                      ]
+                    )
+
+                };
+
+              }
+            );
+
+
+        return {
+
+          id:playerId,
+
+          name:
+            playerName ||
+            playerId,
+
+          games,
+
+          total,
+
+          average,
+
+          maximum,
+
+          minimum,
+
+          lastFive,
+
+          allResults:
+            sortedResults
+
+        };
+
+      }
+    );
+
+
+  /*
+    Sort ranking
+  */
+
+  rankingData.sort(
+    (a,b)=>{
+
+      /*
+        First:
+        Average
+      */
+
+      if(
+        b.average !==
+        a.average
+      ){
+
+        return (
+          b.average -
+          a.average
+        );
+
+      }
+
+
+      /*
+        Then:
+        Games
+      */
+
+      if(
+        b.games !==
+        a.games
+      ){
+
+        return (
+          b.games -
+          a.games
+        );
+
+      }
+
+
+      /*
+        Then:
+        Total goals
+      */
+
+      if(
+        b.total !==
+        a.total
+      ){
+
+        return (
+          b.total -
+          a.total
+        );
+
+      }
+
+
+      /*
+        Then:
+        Best score
+      */
+
+      if(
+        b.maximum !==
+        a.maximum
+      ){
+
+        return (
+          b.maximum -
+          a.maximum
+        );
+
+      }
+
+
+      return a.name.localeCompare(
+        b.name
+      );
+
+    }
+  );
 
 
   filteredRanking =
@@ -1526,7 +2198,7 @@ function buildRanking(){
 
 
 /* ============================================================
-   DATE PARSER
+   DATE
 ============================================================ */
 
 function parseDate(value){
@@ -1534,16 +2206,6 @@ function parseDate(value){
   if(!value){
     return 0;
   }
-
-
-  /*
-    Google Sheets can return:
-
-    Date(...)
-    ISO dates
-    normal date strings
-    numbers
-  */
 
 
   const str =
@@ -1558,8 +2220,9 @@ function parseDate(value){
     const inside =
       str.substring(
         5,
-        str.length-1
+        str.length - 1
       );
+
 
     const parts =
       inside
@@ -1570,12 +2233,15 @@ function parseDate(value){
     if(parts.length >= 3){
 
       return new Date(
+
         parts[0],
         parts[1],
         parts[2],
+
         parts[3] || 0,
         parts[4] || 0,
         parts[5] || 0
+
       ).getTime();
 
     }
@@ -1587,8 +2253,14 @@ function parseDate(value){
     new Date(str);
 
 
-  if(!Number.isNaN(date.getTime())){
+  if(
+    !Number.isNaN(
+      date.getTime()
+    )
+  ){
+
     return date.getTime();
+
   }
 
 
@@ -1598,7 +2270,7 @@ function parseDate(value){
 
 
 /* ============================================================
-   RENDER RANKING
+   RENDER
 ============================================================ */
 
 function renderRanking(){
@@ -1609,16 +2281,24 @@ function renderRanking(){
     );
 
 
-  if(!filteredRanking.length){
+  if(
+    !filteredRanking.length
+  ){
 
     body.innerHTML = `
+
       <tr>
-        <td colspan="7">
+
+        <td colspan="8">
+
           <div class="empty">
             No players found.
           </div>
+
         </td>
+
       </tr>
+
     `;
 
     return;
@@ -1627,102 +2307,168 @@ function renderRanking(){
 
 
   body.innerHTML =
-    filteredRanking.map(
-      (player,index)=>{
 
-        const realRank =
-          rankingData.indexOf(
-            player
-          ) + 1;
+    filteredRanking
 
+      .map(
+        player=>{
 
-        let rankClass = "";
+          const realRank =
 
-        if(realRank === 1){
-          rankClass = "top1";
-        }else if(realRank === 2){
-          rankClass = "top2";
-        }else if(realRank === 3){
-          rankClass = "top3";
-        }
+            rankingData.indexOf(
+              player
+            ) + 1;
 
 
-        const lastFive =
-          player.lastFive.length
-          ? player.lastFive.map(item=>{
+          let rankClass = "";
 
-              return `
-                <div class="last-score">
-                  ${item.score}
+
+          if(realRank === 1){
+
+            rankClass =
+              "top1";
+
+          }
+
+          else if(
+            realRank === 2
+          ){
+
+            rankClass =
+              "top2";
+
+          }
+
+          else if(
+            realRank === 3
+          ){
+
+            rankClass =
+              "top3";
+
+          }
+
+
+          const lastFive =
+
+            player.lastFive.length
+
+            ?
+
+            player.lastFive
+
+              .map(
+                item=>`
+
+                  <div class="last-score">
+                    ${item.score}
+                  </div>
+
+                `
+              )
+
+              .join("")
+
+            :
+
+            `<span style="color:#536987">—</span>`;
+
+
+          return `
+
+            <tr
+              onclick="
+                openProfile(
+                  '${escapeAttr(
+                    player.id
+                  )}'
+                )
+              "
+            >
+
+              <td
+                class="rank ${rankClass}"
+              >
+                ${realRank}
+              </td>
+
+
+              <td>
+
+                <div class="player-name">
+                  ${escapeHtml(
+                    player.name
+                  )}
                 </div>
-              `;
 
-            }).join("")
-          : `<span style="color:#536987">—</span>`;
+                <span class="player-id">
+                  ${escapeHtml(
+                    player.id
+                  )}
+                </span>
+
+              </td>
 
 
-        return `
+              <td class="number">
+                ${player.games}
+              </td>
 
-          <tr onclick="openProfile('${escapeAttr(player.id)}')">
 
-            <td class="rank ${rankClass}">
-              ${realRank}
-            </td>
+              <td class="total">
+                ${
+                  player.games
+                  ? player.total
+                  : "—"
+                }
+              </td>
 
-            <td>
 
-              <div class="player-name">
-                ${escapeHtml(player.name)}
-              </div>
+              <td class="avg">
+                ${
+                  player.games
+                  ? player.average.toFixed(2)
+                  : "—"
+                }
+              </td>
 
-              <span class="player-id">
-                ${escapeHtml(player.id)}
-              </span>
 
-            </td>
+              <td class="max">
+                ${
+                  player.games
+                  ? player.maximum
+                  : "—"
+                }
+              </td>
 
-            <td class="number">
-              ${player.games}
-            </td>
 
-            <td class="avg">
-              ${
-                player.games
-                ? player.average.toFixed(2)
-                : "—"
-              }
-            </td>
+              <td class="min">
+                ${
+                  player.games
+                  ? player.minimum
+                  : "—"
+                }
+              </td>
 
-            <td class="max">
-              ${
-                player.games
-                ? player.maximum
-                : "—"
-              }
-            </td>
 
-            <td class="min">
-              ${
-                player.games
-                ? player.minimum
-                : "—"
-              }
-            </td>
+              <td>
 
-            <td>
+                <div class="last-five">
 
-              <div class="last-five">
-                ${lastFive}
-              </div>
+                  ${lastFive}
 
-            </td>
+                </div>
 
-          </tr>
+              </td>
 
-        `;
+            </tr>
 
-      }
-    ).join("");
+          `;
+
+        }
+      )
+
+      .join("");
 
 }
 
@@ -1734,6 +2480,7 @@ function renderRanking(){
 function filterPlayers(){
 
   const search =
+
     normalize(
       document.getElementById(
         "searchInput"
@@ -1746,20 +2493,31 @@ function filterPlayers(){
     filteredRanking =
       [...rankingData];
 
-  }else{
+  }
+
+  else{
 
     filteredRanking =
-      rankingData.filter(player=>{
 
-        return (
-          normalize(player.name)
-            .includes(search) ||
+      rankingData.filter(
+        player=>{
 
-          normalize(player.id)
-            .includes(search)
-        );
+          return (
 
-      });
+            normalize(
+              player.name
+            ).includes(search)
+
+            ||
+
+            normalize(
+              player.id
+            ).includes(search)
+
+          );
+
+        }
+      );
 
   }
 
@@ -1773,11 +2531,15 @@ function filterPlayers(){
    PROFILE
 ============================================================ */
 
-function openProfile(playerId){
+function openProfile(
+  playerId
+){
 
   const player =
+
     rankingData.find(
-      p=>p.id === playerId
+      p =>
+        p.id === playerId
     );
 
 
@@ -1787,7 +2549,10 @@ function openProfile(playerId){
 
 
   const rank =
-    rankingData.indexOf(player) + 1;
+
+    rankingData.indexOf(
+      player
+    ) + 1;
 
 
   document.getElementById(
@@ -1809,26 +2574,44 @@ function openProfile(playerId){
 
 
   document.getElementById(
-    "profileAvg"
+    "profileTotal"
   ).textContent =
     player.games
+    ? player.total
+    : "—";
+
+
+  document.getElementById(
+    "profileAvg"
+  ).textContent =
+
+    player.games
+
     ? player.average.toFixed(2)
+
     : "—";
 
 
   document.getElementById(
     "profileBest"
   ).textContent =
+
     player.games
+
     ? player.maximum
+
     : "—";
 
 
   document.getElementById(
     "profileLowest"
   ).textContent =
+
     player.games
-    ? "MIN " + player.minimum
+
+    ? "MIN " +
+      player.minimum
+
     : "—";
 
 
@@ -1838,61 +2621,60 @@ function openProfile(playerId){
     player.id;
 
 
-  renderProfileMatches(player);
+  renderProfileMatches(
+    player
+  );
 
 
   /*
-    40+ Goals Club
+    40+ GOALS
   */
-
-  const totalGoals =
-    player.allResults.reduce(
-      (sum,result)=>{
-
-        const score =
-          numberValue(
-            result["Score"]
-          );
-
-        return sum +
-          (score === null ? 0 : score);
-
-      },
-      0
-    );
-
 
   document.getElementById(
     "achievement40"
   ).textContent =
-    totalGoals >= 40
-    ? "Unlocked • 40+ total goals"
-    : totalGoals +
+
+    player.total >= 40
+
+    ? "Unlocked • 40+ goals"
+
+    : player.total +
       " total goals";
 
+
+  /*
+    BEST
+  */
 
   document.getElementById(
     "achievementBest"
   ).textContent =
+
     player.games
+
     ? "Best score: " +
       player.maximum +
       " goals"
+
     : "No results yet";
 
 
   document.getElementById(
     "profileModal"
-  ).classList.add("show");
+  ).classList.add(
+    "show"
+  );
 
 }
 
 
 /* ============================================================
-   PROFILE MATCHES
+   PROFILE RESULTS
 ============================================================ */
 
-function renderProfileMatches(player){
+function renderProfileMatches(
+  player
+){
 
   const box =
     document.getElementById(
@@ -1900,12 +2682,16 @@ function renderProfileMatches(player){
     );
 
 
-  if(!player.allResults.length){
+  if(
+    !player.allResults.length
+  ){
 
     box.innerHTML = `
+
       <div class="empty">
         No results submitted yet.
       </div>
+
     `;
 
     return;
@@ -1914,120 +2700,154 @@ function renderProfileMatches(player){
 
 
   box.innerHTML =
+
     player.allResults
+
       .slice(0,10)
-      .map(result=>{
 
-        const tournamentId =
-          clean(
-            result["Tournament ID"]
-          );
+      .map(
+        result=>{
 
+          const tournamentId =
 
-        const tournament =
-          tournaments.find(t=>
             clean(
-              t["Tournament ID"]
-            ) === tournamentId
-          );
+              result[
+                "Tournament ID"
+              ]
+            );
 
 
-        const lvl =
-          tournament
-          ? clean(tournament["LVL"])
-          : "—";
+          const tournament =
+
+            tournaments.find(
+              t =>
+
+                clean(
+                  t[
+                    "Tournament ID"
+                  ]
+                ) ===
+                tournamentId
+
+            );
 
 
-        const opponent =
-          tournament
-          ? clean(tournament["Opponent"])
-          : "—";
+          const lvl =
+
+            tournament
+
+            ? clean(
+                tournament["LVL"]
+              )
+
+            : "—";
 
 
-        const score =
-          numberValue(
-            result["Score"]
-          );
+          const opponent =
+
+            tournament
+
+            ? clean(
+                tournament[
+                  "Opponent"
+                ]
+              )
+
+            : "—";
 
 
-        const status =
-          clean(
-            result["Status"]
-          );
+          const score =
+
+            numberValue(
+              result["Score"]
+            );
 
 
-        return `
+          const status =
 
-          <div class="match-row">
+            clean(
+              result["Status"]
+            );
 
-            <div class="match-left">
 
-              <div class="match-lvl">
-                LVL ${escapeHtml(lvl)}
+          return `
+
+            <div class="match-row">
+
+              <div class="match-left">
+
+                <div class="match-lvl">
+                  LVL ${escapeHtml(lvl)}
+                </div>
+
+                <div class="match-opponent">
+                  vs ${escapeHtml(opponent)}
+                </div>
+
+                <div class="match-opponent">
+                  ${escapeHtml(status)}
+                </div>
+
               </div>
 
-              <div class="match-opponent">
-                vs ${escapeHtml(opponent)}
-              </div>
 
-              <div class="match-opponent">
-                ${escapeHtml(status)}
+              <div class="match-score">
+
+                ${
+                  score === null
+                  ? "—"
+                  : score
+                }
+
               </div>
 
             </div>
 
-            <div class="match-score">
-              ${score === null ? "—" : score}
-            </div>
+          `;
 
-          </div>
+        }
+      )
 
-        `;
-
-      })
       .join("");
 
 }
 
 
 /* ============================================================
-   CLOSE PROFILE
+   CLOSE
 ============================================================ */
 
 function closeProfile(){
 
   document
-    .getElementById("profileModal")
-    .classList.remove("show");
+    .getElementById(
+      "profileModal"
+    )
+    .classList.remove(
+      "show"
+    );
 
 }
 
 
 document
-  .getElementById("profileModal")
+  .getElementById(
+    "profileModal"
+  )
   .addEventListener(
     "click",
     function(event){
 
-      if(event.target === this){
+      if(
+        event.target === this
+      ){
+
         closeProfile();
+
       }
 
     }
   );
-
-
-/* ============================================================
-   ATTRIBUTE ESCAPE
-============================================================ */
-
-function escapeAttr(value){
-
-  return String(value ?? "")
-    .replace(/\\/g,"\\\\")
-    .replace(/'/g,"\\'");
-
-}
 
 
 /* ============================================================
