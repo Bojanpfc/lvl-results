@@ -1,13 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>FC Mobile • LVL Admin</title>
-
-<style>
-
+<title>FC Mobile • LVL Admin</title><style>
 :root{
   --bg:#030814;
   --card:#0a1428;
@@ -21,28 +16,16 @@
   --blue:#4da3ff;
 }
 
-*{
-  box-sizing:border-box;
-}
+*{box-sizing:border-box}
 
-html{
-  background:var(--bg);
-}
+html{background:var(--bg)}
 
 body{
   margin:0;
   font-family:Arial,Helvetica,sans-serif;
   background:
-    radial-gradient(
-      circle at top right,
-      rgba(32,229,138,.08),
-      transparent 30%
-    ),
-    radial-gradient(
-      circle at top left,
-      rgba(77,163,255,.08),
-      transparent 30%
-    ),
+    radial-gradient(circle at top right,rgba(32,229,138,.08),transparent 30%),
+    radial-gradient(circle at top left,rgba(77,163,255,.08),transparent 30%),
     var(--bg);
   color:var(--text);
   min-height:100vh;
@@ -53,10 +36,6 @@ body{
   margin:0 auto;
   padding:20px;
 }
-
-/* =========================================================
-   HEADER
-========================================================= */
 
 .header{
   display:flex;
@@ -76,11 +55,7 @@ body{
   width:45px;
   height:45px;
   border-radius:12px;
-  background:linear-gradient(
-    135deg,
-    var(--green),
-    #0ebc74
-  );
+  background:linear-gradient(135deg,var(--green),#0ebc74);
   color:#03120b;
   display:flex;
   align-items:center;
@@ -116,23 +91,13 @@ body{
   border-color:var(--green);
 }
 
-/* =========================================================
-   CARDS
-========================================================= */
-
 .card{
-  background:
-    linear-gradient(
-      145deg,
-      var(--card),
-      #071126
-    );
+  background:linear-gradient(145deg,var(--card),#071126);
   border:1px solid var(--line);
   border-radius:16px;
   padding:18px;
   margin-bottom:16px;
-  box-shadow:
-    0 10px 35px rgba(0,0,0,.18);
+  box-shadow:0 10px 35px rgba(0,0,0,.18);
 }
 
 .card-title{
@@ -160,10 +125,6 @@ h2{
   font-size:18px;
 }
 
-/* =========================================================
-   BADGES
-========================================================= */
-
 .badge{
   display:inline-flex;
   align-items:center;
@@ -188,10 +149,6 @@ h2{
   background:rgba(255,209,102,.08);
   border-color:rgba(255,209,102,.25);
 }
-
-/* =========================================================
-   INFO
-========================================================= */
 
 .info-grid{
   display:grid;
@@ -224,10 +181,6 @@ h2{
   color:var(--yellow);
 }
 
-/* =========================================================
-   PROGRESS
-========================================================= */
-
 .progress-wrap{
   margin-top:16px;
 }
@@ -252,12 +205,7 @@ h2{
 .progress-bar{
   height:100%;
   width:0%;
-  background:
-    linear-gradient(
-      90deg,
-      var(--green),
-      #72ffc0
-    );
+  background:linear-gradient(90deg,var(--green),#72ffc0);
   border-radius:999px;
   transition:width .3s ease;
 }
@@ -272,10 +220,6 @@ h2{
   font-size:13px;
   font-weight:bold;
 }
-
-/* =========================================================
-   PLAYER RESULTS
-========================================================= */
 
 .results-section{
   margin-top:18px;
@@ -357,10 +301,6 @@ h2{
   padding:12px 0;
 }
 
-/* =========================================================
-   CREATE
-========================================================= */
-
 .create-title{
   display:flex;
   justify-content:space-between;
@@ -381,8 +321,7 @@ h2{
   letter-spacing:1px;
 }
 
-input,
-select{
+input,select{
   width:100%;
   border:1px solid var(--line);
   background:#050d1d;
@@ -392,8 +331,7 @@ select{
   outline:none;
 }
 
-input:focus,
-select:focus{
+input:focus,select:focus{
   border-color:var(--green);
 }
 
@@ -440,23 +378,13 @@ select:focus{
   color:var(--green);
 }
 
-/* =========================================================
-   LOCKED CREATE
-========================================================= */
-
-.create-locked{
-  opacity:.72;
-}
-
 .lock-box{
   display:flex;
   align-items:center;
   gap:12px;
   padding:15px;
-  background:
-    rgba(255,209,102,.05);
-  border:1px solid
-    rgba(255,209,102,.18);
+  background:rgba(255,209,102,.05);
+  border:1px solid rgba(255,209,102,.18);
   border-radius:12px;
 }
 
@@ -482,10 +410,6 @@ select:focus{
   color:var(--muted);
   font-size:11px;
 }
-
-/* =========================================================
-   BUTTONS
-========================================================= */
 
 .actions{
   display:grid;
@@ -534,10 +458,6 @@ button{
   transform:none;
 }
 
-/* =========================================================
-   NOTICE
-========================================================= */
-
 .notice{
   background:#071126;
   border:1px solid var(--line);
@@ -547,16 +467,6 @@ button{
   font-size:12px;
   line-height:1.5;
 }
-
-.small-note{
-  color:var(--muted);
-  font-size:10px;
-  margin-top:8px;
-}
-
-/* =========================================================
-   STATUS
-========================================================= */
 
 .status{
   position:fixed;
@@ -571,8 +481,7 @@ button{
   color:var(--muted);
   display:none;
   z-index:100;
-  box-shadow:
-    0 10px 30px rgba(0,0,0,.3);
+  box-shadow:0 10px 30px rgba(0,0,0,.3);
 }
 
 .status.show{
@@ -589,12 +498,7 @@ button{
   border-color:rgba(255,82,99,.3);
 }
 
-/* =========================================================
-   MOBILE
-========================================================= */
-
 @media(max-width:700px){
-
   .info-grid{
     grid-template-columns:repeat(2,1fr);
   }
@@ -610,11 +514,9 @@ button{
   .actions{
     grid-template-columns:1fr;
   }
-
 }
 
 @media(max-width:430px){
-
   .container{
     padding:12px;
   }
@@ -634,499 +536,279 @@ button{
   .info-value{
     font-size:16px;
   }
-
 }
+</style></head><body><div class="container">  <div class="header"><div class="logo">
 
-</style>
-</head>
+  <div class="logo-box">FC</div>
 
-<body>
-
-<div class="container">
-
-  <!-- HEADER -->
-
-  <div class="header">
-
-    <div class="logo">
-
-      <div class="logo-box">
-        FC
-      </div>
-
-      <div class="logo-text">
-
-        LVL ADMIN
-
-        <span>
-          TOURNAMENT CONTROL
-        </span>
-
-      </div>
-
-    </div>
-
-    <button
-      class="refresh-btn"
-      onclick="manualRefresh()"
-    >
-      ↻ Refresh
-    </button>
-
+  <div class="logo-text">
+    LVL ADMIN
+    <span>TOURNAMENT CONTROL</span>
   </div>
 
+</div>
 
-  <!-- ACTIVE LVL -->
+<button class="refresh-btn" onclick="manualRefresh()">
+  ↻ Refresh
+</button>
 
-  <div
-    class="card"
-    id="activeCard"
-  >
+  </div>  <!-- ACTIVE LVL -->  <div class="card" id="activeCard"><div class="active-header">
 
-    <div class="active-header">
-
-      <div>
-
-        <div class="card-title">
-          CURRENT LVL
-        </div>
-
-        <h1 id="activeOpponent">
-          LOADING ACTIVE LVL...
-        </h1>
-
-      </div>
-
-      <div
-        id="activeStatus"
-        class="badge yellow"
-      >
-        ● LOADING
-      </div>
-
-    </div>
-
-
-    <div id="activeContent">
-
-      <div class="info-grid">
-
-        <div class="info-box">
-
-          <div class="info-label">
-            LVL
-          </div>
-
-          <div
-            class="info-value"
-            id="activeLvl"
-          >
-            —
-          </div>
-
-        </div>
-
-
-        <div class="info-box">
-
-          <div class="info-label">
-            OUR SCORE
-          </div>
-
-          <div
-            class="info-value"
-            id="ourScore"
-          >
-            —
-          </div>
-
-        </div>
-
-
-        <div class="info-box">
-
-          <div class="info-label">
-            SUBMITTED
-          </div>
-
-          <div
-            class="info-value"
-            id="submittedCount"
-          >
-            —
-          </div>
-
-        </div>
-
-
-        <div class="info-box">
-
-          <div class="info-label">
-            TIME LEFT
-          </div>
-
-          <div
-            class="info-value countdown"
-            id="countdown"
-          >
-            —
-          </div>
-
-        </div>
-
-      </div>
-
-
-      <div class="progress-wrap">
-
-        <div class="progress-head">
-
-          <span>
-            PLAYER SUBMISSIONS
-          </span>
-
-          <span id="progressText">
-            —
-          </span>
-
-        </div>
-
-
-        <div class="progress">
-
-          <div
-            class="progress-bar"
-            id="progressBar"
-          ></div>
-
-        </div>
-
-      </div>
-
-
-      <div class="submitted-box">
-
-        TOTAL TEAM SCORE:
-
-        <span id="teamScoreBox">
-          —
-        </span>
-
-      </div>
-
-
-      <!-- SUBMITTED PLAYERS -->
-
-      <div class="results-section">
-
-        <div class="results-title">
-
-          <span>
-            SUBMITTED PLAYERS
-          </span>
-
-          <span id="submittedLabel">
-            0
-          </span>
-
-        </div>
-
-
-        <div
-          id="submittedList"
-          class="results-list"
-        >
-
-          <div class="empty-results">
-            Loading results...
-          </div>
-
-        </div>
-
-      </div>
-
-
-      <!-- WAITING PLAYERS -->
-
-      <div class="results-section">
-
-        <div class="results-title">
-
-          <span>
-            WAITING FOR RESULTS
-          </span>
-
-          <span id="waitingLabel">
-            —
-          </span>
-
-        </div>
-
-
-        <div
-          id="waitingList"
-          class="results-list"
-        >
-
-          <div class="empty-results">
-            Loading players...
-          </div>
-
-        </div>
-
-      </div>
-
-    </div>
-
-  </div>
-
-
-  <!-- CREATE NEW LVL -->
-
-  <div
-    class="card"
-    id="createCard"
-  >
-
-    <div class="create-title">
-
-      <div>
-
-        <div class="card-title">
-          TOURNAMENT MANAGEMENT
-        </div>
-
-        <h2>
-          Create New LVL
-        </h2>
-
-      </div>
-
-    </div>
-
-
-    <div
-      id="createLocked"
-      class="lock-box"
-      style="display:none;"
-    >
-
-      <div class="lock-icon">
-        🔒
-      </div>
-
-      <div class="lock-text">
-
-        <strong>
-          NEW LVL LOCKED
-        </strong>
-
-        <span>
-          Finish the current LVL before starting a new tournament.
-        </span>
-
-      </div>
-
-    </div>
-
-
-    <div id="createForm">
-
-      <div class="field">
-
-        <label>
-          LVL Number
-        </label>
-
-        <input
-          id="newLvl"
-          type="number"
-          placeholder="Example: 20"
-        >
-
-      </div>
-
-
-      <div class="field">
-
-        <label>
-          Opponent
-        </label>
-
-        <input
-          id="newOpponent"
-          type="text"
-          placeholder="Opponent name"
-        >
-
-      </div>
-
-
-      <div class="field">
-
-        <label>
-          Select Players
-        </label>
-
-        <div
-          id="playerGrid"
-          class="player-grid"
-        >
-          Loading players...
-        </div>
-
-
-        <div class="selected-count">
-
-          Selected:
-
-          <strong id="selectedCount">
-            0
-          </strong>
-
-          / 32
-
-        </div>
-
-      </div>
-
-
-      <div class="actions">
-
-        <button
-          id="startBtn"
-          class="btn btn-primary"
-          onclick="startTournament()"
-        >
-          START LVL
-        </button>
-
-
-        <button
-          class="btn btn-blue"
-          onclick="loadPlayers()"
-        >
-          REFRESH PLAYERS
-        </button>
-
-      </div>
-
-    </div>
-
-  </div>
-
-
-  <!-- FINISH -->
-
-  <div
-    class="card"
-    id="finishCard"
-    style="display:none;"
-  >
+  <div>
 
     <div class="card-title">
-      FINISH CURRENT LVL
+      CURRENT LVL
     </div>
 
+    <h1 id="activeOpponent">
+      LOADING ACTIVE LVL...
+    </h1>
 
-    <div class="notice">
+  </div>
 
-      When all results are collected,
-      enter the opponent's final score.
-      Your team's score is calculated
-      automatically from the submitted
-      player results.
+  <div id="activeStatus" class="badge yellow">
+    ● LOADING
+  </div>
 
+</div>
+
+
+<div id="activeContent">
+
+  <div class="info-grid">
+
+    <div class="info-box">
+      <div class="info-label">LVL</div>
+      <div class="info-value" id="activeLvl">—</div>
     </div>
 
+    <div class="info-box">
+      <div class="info-label">OUR SCORE</div>
+      <div class="info-value" id="ourScore">—</div>
+    </div>
 
-    <button
-      id="finishBtn"
-      class="btn btn-primary"
-      style="margin-top:12px"
-      onclick="finishTournament()"
-    >
-      END LVL
-    </button>
+    <div class="info-box">
+      <div class="info-label">SUBMITTED</div>
+      <div class="info-value" id="submittedCount">—</div>
+    </div>
+
+    <div class="info-box">
+      <div class="info-label">TIME LEFT</div>
+      <div class="info-value countdown" id="countdown">—</div>
+    </div>
 
   </div>
 
 
-  <!-- DELETE -->
+  <div class="progress-wrap">
 
-  <div
-    class="card danger-zone"
-    id="deleteCard"
-  >
+    <div class="progress-head">
+
+      <span>PLAYER SUBMISSIONS</span>
+
+      <span id="progressText">—</span>
+
+    </div>
+
+    <div class="progress">
+      <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+  </div>
+
+
+  <div class="submitted-box">
+    TOTAL TEAM SCORE:
+    <span id="teamScoreBox">—</span>
+  </div>
+
+
+  <div class="results-section">
+
+    <div class="results-title">
+      <span>SUBMITTED PLAYERS</span>
+      <span id="submittedLabel">0</span>
+    </div>
+
+    <div id="submittedList" class="results-list">
+      <div class="empty-results">
+        Loading results...
+      </div>
+    </div>
+
+  </div>
+
+
+  <div class="results-section">
+
+    <div class="results-title">
+      <span>WAITING FOR RESULTS</span>
+      <span id="waitingLabel">—</span>
+    </div>
+
+    <div id="waitingList" class="results-list">
+      <div class="empty-results">
+        Loading players...
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+  </div>  <!-- CREATE NEW LVL -->  <div class="card" id="createCard"><div class="create-title">
+
+  <div>
 
     <div class="card-title">
-      DANGER ZONE
+      TOURNAMENT MANAGEMENT
     </div>
 
-
-    <div class="notice">
-
-      This is intended for deleting
-      the current test LVL.
-      Deleting a tournament removes
-      its tournament data and
-      associated results.
-
-    </div>
-
-
-    <button
-      id="deleteBtn"
-      class="btn btn-danger"
-      style="margin-top:12px"
-      onclick="deleteTournament()"
-    >
-      DELETE TEST LVL
-    </button>
+    <h2>
+      Create New LVL
+    </h2>
 
   </div>
 
 </div>
 
 
-<div
-  id="status"
-  class="status"
-></div>
+<div id="createLocked" class="lock-box" style="display:none;">
+
+  <div class="lock-icon">🔒</div>
+
+  <div class="lock-text">
+
+    <strong>NEW LVL LOCKED</strong>
+
+    <span>
+      Finish the current LVL before starting a new tournament.
+    </span>
+
+  </div>
+
+</div>
 
 
-<script>
+<div id="createForm">
 
-/* =========================================================
-   CONFIG
-========================================================= */
+  <div class="field">
+
+    <label>LVL Number</label>
+
+    <input
+      id="newLvl"
+      type="number"
+      placeholder="Example: 20"
+    >
+
+  </div>
+
+
+  <div class="field">
+
+    <label>Opponent</label>
+
+    <input
+      id="newOpponent"
+      type="text"
+      placeholder="Opponent name"
+    >
+
+  </div>
+
+
+  <div class="field">
+
+    <label>Select Players</label>
+
+    <div id="playerGrid" class="player-grid">
+      Loading players...
+    </div>
+
+    <div class="selected-count">
+      Selected:
+      <strong id="selectedCount">0</strong>
+      / 32
+    </div>
+
+  </div>
+
+
+  <div class="actions">
+
+    <button
+      id="startBtn"
+      class="btn btn-primary"
+      onclick="startTournament()"
+    >
+      START LVL
+    </button>
+
+    <button
+      class="btn btn-blue"
+      onclick="loadPlayers()"
+    >
+      REFRESH PLAYERS
+    </button>
+
+  </div>
+
+</div>
+
+  </div>  <!-- FINISH -->  <div class="card" id="finishCard" style="display:none;"><div class="card-title">
+  FINISH CURRENT LVL
+</div>
+
+<div class="notice">
+  When all results are collected, enter the opponent's final score.
+  Your team's score is calculated automatically from the submitted
+  player results.
+</div>
+
+<button
+  id="finishBtn"
+  class="btn btn-primary"
+  style="margin-top:12px"
+  onclick="finishTournament()"
+>
+  END LVL
+</button>
+
+  </div>  <!-- DELETE -->  <div class="card" id="deleteCard"><div class="card-title">
+  DANGER ZONE
+</div>
+
+<div class="notice">
+  This is intended for deleting the current test LVL.
+  Deleting a tournament removes its tournament data and
+  associated results.
+</div>
+
+<button
+  id="deleteBtn"
+  class="btn btn-danger"
+  style="margin-top:12px"
+  onclick="deleteTournament()"
+>
+  DELETE TEST LVL
+</button>
+
+  </div></div><div id="status" class="status"></div><script>
 
 const API_URL =
 "https://script.google.com/macros/s/AKfycby3nXVRE6Z1ZB4kQA4o037qJfwoeqhTq0YOwqxVoye4pAHbp1BuZustn9qmMx-E8d19/exec";
 
 
-/* =========================================================
-   GLOBALS
-========================================================= */
-
 let activeTournament = null;
-
 let allPlayers = [];
-
 let countdownTimer = null;
-
 let refreshTimer = null;
-
 let loadingAdmin = false;
 
-
 const CACHE_KEY =
-  "fcMobileAdminActiveTournament";
+"fcMobileAdminActiveTournament";
 
-
-/* =========================================================
-   BASIC HELPERS
-========================================================= */
 
 function $(id){
   return document.getElementById(id);
@@ -1136,57 +818,215 @@ function $(id){
 function escapeHtml(value){
 
   return String(value ?? "")
-    .replace(
-      /[&<>"']/g,
-      function(m){
+    .replace(/[&<>"']/g,function(m){
 
-        return {
-          "&":"&amp;",
-          "<":"&lt;",
-          ">":"&gt;",
-          '"':"&quot;",
-          "'":"&#039;"
-        }[m];
+      return {
+        "&":"&amp;",
+        "<":"&lt;",
+        ">":"&gt;",
+        '"':"&quot;",
+        "'":"&#039;"
+      }[m];
 
-      }
-    );
+    });
 
 }
 
 
-function showStatus(
-  message,
-  type=""
-){
+function showStatus(message,type=""){
 
-  const el =
-    $("status");
+  const el = $("status");
 
-
-  el.textContent =
-    message;
-
+  el.textContent = message;
 
   el.className =
-    "status show " +
-    type;
+    "status show " + type;
 
-
-  clearTimeout(
-    showStatus.timer
-  );
-
+  clearTimeout(showStatus.timer);
 
   showStatus.timer =
-    setTimeout(
+    setTimeout(function(){
+
+      el.className = "status";
+
+    },3500);
+
+}
+
+
+/* =========================================================
+   API
+========================================================= */
+
+function getJSONP(action){
+
+  return new Promise(function(resolve,reject){
+
+    const callbackName =
+      "jsonp_" +
+      Date.now() +
+      "_" +
+      Math.random()
+        .toString(36)
+        .substring(2);
+
+
+    const script =
+      document.createElement("script");
+
+
+    let finished = false;
+
+
+    const timeout =
+      setTimeout(function(){
+
+        if(finished)
+          return;
+
+        finished = true;
+
+        cleanup();
+
+        reject(
+          new Error("API timeout")
+        );
+
+      },12000);
+
+
+    function cleanup(){
+
+      clearTimeout(timeout);
+
+      try{
+        delete window[callbackName];
+      }catch(e){
+        window[callbackName] = undefined;
+      }
+
+      if(script.parentNode){
+        script.parentNode.removeChild(script);
+      }
+
+    }
+
+
+    window[callbackName] =
+      function(data){
+
+        if(finished)
+          return;
+
+        finished = true;
+
+        cleanup();
+
+        resolve(data);
+
+      };
+
+
+    script.onerror =
       function(){
 
-        el.className =
-          "status";
+        if(finished)
+          return;
 
-      },
-      3500
+        finished = true;
+
+        cleanup();
+
+        reject(
+          new Error("API request failed")
+        );
+
+      };
+
+
+    script.src =
+      API_URL +
+      "?action=" +
+      encodeURIComponent(action) +
+      "&callback=" +
+      callbackName +
+      "&_=" +
+      Date.now();
+
+
+    document.body.appendChild(script);
+
+  });
+
+}
+
+
+async function getAPI(action){
+
+  /*
+    First try JSONP.
+    This is required for Google Apps Script
+    when normal browser CORS is unavailable.
+  */
+
+  try{
+
+    const result =
+      await getJSONP(action);
+
+    return result;
+
+  }catch(error){
+
+    console.log(
+      "JSONP failed:",
+      action,
+      error
     );
+
+  }
+
+
+  /*
+    Second attempt: normal fetch.
+  */
+
+  try{
+
+    const response =
+      await fetch(
+        API_URL +
+        "?action=" +
+        encodeURIComponent(action) +
+        "&_=" +
+        Date.now(),
+        {
+          cache:"no-store"
+        }
+      );
+
+
+    if(!response.ok){
+      throw new Error(
+        "HTTP " + response.status
+      );
+    }
+
+
+    return await response.json();
+
+  }catch(error){
+
+    console.log(
+      "Fetch failed:",
+      action,
+      error
+    );
+
+
+    throw error;
+
+  }
 
 }
 
@@ -1200,7 +1040,6 @@ function saveActiveTournament(t){
   if(!t)
     return;
 
-
   try{
 
     sessionStorage.setItem(
@@ -1210,10 +1049,7 @@ function saveActiveTournament(t){
 
   }catch(e){
 
-    console.log(
-      "Could not save LVL cache:",
-      e
-    );
+    console.log(e);
 
   }
 
@@ -1242,23 +1078,28 @@ function restoreCachedTournament(){
       return false;
 
 
+    const status =
+      String(
+        cached.status ||
+        cached["Status"] ||
+        ""
+      ).toUpperCase();
+
+
+    if(status !== "ACTIVE")
+      return false;
+
+
     activeTournament =
       cached;
 
 
-    showActiveTournament(
-      cached
-    );
+    showActiveTournament(cached);
 
 
     return true;
 
   }catch(e){
-
-    console.log(
-      "Could not restore cache:",
-      e
-    );
 
     return false;
 
@@ -1285,378 +1126,92 @@ function clearCachedTournament(){
 
 
 /* =========================================================
-   JSONP
+   ACTIVE TOURNAMENT
 ========================================================= */
 
-function getJSONP(action){
+function normalizeTournament(t){
 
-  return new Promise(
-    function(resolve,reject){
-
-      const callbackName =
-        "jsonp_" +
-        Date.now() +
-        "_" +
-        Math.random()
-          .toString(36)
-          .substring(2);
+  if(!t)
+    return null;
 
 
-      const script =
-        document.createElement(
-          "script"
-        );
+  return {
 
+    id:
+      t.id ||
+      t["Tournament ID"] ||
+      "",
 
-      let finished = false;
+    lvl:
+      t.lvl ??
+      t["LVL"] ??
+      "",
 
+    opponent:
+      t.opponent ||
+      t["Opponent"] ||
+      "",
 
-      const timeout =
-        setTimeout(
-          function(){
+    startTime:
+      t.startTime ||
+      t["Start Time"] ||
+      "",
 
-            if(finished)
-              return;
+    endTime:
+      t.endTime ||
+      t["End Time"] ||
+      "",
 
+    status:
+      String(
+        t.status ||
+        t["Status"] ||
+        "ACTIVE"
+      ).toUpperCase(),
 
-            finished = true;
+    ourScore:
+      Number(
+        t.ourScore ??
+        t["Our Score"] ??
+        0
+      )
 
-            cleanup();
-
-
-            reject(
-              new Error(
-                "API timeout"
-              )
-            );
-
-          },
-          12000
-        );
-
-
-      function cleanup(){
-
-        clearTimeout(
-          timeout
-        );
-
-
-        try{
-
-          delete window[
-            callbackName
-          ];
-
-        }catch(e){
-
-          window[
-            callbackName
-          ] = undefined;
-
-        }
-
-
-        if(script.parentNode){
-
-          script.parentNode
-            .removeChild(
-              script
-            );
-
-        }
-
-      }
-
-
-      window[callbackName] =
-        function(data){
-
-          if(finished)
-            return;
-
-
-          finished = true;
-
-          cleanup();
-
-          resolve(data);
-
-        };
-
-
-      script.onerror =
-        function(){
-
-          if(finished)
-            return;
-
-
-          finished = true;
-
-          cleanup();
-
-
-          reject(
-            new Error(
-              "API request failed"
-            )
-          );
-
-        };
-
-
-      script.src =
-        API_URL +
-        "?action=" +
-        encodeURIComponent(action) +
-        "&callback=" +
-        callbackName +
-        "&_=" +
-        Date.now();
-
-
-      document.body.appendChild(
-        script
-      );
-
-    }
-  );
+  };
 
 }
 
 
-async function getAPI(action){
+function isActiveTournament(t){
 
-  try{
+  if(!t)
+    return false;
 
-    return await getJSONP(
-      action
-    );
 
-  }catch(error){
+  const status =
+    String(
+      t.status ||
+      t["Status"] ||
+      ""
+    ).toUpperCase();
 
-    console.log(
-      "JSONP failed:",
-      error
-    );
 
+  /*
+    Accept both:
+    status === ACTIVE
+    and
+    an active:true flag.
+  */
 
-    const response =
-      await fetch(
-        API_URL +
-        "?action=" +
-        encodeURIComponent(action) +
-        "&_=" +
-        Date.now()
-      );
-
-
-    return await response.json();
-
-  }
-
-}
-
-
-/* =========================================================
-   POST
-========================================================= */
-
-function postAPI(data){
-
-  return new Promise(
-    function(resolve,reject){
-
-      const iframeName =
-        "post_" +
-        Date.now() +
-        "_" +
-        Math.random()
-          .toString(36)
-          .substring(2);
-
-
-      const iframe =
-        document.createElement(
-          "iframe"
-        );
-
-
-      iframe.name =
-        iframeName;
-
-
-      iframe.style.display =
-        "none";
-
-
-      document.body.appendChild(
-        iframe
-      );
-
-
-      const form =
-        document.createElement(
-          "form"
-        );
-
-
-      form.method =
-        "POST";
-
-
-      form.action =
-        API_URL;
-
-
-      form.target =
-        iframeName;
-
-
-      form.style.display =
-        "none";
-
-
-      Object.keys(data).forEach(
-        function(key){
-
-          const input =
-            document.createElement(
-              "input"
-            );
-
-
-          input.type =
-            "hidden";
-
-
-          input.name =
-            key;
-
-
-          input.value =
-            typeof data[key] === "object"
-
-              ? JSON.stringify(
-                  data[key]
-                )
-
-              : data[key];
-
-
-          form.appendChild(
-            input
-          );
-
-        }
-      );
-
-
-      document.body.appendChild(
-        form
-      );
-
-
-      let resolved =
-        false;
-
-
-      function cleanup(){
-
-        if(form.parentNode){
-
-          form.parentNode
-            .removeChild(
-              form
-            );
-
-        }
-
-
-        if(iframe.parentNode){
-
-          iframe.parentNode
-            .removeChild(
-              iframe
-            );
-
-        }
-
-      }
-
-
-      iframe.onload =
-        function(){
-
-          if(resolved)
-            return;
-
-
-          resolved = true;
-
-          cleanup();
-
-
-          resolve({
-            success:true
-          });
-
-        };
-
-
-      iframe.onerror =
-        function(){
-
-          if(resolved)
-            return;
-
-
-          resolved = true;
-
-          cleanup();
-
-
-          reject(
-            new Error(
-              "POST failed"
-            )
-          );
-
-        };
-
-
-      form.submit();
-
-
-      setTimeout(
-        function(){
-
-          if(resolved)
-            return;
-
-
-          resolved = true;
-
-          cleanup();
-
-
-          resolve({
-            success:true
-          });
-
-        },
-        1800
-      );
-
-    }
+  return (
+    status === "ACTIVE" ||
+    t.active === true
   );
 
 }
 
 
 /* =========================================================
-   SHOW ACTIVE TOURNAMENT
+   SHOW ACTIVE
 ========================================================= */
 
 function showActiveTournament(t){
@@ -1665,50 +1220,45 @@ function showActiveTournament(t){
     return;
 
 
-  saveActiveTournament(t);
+  const normalized =
+    normalizeTournament(t);
+
+
+  if(!normalized)
+    return;
+
+
+  activeTournament =
+    normalized;
+
+
+  saveActiveTournament(
+    normalized
+  );
 
 
   $("activeOpponent").textContent =
-    t.opponent ||
-    t["Opponent"] ||
+    normalized.opponent ||
     "UNKNOWN OPPONENT";
 
 
   $("activeLvl").textContent =
-    t.lvl ??
-    t["LVL"] ??
+    normalized.lvl ||
     "—";
 
 
-  const currentScore =
-    Number(
-      t.ourScore ??
-      t["Our Score"] ??
-      0
-    );
-
-
   $("ourScore").textContent =
-    currentScore;
+    normalized.ourScore;
 
 
   $("teamScoreBox").textContent =
-    currentScore;
+    normalized.ourScore;
 
 
-  const status =
-    String(
-      t.status ||
-      t["Status"] ||
-      "ACTIVE"
-    ).toUpperCase();
-
-
-  if(status === "ACTIVE"){
+  if(normalized.status === "ACTIVE"){
 
     $("activeStatus").className =
       "badge";
-
 
     $("activeStatus").textContent =
       "● ACTIVE";
@@ -1718,69 +1268,35 @@ function showActiveTournament(t){
     $("activeStatus").className =
       "badge yellow";
 
-
     $("activeStatus").textContent =
-      "● " + status;
+      "● " +
+      normalized.status;
 
   }
 
 
   startCountdown(
-    t.endTime ||
-    t["End Time"]
+    normalized.endTime
   );
 
 
+  const active =
+    normalized.status === "ACTIVE";
+
+
   $("finishCard").style.display =
-    status === "ACTIVE"
+    active
       ? "block"
       : "none";
 
 
   $("finishBtn").disabled =
-    status !== "ACTIVE";
+    !active;
 
 
   setCreateLocked(
-    status === "ACTIVE"
+    active
   );
-
-}
-
-
-/* =========================================================
-   CREATE LOCK
-========================================================= */
-
-function setCreateLocked(locked){
-
-  const form =
-    $("createForm");
-
-
-  const lockedBox =
-    $("createLocked");
-
-
-  if(locked){
-
-    form.style.display =
-      "none";
-
-
-    lockedBox.style.display =
-      "flex";
-
-  }else{
-
-    form.style.display =
-      "block";
-
-
-    lockedBox.style.display =
-      "none";
-
-  }
 
 }
 
@@ -1795,16 +1311,11 @@ function showNoActive(){
     countdownTimer
   );
 
-
-  countdownTimer =
-    null;
-
+  countdownTimer = null;
 
   clearCachedTournament();
 
-
-  activeTournament =
-    null;
+  activeTournament = null;
 
 
   $("activeOpponent").textContent =
@@ -1857,7 +1368,6 @@ function showNoActive(){
 
   clearResultLists();
 
-
   setCreateLocked(false);
 
 }
@@ -1873,96 +1383,72 @@ async function loadAdmin(){
     return;
 
 
-  loadingAdmin =
-    true;
+  loadingAdmin = true;
 
 
   try{
 
     /*
-      NEW BACKEND FORMAT:
+      IMPORTANT:
+      Try activeTournament FIRST.
 
-      {
-        success:true,
-        active:true,
-        tournament:{...},
-        players:[...],
-        submitted:...,
-        waiting:...,
-        total:...,
-        ourScore:...
-      }
+      The backend has already been confirmed
+      to return the active LVL here.
     */
 
-    const data =
-      await getAPI(
-        "liveLVL"
+    let activeData = null;
+
+
+    try{
+
+      activeData =
+        await getAPI(
+          "activeTournament"
+        );
+
+      console.log(
+        "ACTIVE TOURNAMENT API:",
+        activeData
       );
 
+    }catch(e){
 
-    console.log(
-      "liveLVL:",
-      data
-    );
-
-
-    if(
-      data &&
-      data.success &&
-      data.active &&
-      data.tournament
-    ){
-
-      activeTournament =
-        data.tournament;
-
-
-      showActiveTournament(
-        activeTournament
+      console.log(
+        "activeTournament request failed:",
+        e
       );
-
-
-      updateLiveStats(
-        data
-      );
-
-
-      return;
 
     }
 
 
     /*
-      Fallback to activeTournament.
+      Accept the tournament if it is
+      explicitly ACTIVE.
     */
 
-    const active =
-      await getAPI(
-        "activeTournament"
-      );
-
-
-    console.log(
-      "activeTournament:",
-      active
-    );
-
-
     if(
-      active &&
-      active.success &&
-      active.active &&
-      active.tournament
+      activeData &&
+      activeData.success &&
+      activeData.tournament &&
+      isActiveTournament(
+        activeData.tournament
+      )
     ){
 
       activeTournament =
-        active.tournament;
+        normalizeTournament(
+          activeData.tournament
+        );
 
 
       showActiveTournament(
         activeTournament
       );
 
+
+      /*
+        Now get live player data.
+      */
 
       try{
 
@@ -1972,11 +1458,35 @@ async function loadAdmin(){
           );
 
 
+        console.log(
+          "LIVE LVL API:",
+          live
+        );
+
+
         if(
           live &&
           live.success &&
-          live.active
+          live.tournament
         ){
+
+          /*
+            Use live tournament if available,
+            but do not require live.active.
+          */
+
+          if(
+            isActiveTournament(
+              live.tournament
+            )
+          ){
+
+            showActiveTournament(
+              live.tournament
+            );
+
+          }
+
 
           updateLiveStats(
             live
@@ -1986,16 +1496,76 @@ async function loadAdmin(){
 
       }catch(e){
 
-        console.log(e);
+        console.log(
+          "liveLVL failed:",
+          e
+        );
 
       }
 
 
-    }else{
-
-      showNoActive();
+      return;
 
     }
+
+
+    /*
+      If activeTournament did not give us
+      the tournament, try liveLVL.
+    */
+
+    try{
+
+      const live =
+        await getAPI(
+          "liveLVL"
+        );
+
+
+      console.log(
+        "LIVE LVL FALLBACK:",
+        live
+      );
+
+
+      if(
+        live &&
+        live.success &&
+        live.tournament &&
+        isActiveTournament(
+          live.tournament
+        )
+      ){
+
+        showActiveTournament(
+          live.tournament
+        );
+
+
+        updateLiveStats(
+          live
+        );
+
+
+        return;
+
+      }
+
+    }catch(e){
+
+      console.log(
+        "liveLVL fallback failed:",
+        e
+      );
+
+    }
+
+
+    /*
+      No confirmed active tournament.
+    */
+
+    showNoActive();
 
 
   }catch(error){
@@ -2007,8 +1577,8 @@ async function loadAdmin(){
 
 
     /*
-      Do not destroy valid active data
-      because of a temporary network error.
+      Never erase a valid tournament
+      because of a temporary connection error.
     */
 
     if(!activeTournament){
@@ -2016,10 +1586,8 @@ async function loadAdmin(){
       $("activeOpponent").textContent =
         "CONNECTING...";
 
-
       $("activeStatus").className =
         "badge yellow";
-
 
       $("activeStatus").textContent =
         "● LOADING";
@@ -2035,8 +1603,7 @@ async function loadAdmin(){
 
   }finally{
 
-    loadingAdmin =
-      false;
+    loadingAdmin = false;
 
   }
 
@@ -2044,7 +1611,7 @@ async function loadAdmin(){
 
 
 /* =========================================================
-   MANUAL REFRESH
+   REFRESH
 ========================================================= */
 
 async function manualRefresh(){
@@ -2071,92 +1638,69 @@ function updateLiveStats(data){
 
 
   const rows =
-    Array.isArray(
-      data.players
-    )
+    Array.isArray(data.players)
       ? data.players
       : [];
 
 
-  /*
-    Backend now already knows
-    which players are submitted.
-
-    We use that information directly.
-  */
-
   const submittedRows =
-    rows.filter(
-      function(row){
+    rows.filter(function(row){
 
-        return (
-          row.submitted === true ||
-          String(
-            row.status ??
-            row.Status ??
-            ""
-          ).toUpperCase()
-          === "SUBMITTED"
-        );
+      return (
+        row.submitted === true ||
+        String(
+          row.status ??
+          row.Status ??
+          ""
+        ).toUpperCase()
+        === "SUBMITTED"
+      );
 
-      }
-    );
+    });
 
 
   const waitingRows =
-    rows.filter(
-      function(row){
+    rows.filter(function(row){
 
-        return !(
-          row.submitted === true ||
-          String(
-            row.status ??
-            row.Status ??
-            ""
-          ).toUpperCase()
-          === "SUBMITTED"
-        );
+      return !(
+        row.submitted === true ||
+        String(
+          row.status ??
+          row.Status ??
+          ""
+        ).toUpperCase()
+        === "SUBMITTED"
+      );
 
-      }
-    );
+    });
 
 
   const submitted =
     data.submitted != null
-      ? Number(
-          data.submitted
-        )
+      ? Number(data.submitted)
       : submittedRows.length;
 
 
   const total =
     data.total != null
-      ? Number(
-          data.total
-        )
+      ? Number(data.total)
       : rows.length || 32;
 
 
   const ourScore =
     data.ourScore != null
-      ? Number(
-          data.ourScore
-        )
+      ? Number(data.ourScore)
       : calculateScore(
           submittedRows
         );
 
 
   $("submittedCount").textContent =
-    submitted +
-    "/" +
-    total;
+    submitted + "/" + total;
 
 
   $("progressText").textContent =
-    submitted +
-    " / " +
-    total;
+    submitted + " / " + total;
 
 
   $("teamScoreBox").textContent =
@@ -2197,7 +1741,7 @@ function updateLiveStats(data){
 
 
 /* =========================================================
-   CALCULATE SCORE
+   SCORE
 ========================================================= */
 
 function calculateScore(rows){
@@ -2205,14 +1749,12 @@ function calculateScore(rows){
   return rows.reduce(
     function(total,row){
 
-      const score =
-        row.score ??
-        row.Score ??
-        0;
-
-
       return total +
-        Number(score || 0);
+        Number(
+          row.score ??
+          row.Score ??
+          0
+        );
 
     },
     0
@@ -2222,7 +1764,7 @@ function calculateScore(rows){
 
 
 /* =========================================================
-   PLAYER DATA HELPERS
+   PLAYER HELPERS
 ========================================================= */
 
 function getLivePlayerId(row){
@@ -2272,19 +1814,12 @@ function getLivePlayerName(row){
 
 
   return (
-
     player["FC Name"] ||
-
     player.name ||
-
     player["Player Name"] ||
-
     player["Name"] ||
-
     row.name ||
-
     "Unknown Player"
-
   );
 
 }
@@ -2322,12 +1857,9 @@ function renderPlayerLists(
     $("waitingList");
 
 
-  submittedList.innerHTML =
-    "";
+  submittedList.innerHTML = "";
 
-
-  waitingList.innerHTML =
-    "";
+  waitingList.innerHTML = "";
 
 
   if(!submittedRows.length){
@@ -2339,66 +1871,62 @@ function renderPlayerLists(
 
   }else{
 
-    submittedRows.forEach(
-      function(row){
+    submittedRows.forEach(function(row){
 
-        const name =
-          getLivePlayerName(row);
-
-
-        const playerId =
-          getLivePlayerId(row);
+      const name =
+        getLivePlayerName(row);
 
 
-        const score =
-          getLivePlayerScore(row);
+      const playerId =
+        getLivePlayerId(row);
 
 
-        const item =
-          document.createElement(
-            "div"
-          );
+      const score =
+        getLivePlayerScore(row);
 
 
-        item.className =
-          "result-item";
+      const item =
+        document.createElement("div");
 
 
-        item.innerHTML =
+      item.className =
+        "result-item";
 
-          '<div class="result-player">' +
 
-            '<div class="result-name">' +
-              escapeHtml(name) +
-            '</div>' +
+      item.innerHTML =
 
-            '<div class="result-id">' +
-              escapeHtml(playerId) +
-            '</div>' +
+        '<div class="result-player">' +
 
+          '<div class="result-name">' +
+            escapeHtml(name) +
           '</div>' +
 
-          '<div class="result-score">' +
+          '<div class="result-id">' +
+            escapeHtml(playerId) +
+          '</div>' +
 
-            score +
+        '</div>' +
 
-            ' goal' +
+        '<div class="result-score">' +
 
-            (
-              score === 1
-                ? ''
-                : 's'
-            ) +
+          score +
 
-          '</div>';
+          ' goal' +
+
+          (
+            score === 1
+              ? ''
+              : 's'
+          ) +
+
+        '</div>';
 
 
-        submittedList.appendChild(
-          item
-        );
+      submittedList.appendChild(
+        item
+      );
 
-      }
-    );
+    });
 
   }
 
@@ -2412,52 +1940,48 @@ function renderPlayerLists(
 
   }else{
 
-    waitingRows.forEach(
-      function(row){
+    waitingRows.forEach(function(row){
 
-        const name =
-          getLivePlayerName(row);
-
-
-        const playerId =
-          getLivePlayerId(row);
+      const name =
+        getLivePlayerName(row);
 
 
-        const item =
-          document.createElement(
-            "div"
-          );
+      const playerId =
+        getLivePlayerId(row);
 
 
-        item.className =
-          "result-item waiting-item";
+      const item =
+        document.createElement("div");
 
 
-        item.innerHTML =
+      item.className =
+        "result-item waiting-item";
 
-          '<div class="result-player">' +
 
-            '<div class="result-name">' +
-              escapeHtml(name) +
-            '</div>' +
+      item.innerHTML =
 
-            '<div class="result-id">' +
-              escapeHtml(playerId) +
-            '</div>' +
+        '<div class="result-player">' +
 
+          '<div class="result-name">' +
+            escapeHtml(name) +
           '</div>' +
 
-          '<div class="result-score">' +
-            'WAITING' +
-          '</div>';
+          '<div class="result-id">' +
+            escapeHtml(playerId) +
+          '</div>' +
+
+        '</div>' +
+
+        '<div class="result-score">' +
+          'WAITING' +
+        '</div>';
 
 
-        waitingList.appendChild(
-          item
-        );
+      waitingList.appendChild(
+        item
+      );
 
-      }
-    );
+    });
 
   }
 
@@ -2465,7 +1989,7 @@ function renderPlayerLists(
 
 
 /* =========================================================
-   CLEAR LISTS
+   CLEAR
 ========================================================= */
 
 function clearResultLists(){
@@ -2502,9 +2026,7 @@ function startCountdown(endTime){
     countdownTimer
   );
 
-
-  countdownTimer =
-    null;
+  countdownTimer = null;
 
 
   if(!endTime){
@@ -2520,9 +2042,7 @@ function startCountdown(endTime){
   function update(){
 
     const end =
-      new Date(
-        endTime
-      ).getTime();
+      new Date(endTime).getTime();
 
 
     const now =
@@ -2561,10 +2081,7 @@ function startCountdown(endTime){
         countdownTimer
       );
 
-
-      countdownTimer =
-        null;
-
+      countdownTimer = null;
 
       return;
 
@@ -2597,18 +2114,11 @@ function startCountdown(endTime){
 
     $("countdown").textContent =
 
-      String(hours)
-        .padStart(2,"0") +
-
+      String(hours).padStart(2,"0") +
       ":" +
-
-      String(minutes)
-        .padStart(2,"0") +
-
+      String(minutes).padStart(2,"0") +
       ":" +
-
-      String(seconds)
-        .padStart(2,"0");
+      String(seconds).padStart(2,"0");
 
   }
 
@@ -2626,7 +2136,7 @@ function startCountdown(endTime){
 
 
 /* =========================================================
-   LOAD PLAYERS
+   PLAYERS
 ========================================================= */
 
 async function loadPlayers(){
@@ -2658,15 +2168,8 @@ async function loadPlayers(){
     }
 
 
-    /*
-      NEW BACKEND FORMAT:
-      data.players
-    */
-
     allPlayers =
-      Array.isArray(
-        data.players
-      )
+      Array.isArray(data.players)
         ? data.players
         : [];
 
@@ -2694,18 +2197,13 @@ async function loadPlayers(){
 }
 
 
-/* =========================================================
-   PLAYER GRID
-========================================================= */
-
 function renderPlayerGrid(){
 
   const grid =
     $("playerGrid");
 
 
-  grid.innerHTML =
-    "";
+  grid.innerHTML = "";
 
 
   if(!allPlayers.length){
@@ -2715,76 +2213,69 @@ function renderPlayerGrid(){
       'No active players found.' +
       '</div>';
 
-
     return;
 
   }
 
 
-  allPlayers.forEach(
-    function(player){
+  allPlayers.forEach(function(player){
 
-      const id =
-        player["Player ID"] ||
-        player.id ||
-        "";
-
-
-      const name =
-        player["FC Name"] ||
-        player.name ||
-        "Unknown";
+    const id =
+      player["Player ID"] ||
+      player.id ||
+      "";
 
 
-      const activeValue =
-        player["Active"];
+    const name =
+      player["FC Name"] ||
+      player.name ||
+      "Unknown";
 
 
-      const active =
-        !(
-          String(
-            activeValue
-          )
-          .trim()
-          .toUpperCase()
-          === "FALSE"
-        );
+    const activeValue =
+      player["Active"];
 
 
-      if(!active)
-        return;
-
-
-      const label =
-        document.createElement(
-          "label"
-        );
-
-
-      label.className =
-        "player-option";
-
-
-      label.innerHTML =
-
-        '<input ' +
-        'type="checkbox" ' +
-        'value="' +
-        escapeHtml(id) +
-        '" ' +
-        'onchange="updateSelectedCount()">' +
-
-        '<span>' +
-        escapeHtml(name) +
-        '</span>';
-
-
-      grid.appendChild(
-        label
+    const active =
+      !(
+        String(
+          activeValue
+        )
+        .trim()
+        .toUpperCase()
+        === "FALSE"
       );
 
-    }
-  );
+
+    if(!active)
+      return;
+
+
+    const label =
+      document.createElement("label");
+
+
+    label.className =
+      "player-option";
+
+
+    label.innerHTML =
+
+      '<input ' +
+      'type="checkbox" ' +
+      'value="' +
+      escapeHtml(id) +
+      '" ' +
+      'onchange="updateSelectedCount()">' +
+
+      '<span>' +
+      escapeHtml(name) +
+      '</span>';
+
+
+    grid.appendChild(label);
+
+  });
 
 
   updateSelectedCount();
@@ -2802,14 +2293,11 @@ function getSelectedPlayerIds(){
     document.querySelectorAll(
       '#playerGrid input[type="checkbox"]:checked'
     )
-  )
-  .map(
-    function(input){
+  ).map(function(input){
 
-      return input.value;
+    return input.value;
 
-    }
-  );
+  });
 
 }
 
@@ -2831,14 +2319,10 @@ function updateSelectedCount(){
 
 
 /* =========================================================
-   START TOURNAMENT
+   START
 ========================================================= */
 
 async function startTournament(){
-
-  /*
-    Double safety check.
-  */
 
   try{
 
@@ -2851,12 +2335,16 @@ async function startTournament(){
     if(
       check &&
       check.success &&
-      check.active &&
-      check.tournament
+      check.tournament &&
+      isActiveTournament(
+        check.tournament
+      )
     ){
 
       activeTournament =
-        check.tournament;
+        normalizeTournament(
+          check.tournament
+        );
 
 
       showActiveTournament(
@@ -2875,24 +2363,17 @@ async function startTournament(){
 
   }catch(e){
 
-    console.log(
-      "Active check failed:",
-      e
-    );
+    console.log(e);
 
   }
 
 
   const lvl =
-    $("newLvl")
-      .value
-      .trim();
+    $("newLvl").value.trim();
 
 
   const opponent =
-    $("newOpponent")
-      .value
-      .trim();
+    $("newOpponent").value.trim();
 
 
   const playerIds =
@@ -2932,9 +2413,8 @@ async function startTournament(){
   }
 
 
-  const confirmed =
-    confirm(
-
+  if(
+    !confirm(
       "Start LVL " +
       lvl +
       " vs " +
@@ -2942,11 +2422,8 @@ async function startTournament(){
       " with " +
       playerIds.length +
       " players?"
-
-    );
-
-
-  if(!confirmed)
+    )
+  )
     return;
 
 
@@ -2954,9 +2431,7 @@ async function startTournament(){
     $("startBtn");
 
 
-  btn.disabled =
-    true;
-
+  btn.disabled = true;
 
   btn.textContent =
     "STARTING...";
@@ -2964,30 +2439,21 @@ async function startTournament(){
 
   try{
 
-    const response =
-      await postAPI({
+    await postAPI({
 
-        action:
-          "startTournament",
+      action:
+        "startTournament",
 
-        lvl:
-          lvl,
+      lvl:
+        lvl,
 
-        opponent:
-          opponent,
+      opponent:
+        opponent,
 
-        playerIds:
-          JSON.stringify(
-            playerIds
-          )
+      playerIds:
+        JSON.stringify(playerIds)
 
-      });
-
-
-    console.log(
-      "startTournament response:",
-      response
-    );
+    });
 
 
     showStatus(
@@ -2996,40 +2462,31 @@ async function startTournament(){
     );
 
 
-    $("newLvl").value =
-      "";
+    $("newLvl").value = "";
 
-
-    $("newOpponent").value =
-      "";
+    $("newOpponent").value = "";
 
 
     document.querySelectorAll(
       '#playerGrid input[type="checkbox"]'
-    )
-    .forEach(
-      function(input){
+    ).forEach(function(input){
 
-        input.checked =
-          false;
+      input.checked = false;
 
-      }
-    );
+    });
 
 
     updateSelectedCount();
 
 
-    await new Promise(
-      function(resolve){
+    await new Promise(function(resolve){
 
-        setTimeout(
-          resolve,
-          1200
-        );
+      setTimeout(
+        resolve,
+        1200
+      );
 
-      }
-    );
+    });
 
 
     await loadAdmin();
@@ -3045,12 +2502,10 @@ async function startTournament(){
       "error"
     );
 
-
   }finally{
 
     btn.textContent =
       "START LVL";
-
 
     updateSelectedCount();
 
@@ -3060,7 +2515,7 @@ async function startTournament(){
 
 
 /* =========================================================
-   FINISH TOURNAMENT
+   FINISH
 ========================================================= */
 
 async function finishTournament(){
@@ -3088,9 +2543,7 @@ async function finishTournament(){
 
   if(
     opponentScore.trim() === "" ||
-    isNaN(
-      Number(opponentScore)
-    )
+    isNaN(Number(opponentScore))
   ){
 
     alert(
@@ -3103,9 +2556,7 @@ async function finishTournament(){
 
 
   const score =
-    Number(
-      opponentScore
-    );
+    Number(opponentScore);
 
 
   if(score < 0){
@@ -3136,25 +2587,19 @@ async function finishTournament(){
     "";
 
 
-  const confirmed =
-    confirm(
-
+  if(
+    !confirm(
       "Finish LVL " +
       lvl +
       " vs " +
       opponent +
       "?\n\n" +
-
       "Opponent score: " +
       score +
       "\n\n" +
-
       "The current team score will be used automatically."
-
-    );
-
-
-  if(!confirmed)
+    )
+  )
     return;
 
 
@@ -3162,9 +2607,7 @@ async function finishTournament(){
     $("finishBtn");
 
 
-  btn.disabled =
-    true;
-
+  btn.disabled = true;
 
   btn.textContent =
     "FINISHING...";
@@ -3172,28 +2615,21 @@ async function finishTournament(){
 
   try{
 
-    const response =
-      await postAPI({
+    await postAPI({
 
-        action:
-          "finishTournament",
+      action:
+        "finishTournament",
 
-        tournamentId:
-          tournamentId,
+      tournamentId:
+        tournamentId,
 
-        id:
-          tournamentId,
+      id:
+        tournamentId,
 
-        opponentScore:
-          score
+      opponentScore:
+        score
 
-      });
-
-
-    console.log(
-      "finishTournament response:",
-      response
-    );
+    });
 
 
     showStatus(
@@ -3204,18 +2640,14 @@ async function finishTournament(){
 
     clearCachedTournament();
 
-
-    activeTournament =
-      null;
+    activeTournament = null;
 
 
     clearInterval(
       countdownTimer
     );
 
-
-    countdownTimer =
-      null;
+    countdownTimer = null;
 
 
     $("countdown").textContent =
@@ -3226,16 +2658,14 @@ async function finishTournament(){
       "none";
 
 
-    await new Promise(
-      function(resolve){
+    await new Promise(function(resolve){
 
-        setTimeout(
-          resolve,
-          1200
-        );
+      setTimeout(
+        resolve,
+        1200
+      );
 
-      }
-    );
+    });
 
 
     await loadAdmin();
@@ -3251,12 +2681,9 @@ async function finishTournament(){
       "error"
     );
 
-
   }finally{
 
-    btn.disabled =
-      false;
-
+    btn.disabled = false;
 
     btn.textContent =
       "END LVL";
@@ -3267,7 +2694,7 @@ async function finishTournament(){
 
 
 /* =========================================================
-   DELETE TOURNAMENT
+   DELETE
 ========================================================= */
 
 async function deleteTournament(){
@@ -3300,39 +2727,27 @@ async function deleteTournament(){
     "";
 
 
-  const first =
-    confirm(
-
+  if(
+    !confirm(
       "DELETE TEST LVL?\n\n" +
-
       "LVL: " +
       lvl +
       "\n" +
-
       "Opponent: " +
       opponent +
       "\n\n" +
-
       "This will delete the tournament and its submitted results."
-
-    );
-
-
-  if(!first)
+    )
+  )
     return;
 
 
-  const second =
-    confirm(
-
+  if(
+    !confirm(
       "Are you absolutely sure?\n\n" +
-
       "This action cannot be undone."
-
-    );
-
-
-  if(!second)
+    )
+  )
     return;
 
 
@@ -3340,9 +2755,7 @@ async function deleteTournament(){
     $("deleteBtn");
 
 
-  btn.disabled =
-    true;
-
+  btn.disabled = true;
 
   btn.textContent =
     "DELETING...";
@@ -3350,25 +2763,18 @@ async function deleteTournament(){
 
   try{
 
-    const response =
-      await postAPI({
+    await postAPI({
 
-        action:
-          "deleteTournament",
+      action:
+        "deleteTournament",
 
-        tournamentId:
-          id,
+      tournamentId:
+        id,
 
-        id:
-          id
+      id:
+        id
 
-      });
-
-
-    console.log(
-      "deleteTournament response:",
-      response
-    );
+    });
 
 
     showStatus(
@@ -3379,34 +2785,28 @@ async function deleteTournament(){
 
     clearCachedTournament();
 
-
-    activeTournament =
-      null;
+    activeTournament = null;
 
 
     clearInterval(
       countdownTimer
     );
 
-
-    countdownTimer =
-      null;
+    countdownTimer = null;
 
 
     $("finishCard").style.display =
       "none";
 
 
-    await new Promise(
-      function(resolve){
+    await new Promise(function(resolve){
 
-        setTimeout(
-          resolve,
-          1200
-        );
+      setTimeout(
+        resolve,
+        1200
+      );
 
-      }
-    );
+    });
 
 
     await loadAdmin();
@@ -3422,17 +2822,172 @@ async function deleteTournament(){
       "error"
     );
 
-
   }finally{
 
-    btn.disabled =
-      false;
-
+    btn.disabled = false;
 
     btn.textContent =
       "DELETE TEST LVL";
 
   }
+
+}
+
+
+/* =========================================================
+   POST API
+========================================================= */
+
+function postAPI(data){
+
+  return new Promise(function(resolve,reject){
+
+    const iframeName =
+      "post_" +
+      Date.now() +
+      "_" +
+      Math.random()
+        .toString(36)
+        .substring(2);
+
+
+    const iframe =
+      document.createElement("iframe");
+
+
+    iframe.name =
+      iframeName;
+
+
+    iframe.style.display =
+      "none";
+
+
+    document.body.appendChild(
+      iframe
+    );
+
+
+    const form =
+      document.createElement("form");
+
+
+    form.method =
+      "POST";
+
+
+    form.action =
+      API_URL;
+
+
+    form.target =
+      iframeName;
+
+
+    form.style.display =
+      "none";
+
+
+    Object.keys(data).forEach(function(key){
+
+      const input =
+        document.createElement("input");
+
+
+      input.type =
+        "hidden";
+
+
+      input.name =
+        key;
+
+
+      input.value =
+        typeof data[key] === "object"
+          ? JSON.stringify(data[key])
+          : data[key];
+
+
+      form.appendChild(
+        input
+      );
+
+    });
+
+
+    document.body.appendChild(
+      form
+    );
+
+
+    let resolved = false;
+
+
+    function cleanup(){
+
+      if(form.parentNode)
+        form.parentNode.removeChild(form);
+
+
+      if(iframe.parentNode)
+        iframe.parentNode.removeChild(iframe);
+
+    }
+
+
+    iframe.onload =
+      function(){
+
+        if(resolved)
+          return;
+
+        resolved = true;
+
+        cleanup();
+
+        resolve({
+          success:true
+        });
+
+      };
+
+
+    iframe.onerror =
+      function(){
+
+        if(resolved)
+          return;
+
+        resolved = true;
+
+        cleanup();
+
+        reject(
+          new Error("POST failed")
+        );
+
+      };
+
+
+    form.submit();
+
+
+    setTimeout(function(){
+
+      if(resolved)
+        return;
+
+      resolved = true;
+
+      cleanup();
+
+      resolve({
+        success:true
+      });
+
+    },1800);
+
+  });
 
 }
 
@@ -3460,19 +3015,23 @@ async function refreshLiveStats(){
       );
 
 
+    console.log(
+      "AUTO LIVE:",
+      data
+    );
+
+
     if(
       data &&
       data.success &&
-      data.active &&
-      data.tournament
+      data.tournament &&
+      isActiveTournament(
+        data.tournament
+      )
     ){
 
-      activeTournament =
-        data.tournament;
-
-
       showActiveTournament(
-        activeTournament
+        data.tournament
       );
 
 
@@ -3486,34 +3045,21 @@ async function refreshLiveStats(){
     }
 
 
-    const active =
-      await getAPI(
-        "activeTournament"
-      );
-
+    /*
+      Only clear the screen if the API
+      explicitly confirms that there is
+      no active tournament.
+    */
 
     if(
-      active &&
-      active.success &&
-      active.active &&
-      active.tournament
+      data &&
+      data.success &&
+      data.active === false
     ){
-
-      activeTournament =
-        active.tournament;
-
-
-      showActiveTournament(
-        activeTournament
-      );
-
-
-    }else{
 
       showNoActive();
 
     }
-
 
   }catch(error){
 
@@ -3536,8 +3082,7 @@ document.addEventListener(
   async function(){
 
     /*
-      Show cached LVL immediately
-      if available.
+      Show cached active LVL immediately.
     */
 
     restoreCachedTournament();
@@ -3551,7 +3096,7 @@ document.addEventListener(
 
 
     /*
-      Then load live tournament.
+      Get confirmed server data.
     */
 
     await loadAdmin();
@@ -3570,7 +3115,5 @@ document.addEventListener(
   }
 );
 
-</script>
-
-</body>
+</script></body>
 </html>
