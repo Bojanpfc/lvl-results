@@ -567,6 +567,7 @@ tbody tr:last-child td{
 /* MOBILE */
 
 @media(max-width:800px){
+
   .top-grid{
     grid-template-columns:repeat(2,1fr);
   }
@@ -574,9 +575,11 @@ tbody tr:last-child td{
   .profile-stats{
     grid-template-columns:repeat(2,1fr);
   }
+
 }
 
 @media(max-width:600px){
+
   .container{
     width:95%;
     padding-top:15px;
@@ -640,6 +643,7 @@ tbody tr:last-child td{
   .achievement-grid{
     grid-template-columns:1fr;
   }
+
 }
 </style>
 </head>
@@ -649,39 +653,97 @@ tbody tr:last-child td{
 <div class="container">
 
   <div class="header">
+
     <div class="brand">
-      <div class="logo">⚽</div>
+
+      <div class="logo">
+        ⚽
+      </div>
 
       <div class="title">
-        <h1>LVL Rankings</h1>
-        <p>New Tournament System</p>
+
+        <h1>
+          LVL Rankings
+        </h1>
+
+        <p>
+          New Tournament System
+        </p>
+
       </div>
+
     </div>
 
-    <div class="badge">NEW SYSTEM • TEST</div>
+    <div class="badge">
+      NEW SYSTEM • TEST
+    </div>
+
   </div>
 
 
   <div class="top-grid">
 
     <div class="stat-card">
-      <div class="stat-label">Players</div>
-      <div class="stat-value" id="playersCount">—</div>
+
+      <div class="stat-label">
+        Players
+      </div>
+
+      <div
+        class="stat-value"
+        id="playersCount"
+      >
+        —
+      </div>
+
     </div>
 
-    <div class="stat-card">
-      <div class="stat-label">Finished LVLs</div>
-      <div class="stat-value" id="finishedCount">—</div>
-    </div>
 
     <div class="stat-card">
-      <div class="stat-label">Results</div>
-      <div class="stat-value" id="resultsCount">—</div>
+
+      <div class="stat-label">
+        LVLs
+      </div>
+
+      <div
+        class="stat-value"
+        id="finishedCount"
+      >
+        —
+      </div>
+
     </div>
 
+
     <div class="stat-card">
-      <div class="stat-label">Top Average</div>
-      <div class="stat-value" id="topAverage">—</div>
+
+      <div class="stat-label">
+        Results
+      </div>
+
+      <div
+        class="stat-value"
+        id="resultsCount"
+      >
+        —
+      </div>
+
+    </div>
+
+
+    <div class="stat-card">
+
+      <div class="stat-label">
+        Top Average
+      </div>
+
+      <div
+        class="stat-value"
+        id="topAverage"
+      >
+        —
+      </div>
+
     </div>
 
   </div>
@@ -697,7 +759,10 @@ tbody tr:last-child td{
       autocomplete="off"
     >
 
-    <button class="refresh-btn" onclick="loadData()">
+    <button
+      class="refresh-btn"
+      onclick="loadData()"
+    >
       ↻ Refresh
     </button>
 
@@ -707,18 +772,28 @@ tbody tr:last-child td{
   <div class="card">
 
     <div class="card-header">
+
       <div>
-        <h2>PLAYER RANKING</h2>
+        <h2>
+          PLAYER RANKING
+        </h2>
       </div>
 
-      <span id="lastUpdated">Loading...</span>
+      <span id="lastUpdated">
+        Loading...
+      </span>
+
     </div>
+
 
     <div id="rankingArea">
 
       <div class="loading">
+
         <div class="spinner"></div>
+
         Loading rankings...
+
       </div>
 
     </div>
@@ -735,43 +810,108 @@ tbody tr:last-child td{
 
 <!-- PROFILE MODAL -->
 
-<div class="modal" id="profileModal">
+<div
+  class="modal"
+  id="profileModal"
+>
 
   <div class="modal-box">
 
     <div class="modal-head">
 
       <div>
-        <div class="profile-name" id="profileName">Player</div>
-        <div class="profile-id" id="profileId">—</div>
+
+        <div
+          class="profile-name"
+          id="profileName"
+        >
+          Player
+        </div>
+
+        <div
+          class="profile-id"
+          id="profileId"
+        >
+          —
+        </div>
+
       </div>
 
-      <button class="close" onclick="closeProfile()">×</button>
+      <button
+        class="close"
+        onclick="closeProfile()"
+      >
+        ×
+      </button>
 
     </div>
+
 
     <div class="profile-body">
 
       <div class="profile-stats">
 
         <div class="profile-stat">
-          <div class="label">Average</div>
-          <div class="value" id="pAverage">—</div>
+
+          <div class="label">
+            Average
+          </div>
+
+          <div
+            class="value"
+            id="pAverage"
+          >
+            —
+          </div>
+
         </div>
 
-        <div class="profile-stat">
-          <div class="label">Games</div>
-          <div class="value" id="pGames">—</div>
-        </div>
 
         <div class="profile-stat">
-          <div class="label">Rank</div>
-          <div class="value" id="pRank">—</div>
+
+          <div class="label">
+            Games
+          </div>
+
+          <div
+            class="value"
+            id="pGames"
+          >
+            —
+          </div>
+
         </div>
 
+
         <div class="profile-stat">
-          <div class="label">Best Score</div>
-          <div class="value" id="pBest">—</div>
+
+          <div class="label">
+            Rank
+          </div>
+
+          <div
+            class="value"
+            id="pRank"
+          >
+            —
+          </div>
+
+        </div>
+
+
+        <div class="profile-stat">
+
+          <div class="label">
+            Best Score
+          </div>
+
+          <div
+            class="value"
+            id="pBest"
+          >
+            —
+          </div>
+
         </div>
 
       </div>
@@ -783,26 +923,70 @@ tbody tr:last-child td{
           Statistics
         </div>
 
+
         <div class="profile-stats">
 
           <div class="profile-stat">
-            <div class="label">Lowest Score</div>
-            <div class="value" id="pLowest">—</div>
+
+            <div class="label">
+              Lowest Score
+            </div>
+
+            <div
+              class="value"
+              id="pLowest"
+            >
+              —
+            </div>
+
           </div>
 
-          <div class="profile-stat">
-            <div class="label">Last 5 Average</div>
-            <div class="value" id="pLastFiveAvg">—</div>
-          </div>
 
           <div class="profile-stat">
-            <div class="label">40+ Goals</div>
-            <div class="value" id="pForty">—</div>
+
+            <div class="label">
+              Last 5 Average
+            </div>
+
+            <div
+              class="value"
+              id="pLastFiveAvg"
+            >
+              —
+            </div>
+
           </div>
 
+
           <div class="profile-stat">
-            <div class="label">Total Goals</div>
-            <div class="value" id="pTotal">—</div>
+
+            <div class="label">
+              40+ Goals
+            </div>
+
+            <div
+              class="value"
+              id="pForty"
+            >
+              —
+            </div>
+
+          </div>
+
+
+          <div class="profile-stat">
+
+            <div class="label">
+              Total Goals
+            </div>
+
+            <div
+              class="value"
+              id="pTotal"
+            >
+              —
+            </div>
+
           </div>
 
         </div>
@@ -816,7 +1000,10 @@ tbody tr:last-child td{
           Achievements
         </div>
 
-        <div class="achievement-grid" id="achievements"></div>
+        <div
+          class="achievement-grid"
+          id="achievements"
+        ></div>
 
       </div>
 
@@ -827,7 +1014,10 @@ tbody tr:last-child td{
           Last 5 Results
         </div>
 
-        <div class="last-five" id="profileLastFive"></div>
+        <div
+          class="last-five"
+          id="profileLastFive"
+        ></div>
 
       </div>
 
@@ -838,7 +1028,10 @@ tbody tr:last-child td{
           LVL History
         </div>
 
-        <div class="history-list" id="lvlHistory"></div>
+        <div
+          class="history-list"
+          id="lvlHistory"
+        ></div>
 
       </div>
 
@@ -881,7 +1074,7 @@ let currentProfile = null;
 
 
 /* =========================================================
-   GOOGLE SHEETS GVIZ URL
+   GOOGLE SHEETS URL
 ========================================================= */
 
 function sheetUrl(sheetName){
@@ -902,70 +1095,104 @@ function sheetUrl(sheetName){
 
 function parseGViz(text){
 
-  const start = text.indexOf("{");
-  const end = text.lastIndexOf("}");
+  const start =
+    text.indexOf("{");
 
-  if(start === -1 || end === -1){
-    throw new Error("Invalid Google Sheets response");
+  const end =
+    text.lastIndexOf("}");
+
+  if(
+    start === -1 ||
+    end === -1
+  ){
+
+    throw new Error(
+      "Invalid Google Sheets response"
+    );
+
   }
 
   return JSON.parse(
-    text.slice(start,end + 1)
+    text.slice(
+      start,
+      end + 1
+    )
   );
 
 }
 
 
 /* =========================================================
-   GET SHEET DATA
+   GET SHEET
 ========================================================= */
 
 async function getSheet(sheetName){
 
   const response =
-    await fetch(sheetUrl(sheetName),{
-      cache:"no-store"
-    });
+    await fetch(
+      sheetUrl(sheetName),
+      {
+        cache:"no-store"
+      }
+    );
+
 
   if(!response.ok){
+
     throw new Error(
-      "Could not load " + sheetName
+      "Could not load " +
+      sheetName
     );
+
   }
+
 
   const text =
     await response.text();
 
+
   const json =
     parseGViz(text);
+
 
   const cols =
     json.table.cols;
 
+
   const rows =
     json.table.rows || [];
 
+
   const headers =
-    cols.map((c,index)=>
-      c.label ||
-      c.id ||
-      ("Column " + index)
+    cols.map(
+      (c,index)=>
+        c.label ||
+        c.id ||
+        ("Column " + index)
     );
+
 
   return rows.map(row=>{
 
     const obj = {};
 
-    headers.forEach((header,index)=>{
 
-      const cell =
-        row.c &&
-        row.c[index];
+    headers.forEach(
+      (header,index)=>{
 
-      obj[header] =
-        cell ? cell.v : "";
+        const cell =
+          row.c &&
+          row.c[index];
 
-    });
+
+        obj[header] =
+          cell
+            ? cell.v
+            : "";
+
+      }
+    );
+
 
     return obj;
 
@@ -975,7 +1202,7 @@ async function getSheet(sheetName){
 
 
 /* =========================================================
-   DATE HELPERS
+   DATE PARSER
 ========================================================= */
 
 function parseDate(value){
@@ -984,56 +1211,77 @@ function parseDate(value){
     return null;
   }
 
+
   if(value instanceof Date){
     return value;
   }
 
+
   const str =
     String(value);
 
-  /*
-    Google GViz may return:
-    Date(2026,7,21,12,30,0)
-  */
 
   const match =
     str.match(
       /Date\((\d+),(\d+),(\d+)(?:,(\d+),(\d+),(\d+))?\)/
     );
 
+
   if(match){
 
     return new Date(
+
       Number(match[1]),
+
       Number(match[2]),
+
       Number(match[3]),
+
       Number(match[4] || 0),
+
       Number(match[5] || 0),
+
       Number(match[6] || 0)
+
     );
 
   }
 
+
   const d =
     new Date(str);
 
-  if(!isNaN(d.getTime())){
+
+  if(
+    !isNaN(
+      d.getTime()
+    )
+  ){
+
     return d;
+
   }
+
 
   return null;
 
 }
 
 
+/* =========================================================
+   DATE FORMAT
+========================================================= */
+
 function formatDate(value){
 
   const d =
     parseDate(value);
 
+
   if(!d){
     return "—";
   }
+
 
   return d.toLocaleDateString(
     undefined,
@@ -1048,13 +1296,15 @@ function formatDate(value){
 
 
 /* =========================================================
-   NORMALIZE VALUES
+   NORMALIZE
 ========================================================= */
 
 function normalize(value){
 
   return String(
-    value == null ? "" : value
+    value == null
+      ? ""
+      : value
   )
   .trim()
   .toLowerCase();
@@ -1062,18 +1312,25 @@ function normalize(value){
 }
 
 
+/* =========================================================
+   NUMBER
+========================================================= */
+
 function numberValue(value){
 
   const n =
     Number(value);
 
-  return isNaN(n) ? 0 : n;
+
+  return isNaN(n)
+    ? 0
+    : n;
 
 }
 
 
 /* =========================================================
-   LOAD ALL DATA
+   LOAD DATA
 ========================================================= */
 
 async function loadData(){
@@ -1083,40 +1340,61 @@ async function loadData(){
       "rankingArea"
     );
 
+
   area.innerHTML = `
+
     <div class="loading">
+
       <div class="spinner"></div>
+
       Loading rankings...
+
     </div>
+
   `;
+
 
   try{
 
     const [
+
       playersData,
+
       tournamentsData,
+
       tpData
+
     ] = await Promise.all([
 
-      getSheet(PLAYERS_SHEET),
+      getSheet(
+        PLAYERS_SHEET
+      ),
 
-      getSheet(TOURNAMENTS_SHEET),
+      getSheet(
+        TOURNAMENTS_SHEET
+      ),
 
-      getSheet(TP_SHEET)
+      getSheet(
+        TP_SHEET
+      )
 
     ]);
+
 
     players =
       playersData || [];
 
+
     tournaments =
       tournamentsData || [];
+
 
     tournamentPlayers =
       tpData || [];
 
 
     buildRanking();
+
 
     document.getElementById(
       "lastUpdated"
@@ -1135,20 +1413,38 @@ async function loadData(){
 
     console.error(error);
 
+
     area.innerHTML = `
+
       <div class="empty">
-        <div style="font-size:32px;margin-bottom:10px;">
+
+        <div
+          style="
+            font-size:32px;
+            margin-bottom:10px;
+          "
+        >
           ⚠️
         </div>
 
-        <div style="font-weight:800;color:white;margin-bottom:6px;">
+
+        <div
+          style="
+            font-weight:800;
+            color:white;
+            margin-bottom:6px;
+          "
+        >
           Could not load rankings
         </div>
+
 
         <div>
           Please refresh the page.
         </div>
+
       </div>
+
     `;
 
   }
@@ -1157,15 +1453,19 @@ async function loadData(){
 
 
 /* =========================================================
-   FIND PLAYER ID / NAME
+   PLAYER HELPERS
 ========================================================= */
 
 function getPlayerId(player){
 
   return String(
+
     player["Player ID"] ||
+
     player["id"] ||
+
     ""
+
   ).trim();
 
 }
@@ -1174,25 +1474,34 @@ function getPlayerId(player){
 function getPlayerName(player){
 
   return String(
+
     player["FC Name"] ||
+
     player["name"] ||
+
     player["Player"] ||
+
     ""
+
   ).trim();
 
 }
 
 
 /* =========================================================
-   FIND TOURNAMENT ID
+   TOURNAMENT ID
 ========================================================= */
 
 function tournamentId(t){
 
   return String(
+
     t["Tournament ID"] ||
+
     t["id"] ||
+
     ""
+
   ).trim();
 
 }
@@ -1205,44 +1514,72 @@ function tournamentId(t){
 function buildRanking(){
 
   /*
-    ONLY FINISHED TOURNAMENTS
-    are included in rankings.
+    TEST MODE:
+
+    BOTH ACTIVE AND FINISHED
+    TOURNAMENTS ARE INCLUDED.
+
+    This allows us to test LVL 999
+    before pressing END LVL.
   */
 
-  const finished =
-    tournaments.filter(t =>
-      normalize(t["Status"]) === "finished"
-    );
+  const includedTournaments =
+    tournaments.filter(t=>{
+
+      const status =
+        normalize(
+          t["Status"]
+        );
+
+      return (
+        status === "active" ||
+        status === "finished"
+      );
+
+    });
 
 
   /*
-    Sort newest first
+    Sort newest first.
   */
 
-  finished.sort((a,b)=>{
+  includedTournaments.sort(
+    (a,b)=>{
 
-    const da =
-      parseDate(
-        a["End Time"] ||
-        a["Start Time"]
+      const da =
+        parseDate(
+          a["End Time"] ||
+          a["Start Time"]
+        );
+
+
+      const db =
+        parseDate(
+          b["End Time"] ||
+          b["Start Time"]
+        );
+
+
+      return (
+
+        (db
+          ? db.getTime()
+          : 0)
+
+        -
+
+        (da
+          ? da.getTime()
+          : 0)
+
       );
 
-    const db =
-      parseDate(
-        b["End Time"] ||
-        b["Start Time"]
-      );
-
-    return (
-      (db ? db.getTime() : 0) -
-      (da ? da.getTime() : 0)
-    );
-
-  });
+    }
+  );
 
 
   /*
-    Create player map
+    Player map.
   */
 
   const map =
@@ -1254,29 +1591,38 @@ function buildRanking(){
     const id =
       getPlayerId(player);
 
+
     if(!id){
       return;
     }
 
-    map.set(id,{
 
-      id:id,
+    map.set(
+      id,
+      {
 
-      name:getPlayerName(player),
+        id:id,
 
-      active:
-        normalize(player["Active"]) !== "false",
+        name:
+          getPlayerName(
+            player
+          ),
 
-      results:[]
+        active:
+          normalize(
+            player["Active"]
+          ) !== "false",
 
-    });
+        results:[]
+
+      }
+    );
 
   });
 
 
   /*
-    Add submitted results
-    from finished tournaments
+    Add submitted results.
   */
 
   tournamentPlayers.forEach(tp=>{
@@ -1287,70 +1633,95 @@ function buildRanking(){
         ""
       ).trim();
 
+
     const pid =
       String(
         tp["Player ID"] ||
         ""
       ).trim();
 
-    if(!tid || !pid){
+
+    if(
+      !tid ||
+      !pid
+    ){
       return;
     }
 
+
     const tournament =
-      finished.find(
-        t => tournamentId(t) === tid
+      includedTournaments.find(
+        t =>
+          tournamentId(t) === tid
       );
+
 
     if(!tournament){
       return;
     }
 
+
     /*
-      Only submitted results count.
+      Only submitted/completed
+      results count.
     */
 
     const status =
-      normalize(tp["Status"]);
+      normalize(
+        tp["Status"]
+      );
+
 
     if(
       status &&
       status !== "submitted" &&
       status !== "completed"
     ){
+
       return;
+
     }
 
+
     /*
-      If Score is empty, don't count it.
+      Empty score does not count.
     */
 
     if(
       tp["Score"] === "" ||
       tp["Score"] == null
     ){
+
       return;
+
     }
+
 
     if(!map.has(pid)){
 
-      map.set(pid,{
+      map.set(
+        pid,
+        {
 
-        id:pid,
+          id:pid,
 
-        name:pid,
+          name:pid,
 
-        active:true,
+          active:true,
 
-        results:[]
+          results:[]
 
-      });
+        }
+      );
 
     }
 
 
     const score =
-      numberValue(tp["Score"]);
+      numberValue(
+        tp["Score"]
+      );
+
 
     const date =
       parseDate(
@@ -1359,73 +1730,107 @@ function buildRanking(){
       );
 
 
-    map.get(pid).results.push({
+    map.get(pid)
+      .results
+      .push({
 
-      score:score,
+        score:score,
 
-      tournamentId:tid,
+        tournamentId:tid,
 
-      lvl:
-        tournament["LVL"] || "—",
+        lvl:
+          tournament["LVL"] ||
+          "—",
 
-      opponent:
-        tournament["Opponent"] ||
-        "Unknown",
+        opponent:
+          tournament["Opponent"] ||
+          "Unknown",
 
-      date:date,
+        date:date,
 
-      start:
-        tournament["Start Time"] || "",
+        status:
+          tournament["Status"] ||
+          "",
 
-      end:
-        tournament["End Time"] || ""
+        start:
+          tournament["Start Time"] ||
+          "",
 
-    });
+        end:
+          tournament["End Time"] ||
+          ""
+
+      });
 
   });
 
 
   /*
-    Create ranking objects
+    Create ranking.
   */
 
   rankingData =
-    Array.from(map.values())
+    Array.from(
+      map.values()
+    )
     .map(player=>{
 
       const results =
         player.results.sort(
           (a,b)=>
-            (b.date ? b.date.getTime() : 0) -
-            (a.date ? a.date.getTime() : 0)
+            (
+              b.date
+                ? b.date.getTime()
+                : 0
+            )
+            -
+            (
+              a.date
+                ? a.date.getTime()
+                : 0
+            )
         );
 
+
       const scores =
-        results.map(r=>r.score);
+        results.map(
+          r=>r.score
+        );
+
 
       const games =
         scores.length;
 
+
       const total =
         scores.reduce(
-          (sum,n)=>sum+n,
+          (sum,n)=>
+            sum+n,
           0
         );
+
 
       const average =
         games
           ? total / games
           : 0;
 
+
       const best =
         games
-          ? Math.max(...scores)
+          ? Math.max(
+              ...scores
+            )
           : 0;
+
 
       const lowest =
         games
-          ? Math.min(...scores)
+          ? Math.min(
+              ...scores
+            )
           : 0;
+
 
       return {
 
@@ -1456,71 +1861,114 @@ function buildRanking(){
 
 
   /*
-    Players with results first.
-    Ranking:
-      1. Average
-      2. Games
-      3. Total goals
-      4. Name
+    Sort ranking.
   */
 
-  rankingData.sort((a,b)=>{
+  rankingData.sort(
+    (a,b)=>{
 
-    if(a.games > 0 && b.games === 0){
-      return -1;
+      if(
+        a.games > 0 &&
+        b.games === 0
+      ){
+
+        return -1;
+
+      }
+
+
+      if(
+        a.games === 0 &&
+        b.games > 0
+      ){
+
+        return 1;
+
+      }
+
+
+      if(
+        b.average !==
+        a.average
+      ){
+
+        return (
+          b.average -
+          a.average
+        );
+
+      }
+
+
+      if(
+        b.games !==
+        a.games
+      ){
+
+        return (
+          b.games -
+          a.games
+        );
+
+      }
+
+
+      if(
+        b.total !==
+        a.total
+      ){
+
+        return (
+          b.total -
+          a.total
+        );
+
+      }
+
+
+      return a.name.localeCompare(
+        b.name
+      );
+
     }
-
-    if(a.games === 0 && b.games > 0){
-      return 1;
-    }
-
-    if(b.average !== a.average){
-      return b.average - a.average;
-    }
-
-    if(b.games !== a.games){
-      return b.games - a.games;
-    }
-
-    if(b.total !== a.total){
-      return b.total - a.total;
-    }
-
-    return a.name.localeCompare(b.name);
-
-  });
+  );
 
 
   /*
-    Stats
+    Dashboard stats.
   */
 
   document.getElementById(
     "playersCount"
   ).textContent =
-    players.filter(p =>
-      normalize(p["Active"]) !== "false"
+    players.filter(
+      p =>
+        normalize(
+          p["Active"]
+        ) !== "false"
     ).length;
 
 
   document.getElementById(
     "finishedCount"
   ).textContent =
-    finished.length;
+    includedTournaments.length;
 
 
   document.getElementById(
     "resultsCount"
   ).textContent =
     rankingData.reduce(
-      (sum,p)=>sum+p.games,
+      (sum,p)=>
+        sum+p.games,
       0
     );
 
 
   const ranked =
     rankingData.filter(
-      p=>p.games > 0
+      p =>
+        p.games > 0
     );
 
 
@@ -1528,7 +1976,9 @@ function buildRanking(){
     "topAverage"
   ).textContent =
     ranked.length
-      ? ranked[0].average.toFixed(2)
+      ? ranked[0]
+          .average
+          .toFixed(2)
       : "—";
 
 
@@ -1543,19 +1993,28 @@ function buildRanking(){
 
 function getRank(player){
 
-  if(player.games === 0){
+  if(
+    player.games === 0
+  ){
+
     return "—";
+
   }
+
 
   const ranked =
     rankingData.filter(
-      p=>p.games > 0
+      p =>
+        p.games > 0
     );
+
 
   const index =
     ranked.findIndex(
-      p=>p.id === player.id
+      p =>
+        p.id === player.id
     );
+
 
   return index === -1
     ? "—"
@@ -1575,6 +2034,7 @@ function renderRanking(){
       "rankingArea"
     );
 
+
   const search =
     normalize(
       document.getElementById(
@@ -1584,29 +2044,40 @@ function renderRanking(){
 
 
   const filtered =
-    rankingData.filter(player=>{
+    rankingData.filter(
+      player=>{
 
-      if(!search){
-        return true;
+        if(!search){
+          return true;
+        }
+
+
+        return (
+
+          normalize(
+            player.name
+          ).includes(search)
+
+          ||
+
+          normalize(
+            player.id
+          ).includes(search)
+
+        );
+
       }
-
-      return (
-        normalize(player.name)
-          .includes(search)
-        ||
-        normalize(player.id)
-          .includes(search)
-      );
-
-    });
+    );
 
 
   if(!filtered.length){
 
     area.innerHTML = `
+
       <div class="empty">
         No players found.
       </div>
+
     `;
 
     return;
@@ -1623,132 +2094,222 @@ function renderRanking(){
         <thead>
 
           <tr>
+
             <th>#</th>
+
             <th>Player</th>
+
             <th>GP</th>
+
             <th>AVG</th>
+
             <th>MAX</th>
+
             <th>MIN</th>
+
             <th>Last 5</th>
+
           </tr>
 
         </thead>
 
         <tbody>
+
   `;
 
 
-  filtered.forEach(player=>{
+  filtered.forEach(
+    player=>{
 
-    const rank =
-      getRank(player);
-
-    let rankClass = "";
-
-    if(rank === 1){
-      rankClass = "top1";
-    }
-    else if(rank === 2){
-      rankClass = "top2";
-    }
-    else if(rank === 3){
-      rankClass = "top3";
-    }
+      const rank =
+        getRank(player);
 
 
-    const lastFive =
-      player.results
-        .slice(0,5);
+      let rankClass = "";
 
 
-    const lastFiveHtml =
-      lastFive.length
+      if(rank === 1){
 
-      ? lastFive.map(r=>{
+        rankClass =
+          "top1";
 
-          const cls =
-            r.score >= 34
-              ? "good"
-              : r.score < 20
-                ? "bad"
-                : "";
+      }
+      else if(rank === 2){
 
-          return `
-            <span
-              class="score-pill ${cls}"
-              title="LVL ${escapeHtml(r.lvl)} vs ${escapeHtml(r.opponent)}"
-            >
-              ${r.score}
-            </span>
-          `;
+        rankClass =
+          "top2";
 
-        }).join("")
+      }
+      else if(rank === 3){
 
-      : `<span style="color:#536783;">—</span>`;
+        rankClass =
+          "top3";
+
+      }
 
 
-    html += `
+      const lastFive =
+        player.results.slice(
+          0,
+          5
+        );
 
-      <tr>
 
-        <td class="rank ${rankClass}">
-          ${rank}
-        </td>
+      const lastFiveHtml =
+        lastFive.length
 
-        <td class="player-cell">
+        ?
 
-          <button
-            class="player-btn"
-            onclick="openProfile('${escapeJs(player.id)}')"
+        lastFive.map(
+          r=>{
+
+            const cls =
+              r.score >= 34
+
+                ? "good"
+
+                : r.score < 20
+
+                  ? "bad"
+
+                  : "";
+
+
+            return `
+
+              <span
+
+                class="score-pill ${cls}"
+
+                title="LVL ${escapeHtml(
+                  r.lvl
+                )} vs ${escapeHtml(
+                  r.opponent
+                )}"
+
+              >
+
+                ${r.score}
+
+              </span>
+
+            `;
+
+          }
+        ).join("")
+
+        :
+
+        `<span
+          style="color:#536783;"
+        >
+          —
+        </span>`;
+
+
+      html += `
+
+        <tr>
+
+          <td
+            class="rank ${rankClass}"
           >
-            ${escapeHtml(player.name)}
-          </button>
+            ${rank}
+          </td>
 
-          <div class="player-id">
-            ${escapeHtml(player.id)}
-          </div>
 
-        </td>
+          <td
+            class="player-cell"
+          >
 
-        <td>
-          ${player.games || "—"}
-        </td>
+            <button
 
-        <td class="avg">
-          ${
-            player.games
-              ? player.average.toFixed(2)
-              : "—"
-          }
-        </td>
+              class="player-btn"
 
-        <td class="high">
-          ${
-            player.games
-              ? player.best
-              : "—"
-          }
-        </td>
+              onclick="openProfile('${escapeJs(
+                player.id
+              )}')"
 
-        <td class="low">
-          ${
-            player.games
-              ? player.lowest
-              : "—"
-          }
-        </td>
+            >
 
-        <td>
-          <div class="last-five">
-            ${lastFiveHtml}
-          </div>
-        </td>
+              ${escapeHtml(
+                player.name
+              )}
 
-      </tr>
+            </button>
 
-    `;
 
-  });
+            <div class="player-id">
+
+              ${escapeHtml(
+                player.id
+              )}
+
+            </div>
+
+          </td>
+
+
+          <td>
+            ${player.games || "—"}
+          </td>
+
+
+          <td class="avg">
+
+            ${
+              player.games
+
+                ? player.average.toFixed(2)
+
+                : "—"
+            }
+
+          </td>
+
+
+          <td class="high">
+
+            ${
+              player.games
+
+                ? player.best
+
+                : "—"
+            }
+
+          </td>
+
+
+          <td class="low">
+
+            ${
+              player.games
+
+                ? player.lowest
+
+                : "—"
+            }
+
+          </td>
+
+
+          <td>
+
+            <div class="last-five">
+
+              ${lastFiveHtml}
+
+            </div>
+
+          </td>
+
+        </tr>
+
+      `;
+
+    }
+  );
 
 
   html += `
@@ -1776,12 +2337,15 @@ function openProfile(playerId){
 
   const player =
     rankingData.find(
-      p=>p.id === playerId
+      p =>
+        p.id === playerId
     );
+
 
   if(!player){
     return;
   }
+
 
   currentProfile =
     player;
@@ -1836,18 +2400,27 @@ function openProfile(playerId){
 
 
   const lastFive =
-    player.results.slice(0,5);
+    player.results.slice(
+      0,
+      5
+    );
 
 
   const lastFiveAverage =
     lastFive.length
 
-      ? lastFive.reduce(
-          (sum,r)=>sum+r.score,
-          0
-        ) / lastFive.length
+      ?
 
-      : 0;
+      lastFive.reduce(
+        (sum,r)=>
+          sum+r.score,
+        0
+      ) /
+      lastFive.length
+
+      :
+
+      0;
 
 
   document.getElementById(
@@ -1860,7 +2433,8 @@ function openProfile(playerId){
 
   const fortyPlus =
     player.results.filter(
-      r=>r.score >= 40
+      r =>
+        r.score >= 40
     ).length;
 
 
@@ -1900,6 +2474,10 @@ function openProfile(playerId){
 }
 
 
+/* =========================================================
+   CLOSE PROFILE
+========================================================= */
+
 function closeProfile(){
 
   document.getElementById(
@@ -1907,6 +2485,7 @@ function closeProfile(){
   ).classList.remove(
     "show"
   );
+
 
   currentProfile =
     null;
@@ -1929,7 +2508,9 @@ function renderAchievements(player){
   if(!player.games){
 
     box.innerHTML = `
+
       <div class="achievement">
+
         <div class="achievement-title">
           No achievements yet
         </div>
@@ -1937,7 +2518,9 @@ function renderAchievements(player){
         <div class="achievement-desc">
           Complete an LVL to start building your profile.
         </div>
+
       </div>
+
     `;
 
     return;
@@ -1950,7 +2533,8 @@ function renderAchievements(player){
 
   const forty =
     player.results.filter(
-      r=>r.score >= 40
+      r =>
+        r.score >= 40
     ).length;
 
 
@@ -1964,7 +2548,11 @@ function renderAchievements(player){
       desc:
         forty +
         " result" +
-        (forty !== 1 ? "s" : "") +
+        (
+          forty !== 1
+            ? "s"
+            : ""
+        ) +
         " with 40 or more goals."
 
     });
@@ -2039,27 +2627,29 @@ function renderAchievements(player){
 
 
   box.innerHTML =
-    achievements.map(a=>`
+    achievements.map(
+      a=>`
 
-      <div class="achievement">
+        <div class="achievement">
 
-        <div class="achievement-title">
-          ${a.title}
+          <div class="achievement-title">
+            ${a.title}
+          </div>
+
+          <div class="achievement-desc">
+            ${a.desc}
+          </div>
+
         </div>
 
-        <div class="achievement-desc">
-          ${a.desc}
-        </div>
-
-      </div>
-
-    `).join("");
+      `
+    ).join("");
 
 }
 
 
 /* =========================================================
-   PROFILE LAST 5
+   PROFILE LAST FIVE
 ========================================================= */
 
 function renderProfileLastFive(player){
@@ -2071,7 +2661,10 @@ function renderProfileLastFive(player){
 
 
   const results =
-    player.results.slice(0,5);
+    player.results.slice(
+      0,
+      5
+    );
 
 
   if(!results.length){
@@ -2087,27 +2680,39 @@ function renderProfileLastFive(player){
 
 
   box.innerHTML =
-    results.map(r=>{
+    results.map(
+      r=>{
 
-      const cls =
-        r.score >= 34
-          ? "good"
-          : r.score < 20
-            ? "bad"
-            : "";
+        const cls =
+          r.score >= 34
+            ? "good"
+            : r.score < 20
+              ? "bad"
+              : "";
 
-      return `
 
-        <span
-          class="score-pill ${cls}"
-          title="LVL ${escapeHtml(r.lvl)} vs ${escapeHtml(r.opponent)}"
-        >
-          ${r.score}
-        </span>
+        return `
 
-      `;
+          <span
 
-    }).join("");
+            class="score-pill ${cls}"
+
+            title="LVL ${escapeHtml(
+              r.lvl
+            )} vs ${escapeHtml(
+              r.opponent
+            )}"
+
+          >
+
+            ${r.score}
+
+          </span>
+
+        `;
+
+      }
+    ).join("");
 
 }
 
@@ -2132,7 +2737,7 @@ function renderLVLHistory(player){
 
     box.innerHTML =
       `<div class="no-data">
-        No completed LVLs yet.
+        No LVLs yet.
       </div>`;
 
     return;
@@ -2141,29 +2746,51 @@ function renderLVLHistory(player){
 
 
   box.innerHTML =
-    results.map(r=>`
+    results.map(
+      r=>`
 
-      <div class="history-row">
+        <div class="history-row">
 
-        <div class="history-lvl">
-          LVL ${escapeHtml(r.lvl)}
+          <div class="history-lvl">
+
+            LVL
+            ${escapeHtml(
+              r.lvl
+            )}
+
+          </div>
+
+
+          <div class="history-opponent">
+
+            vs
+            ${escapeHtml(
+              r.opponent
+            )}
+
+          </div>
+
+
+          <div class="history-score">
+
+            ${r.score}
+            goals
+
+          </div>
+
+
+          <div class="history-date">
+
+            ${formatDate(
+              r.date
+            )}
+
+          </div>
+
         </div>
 
-        <div class="history-opponent">
-          vs ${escapeHtml(r.opponent)}
-        </div>
-
-        <div class="history-score">
-          ${r.score} goals
-        </div>
-
-        <div class="history-date">
-          ${formatDate(r.date)}
-        </div>
-
-      </div>
-
-    `).join("");
+      `
+    ).join("");
 
 }
 
@@ -2187,33 +2814,71 @@ document.getElementById(
 function escapeHtml(value){
 
   return String(
-    value == null ? "" : value
+    value == null
+      ? ""
+      : value
   )
-  .replace(/&/g,"&amp;")
-  .replace(/</g,"&lt;")
-  .replace(/>/g,"&gt;")
-  .replace(/"/g,"&quot;")
-  .replace(/'/g,"&#039;");
-
-}
-
-
-function escapeJs(value){
-
-  return String(
-    value == null ? "" : value
+  .replace(
+    /&/g,
+    "&amp;"
   )
-  .replace(/\\/g,"\\\\")
-  .replace(/'/g,"\\'")
-  .replace(/"/g,'\\"')
-  .replace(/\n/g,"\\n")
-  .replace(/\r/g,"\\r");
+  .replace(
+    /</g,
+    "&lt;"
+  )
+  .replace(
+    />/g,
+    "&gt;"
+  )
+  .replace(
+    /"/g,
+    "&quot;"
+  )
+  .replace(
+    /'/g,
+    "&#039;"
+  );
 
 }
 
 
 /* =========================================================
-   CLOSE MODAL BY CLICKING OUTSIDE
+   ESCAPE JS
+========================================================= */
+
+function escapeJs(value){
+
+  return String(
+    value == null
+      ? ""
+      : value
+  )
+  .replace(
+    /\\/g,
+    "\\\\"
+  )
+  .replace(
+    /'/g,
+    "\\'"
+  )
+  .replace(
+    /"/g,
+    '\\"'
+  )
+  .replace(
+    /\n/g,
+    "\\n"
+  )
+  .replace(
+    /\r/g,
+    "\\r"
+  );
+
+}
+
+
+/* =========================================================
+   CLICK OUTSIDE MODAL
 ========================================================= */
 
 document.getElementById(
@@ -2225,7 +2890,9 @@ document.getElementById(
     if(
       e.target === this
     ){
+
       closeProfile();
+
     }
 
   }
@@ -2243,7 +2910,9 @@ document.addEventListener(
     if(
       e.key === "Escape"
     ){
+
       closeProfile();
+
     }
 
   }
