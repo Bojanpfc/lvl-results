@@ -680,9 +680,7 @@ button{
 
 <div class="container">
 
-  <!-- =====================================================
-       HEADER
-  ====================================================== -->
+  <!-- HEADER -->
 
   <div class="header">
 
@@ -715,9 +713,7 @@ button{
   </div>
 
 
-  <!-- =====================================================
-       ACTIVE LVL
-  ====================================================== -->
+  <!-- ACTIVE LVL -->
 
   <div
     class="card"
@@ -923,9 +919,7 @@ button{
   </div>
 
 
-  <!-- =====================================================
-       CREATE NEW LVL
-  ====================================================== -->
+  <!-- CREATE NEW LVL -->
 
   <div
     class="card"
@@ -948,8 +942,6 @@ button{
 
     </div>
 
-
-    <!-- LOCK MESSAGE -->
 
     <div
       id="createLocked"
@@ -975,8 +967,6 @@ button{
 
     </div>
 
-
-    <!-- CREATE FORM -->
 
     <div id="createForm">
 
@@ -1064,11 +1054,18 @@ button{
   </div>
 
 
-  <!-- =====================================================
-       FINISH
-  ====================================================== -->
+  <!-- FINISH -->
 
-  <div class="card">
+  <!--
+    IMPORTANT:
+    This card is now hidden when there is no active LVL.
+  -->
+
+  <div
+    class="card"
+    id="finishCard"
+    style="display:none;"
+  >
 
     <div class="card-title">
       FINISH CURRENT LVL
@@ -1098,11 +1095,12 @@ button{
   </div>
 
 
-  <!-- =====================================================
-       DELETE
-  ====================================================== -->
+  <!-- DELETE -->
 
-  <div class="card danger-zone">
+  <div
+    class="card danger-zone"
+    id="deleteCard"
+  >
 
     <div class="card-title">
       DANGER ZONE
@@ -1164,13 +1162,6 @@ let refreshTimer = null;
 
 let loadingAdmin = false;
 
-
-/*
-  This key stores the last known active LVL.
-
-  It allows the page to immediately restore
-  the previous LVL after a mobile refresh.
-*/
 
 const CACHE_KEY =
   "fcMobileAdminActiveTournament";
@@ -1717,12 +1708,6 @@ function showActiveTournament(t){
     return;
 
 
-  /*
-    Save immediately.
-
-    This is important for mobile refresh.
-  */
-
   saveActiveTournament(t);
 
 
@@ -1790,10 +1775,15 @@ function showActiveTournament(t){
 
 
   /*
-    Very important:
-    if there is an active tournament,
-    the create-new-LVL section is locked.
+    SHOW FINISH BUTTON
+    ONLY WHEN THERE IS AN ACTIVE LVL
   */
+
+  $("finishCard").style.display =
+    status === "ACTIVE"
+      ? "block"
+      : "none";
+
 
   setCreateLocked(
     status === "ACTIVE"
@@ -1845,6 +1835,20 @@ function setCreateLocked(locked){
 
 function showNoActive(){
 
+  /*
+    VERY IMPORTANT:
+    Stop the old countdown completely.
+  */
+
+  clearInterval(
+    countdownTimer
+  );
+
+
+  countdownTimer =
+    null;
+
+
   clearCachedTournament();
 
 
@@ -1892,12 +1896,20 @@ function showNoActive(){
     "—";
 
 
+  /*
+    HIDE FINISH CARD COMPLETELY.
+  */
+
+  $("finishCard").style.display =
+    "none";
+
+
   clearResultLists();
 
 
   /*
-    Now there really is no active LVL,
-    so unlock creation.
+    NO ACTIVE LVL =
+    CREATE NEW LVL UNLOCKED.
   */
 
   setCreateLocked(false);
@@ -1920,10 +1932,6 @@ async function loadAdmin(){
 
 
   try{
-
-    /*
-      First check liveLVL.
-    */
 
     const data =
       await getAPI(
@@ -1963,11 +1971,6 @@ async function loadAdmin(){
     }
 
 
-    /*
-      If liveLVL didn't return a tournament,
-      check activeTournament.
-    */
-
     const active =
       await getAPI(
         "activeTournament"
@@ -1994,10 +1997,6 @@ async function loadAdmin(){
         activeTournament
       );
 
-
-      /*
-        Try to refresh the player list.
-      */
 
       try{
 
@@ -2028,11 +2027,6 @@ async function loadAdmin(){
 
     }else{
 
-      /*
-        Only now do we know for sure
-        there is no active LVL.
-      */
-
       showNoActive();
 
     }
@@ -2047,10 +2041,8 @@ async function loadAdmin(){
 
 
     /*
-      CRITICAL:
-      NEVER replace the current
-      tournament with NO ACTIVE LVL
-      because of a network error.
+      Do not destroy valid active data
+      because of a temporary network error.
     */
 
     if(!activeTournament){
@@ -2361,10 +2353,6 @@ function renderPlayerLists(
     "";
 
 
-  /*
-    SUBMITTED
-  */
-
   if(!submittedRows.length){
 
     submittedList.innerHTML =
@@ -2437,10 +2425,6 @@ function renderPlayerLists(
 
   }
 
-
-  /*
-    WAITING
-  */
 
   if(!waitingRows.length){
 
@@ -2542,6 +2526,10 @@ function startCountdown(endTime){
   );
 
 
+  countdownTimer =
+    null;
+
+
   if(!endTime){
 
     $("countdown").textContent =
@@ -2595,6 +2583,10 @@ function startCountdown(endTime){
       clearInterval(
         countdownTimer
       );
+
+
+      countdownTimer =
+        null;
 
 
       return;
@@ -2698,12 +2690,6 @@ async function loadPlayers(){
 
 
     renderPlayerGrid();
-
-
-    /*
-      Don't show a notification every
-      30 seconds when this is used manually.
-    */
 
   }catch(error){
 
@@ -2856,10 +2842,6 @@ function updateSelectedCount(){
 ========================================================= */
 
 async function startTournament(){
-
-  /*
-    Double safety check.
-  */
 
   if(activeTournament){
 
@@ -3190,7 +3172,8 @@ async function finishTournament(){
 
 
     /*
-      Clear only AFTER successful finish.
+      Clear local active state
+      immediately after successful finish.
     */
 
     clearCachedTournament();
@@ -3198,6 +3181,31 @@ async function finishTournament(){
 
     activeTournament =
       null;
+
+
+    /*
+      Also stop countdown immediately.
+    */
+
+    clearInterval(
+      countdownTimer
+    );
+
+
+    countdownTimer =
+      null;
+
+
+    $("countdown").textContent =
+      "—";
+
+
+    /*
+      Hide END LVL immediately.
+    */
+
+    $("finishCard").style.display =
+      "none";
 
 
     await loadAdmin();
@@ -3351,6 +3359,19 @@ async function deleteTournament(){
       null;
 
 
+    clearInterval(
+      countdownTimer
+    );
+
+
+    countdownTimer =
+      null;
+
+
+    $("finishCard").style.display =
+      "none";
+
+
     await loadAdmin();
 
 
@@ -3385,11 +3406,6 @@ async function deleteTournament(){
 
 async function refreshLiveStats(){
 
-  /*
-    If there is no known LVL,
-    perform full admin check.
-  */
-
   if(!activeTournament){
 
     await loadAdmin();
@@ -3406,10 +3422,6 @@ async function refreshLiveStats(){
         "liveLVL"
       );
 
-
-    /*
-      Active LVL still exists.
-    */
 
     if(
       data &&
@@ -3437,14 +3449,6 @@ async function refreshLiveStats(){
     }
 
 
-    /*
-      The endpoint no longer returned
-      an active tournament.
-
-      Check the other endpoint before
-      removing anything from screen.
-    */
-
     const active =
       await getAPI(
         "activeTournament"
@@ -3468,22 +3472,12 @@ async function refreshLiveStats(){
 
     }else{
 
-      /*
-        Now the server has confirmed
-        that the LVL is really finished.
-      */
-
       showNoActive();
 
     }
 
 
   }catch(error){
-
-    /*
-      NEVER clear the screen because
-      of a temporary connection error.
-    */
 
     console.log(
       "Auto refresh failed:",
@@ -3503,31 +3497,12 @@ document.addEventListener(
   "DOMContentLoaded",
   async function(){
 
-    /*
-      FIRST:
-      Restore the previous LVL immediately.
-
-      This prevents the mobile browser from
-      showing an empty/NO ACTIVE LVL state
-      while Google Apps Script is loading.
-    */
-
     restoreCachedTournament();
-
-
-    /*
-      SECOND:
-      Load the real data from the server.
-    */
 
     await loadPlayers();
 
     await loadAdmin();
 
-
-    /*
-      Update live statistics every 30 seconds.
-    */
 
     refreshTimer =
       setInterval(
