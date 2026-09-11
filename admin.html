@@ -3,399 +3,546 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>FC Mobile • LVL Admin</title>
 
 <style>
 :root{
-    --bg:#050b18;
-    --card:#0c1730;
-    --card2:#101f3e;
-    --line:#1d3157;
-    --text:#f4f7ff;
-    --muted:#8ea4c7;
-    --blue:#2490ff;
-    --green:#21d68b;
-    --red:#ff4d67;
-    --yellow:#ffc857;
+  --bg:#030814;
+  --card:#0a1428;
+  --card2:#0e1b34;
+  --line:#1b3155;
+  --text:#eef5ff;
+  --muted:#8da2c2;
+  --green:#20e58a;
+  --yellow:#ffd166;
+  --red:#ff5263;
+  --blue:#4da3ff;
 }
 
 *{
-    box-sizing:border-box;
+  box-sizing:border-box;
 }
 
 body{
-    margin:0;
-    font-family:Arial,Helvetica,sans-serif;
-    background:
-        radial-gradient(circle at top,#102653 0%,#050b18 45%,#030711 100%);
-    color:var(--text);
-    min-height:100vh;
+  margin:0;
+  font-family:Arial,Helvetica,sans-serif;
+  background:
+    radial-gradient(circle at top right,rgba(32,229,138,.08),transparent 30%),
+    radial-gradient(circle at top left,rgba(77,163,255,.08),transparent 30%),
+    var(--bg);
+  color:var(--text);
+  min-height:100vh;
 }
 
 .container{
-    width:100%;
-    max-width:900px;
-    margin:0 auto;
-    padding:20px;
+  width:min(100%,900px);
+  margin:0 auto;
+  padding:20px;
 }
 
 .header{
-    text-align:center;
-    margin-bottom:25px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:15px;
+  margin-bottom:20px;
 }
 
-.header .logo{
-    font-size:13px;
-    font-weight:bold;
-    letter-spacing:3px;
-    color:var(--blue);
-    margin-bottom:8px;
+.logo{
+  display:flex;
+  align-items:center;
+  gap:12px;
 }
 
-.header h1{
-    margin:0;
-    font-size:30px;
+.logo-box{
+  width:45px;
+  height:45px;
+  border-radius:12px;
+  background:linear-gradient(135deg,var(--green),#0ebc74);
+  color:#03120b;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:16px;
+  font-weight:900;
 }
 
-.header p{
-    color:var(--muted);
-    margin:8px 0 0;
+.logo-text{
+  font-weight:900;
+  letter-spacing:.5px;
+}
+
+.logo-text span{
+  display:block;
+  color:var(--green);
+  font-size:11px;
+  letter-spacing:2px;
+  margin-top:3px;
+}
+
+.refresh-btn{
+  border:1px solid var(--line);
+  background:var(--card);
+  color:var(--text);
+  padding:10px 14px;
+  border-radius:10px;
+  cursor:pointer;
+  font-weight:bold;
+}
+
+.refresh-btn:hover{
+  border-color:var(--green);
 }
 
 .card{
-    background:linear-gradient(145deg,var(--card),var(--card2));
-    border:1px solid var(--line);
-    border-radius:18px;
-    padding:20px;
-    margin-bottom:18px;
-    box-shadow:0 12px 35px rgba(0,0,0,.25);
+  background:linear-gradient(145deg,var(--card),#071126);
+  border:1px solid var(--line);
+  border-radius:16px;
+  padding:18px;
+  margin-bottom:16px;
+  box-shadow:0 10px 35px rgba(0,0,0,.18);
 }
 
-.card h2{
-    margin:0 0 16px;
-    font-size:19px;
+.card-title{
+  font-size:12px;
+  color:var(--muted);
+  letter-spacing:1.5px;
+  font-weight:bold;
+  margin-bottom:8px;
 }
 
-label{
-    display:block;
-    color:var(--muted);
-    font-size:13px;
-    margin-bottom:7px;
+.active-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:15px;
+}
+
+h1{
+  margin:0;
+  font-size:25px;
+}
+
+h2{
+  margin:0;
+  font-size:18px;
+}
+
+.badge{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  padding:6px 10px;
+  border-radius:999px;
+  background:rgba(32,229,138,.1);
+  border:1px solid rgba(32,229,138,.3);
+  color:var(--green);
+  font-size:11px;
+  font-weight:bold;
+}
+
+.badge.red{
+  color:var(--red);
+  background:rgba(255,82,99,.08);
+  border-color:rgba(255,82,99,.25);
+}
+
+.badge.yellow{
+  color:var(--yellow);
+  background:rgba(255,209,102,.08);
+  border-color:rgba(255,209,102,.25);
+}
+
+.info-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:10px;
+  margin-top:18px;
+}
+
+.info-box{
+  background:#071126;
+  border:1px solid var(--line);
+  border-radius:12px;
+  padding:12px;
+}
+
+.info-label{
+  font-size:10px;
+  color:var(--muted);
+  text-transform:uppercase;
+  letter-spacing:1px;
+}
+
+.info-value{
+  font-size:18px;
+  font-weight:900;
+  margin-top:5px;
+}
+
+.progress-wrap{
+  margin-top:16px;
+}
+
+.progress-head{
+  display:flex;
+  justify-content:space-between;
+  color:var(--muted);
+  font-size:11px;
+  margin-bottom:7px;
+}
+
+.progress{
+  width:100%;
+  height:9px;
+  background:#050c1b;
+  border:1px solid var(--line);
+  border-radius:999px;
+  overflow:hidden;
+}
+
+.progress-bar{
+  height:100%;
+  width:0%;
+  background:linear-gradient(90deg,var(--green),#72ffc0);
+  border-radius:999px;
+  transition:width .3s ease;
+}
+
+.submitted-box{
+  margin-top:14px;
+  padding:13px;
+  border-radius:12px;
+  border:1px solid rgba(32,229,138,.2);
+  background:rgba(32,229,138,.05);
+  color:var(--green);
+  font-size:13px;
+  font-weight:bold;
+}
+
+/* PLAYER LISTS */
+
+.results-section{
+  margin-top:18px;
+  padding-top:16px;
+  border-top:1px solid var(--line);
+}
+
+.results-title{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:10px;
+  font-size:13px;
+  font-weight:900;
+  letter-spacing:.4px;
+}
+
+.results-title span:last-child{
+  color:var(--muted);
+  font-size:12px;
+}
+
+.results-list{
+  display:flex;
+  flex-direction:column;
+  gap:7px;
+  max-height:420px;
+  overflow-y:auto;
+  padding-right:2px;
+}
+
+.result-item{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  padding:11px 12px;
+  background:#071126;
+  border:1px solid var(--line);
+  border-radius:10px;
+}
+
+.result-player{
+  min-width:0;
+}
+
+.result-name{
+  font-size:13px;
+  font-weight:bold;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+
+.result-id{
+  color:var(--muted);
+  font-size:10px;
+  margin-top:3px;
+}
+
+.result-score{
+  flex:none;
+  font-size:14px;
+  font-weight:900;
+  color:var(--green);
+}
+
+.waiting-item{
+  border-color:rgba(255,209,102,.16);
+}
+
+.waiting-item .result-score{
+  color:var(--yellow);
+}
+
+.empty-results{
+  color:var(--muted);
+  font-size:12px;
+  padding:12px 0;
+}
+
+.create-title{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:15px;
+}
+
+.field{
+  margin-bottom:14px;
+}
+
+.field label{
+  display:block;
+  color:var(--muted);
+  font-size:11px;
+  margin-bottom:7px;
+  text-transform:uppercase;
+  letter-spacing:1px;
 }
 
 input,
 select{
-    width:100%;
-    background:#071126;
-    border:1px solid var(--line);
-    color:white;
-    border-radius:10px;
-    padding:13px;
-    font-size:15px;
-    outline:none;
+  width:100%;
+  border:1px solid var(--line);
+  background:#050d1d;
+  color:var(--text);
+  padding:12px;
+  border-radius:10px;
+  outline:none;
 }
 
 input:focus,
 select:focus{
-    border-color:var(--blue);
+  border-color:var(--green);
 }
 
-.form-row{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:15px;
+.player-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:7px;
+  max-height:430px;
+  overflow-y:auto;
+  padding-right:2px;
 }
 
-.button{
-    width:100%;
-    border:0;
-    border-radius:11px;
-    padding:14px 18px;
-    font-size:15px;
-    font-weight:bold;
-    cursor:pointer;
-    margin-top:15px;
-    transition:.15s;
+.player-option{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  padding:10px;
+  border:1px solid var(--line);
+  background:#071126;
+  border-radius:9px;
+  cursor:pointer;
 }
 
-.button:hover{
-    transform:translateY(-1px);
+.player-option:hover{
+  border-color:#31547f;
 }
 
-.button-primary{
-    background:var(--blue);
-    color:white;
+.player-option input{
+  width:auto;
+  accent-color:var(--green);
 }
 
-.button-green{
-    background:var(--green);
-    color:#03150e;
+.player-option span{
+  font-size:12px;
 }
 
-.button-red{
-    background:var(--red);
-    color:white;
+.selected-count{
+  margin-top:10px;
+  font-size:12px;
+  color:var(--muted);
 }
 
-.button-yellow{
-    background:var(--yellow);
-    color:#1b1400;
+.selected-count strong{
+  color:var(--green);
 }
 
-.button:disabled{
-    opacity:.45;
-    cursor:not-allowed;
-    transform:none;
+.actions{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin-top:15px;
+}
+
+button{
+  font-family:inherit;
+}
+
+.btn{
+  width:100%;
+  border:0;
+  border-radius:10px;
+  padding:13px 15px;
+  font-weight:900;
+  cursor:pointer;
+  transition:.15s;
+}
+
+.btn:hover{
+  transform:translateY(-1px);
+}
+
+.btn-primary{
+  background:var(--green);
+  color:#03120b;
+}
+
+.btn-blue{
+  background:var(--blue);
+  color:#04101d;
+}
+
+.btn-danger{
+  background:rgba(255,82,99,.1);
+  border:1px solid rgba(255,82,99,.3);
+  color:var(--red);
+}
+
+.btn:disabled{
+  opacity:.45;
+  cursor:not-allowed;
+  transform:none;
+}
+
+.notice{
+  background:#071126;
+  border:1px solid var(--line);
+  color:var(--muted);
+  padding:12px;
+  border-radius:10px;
+  font-size:12px;
+  line-height:1.5;
 }
 
 .status{
-    padding:14px;
-    border-radius:11px;
-    margin-bottom:15px;
-    font-size:14px;
-    display:none;
+  position:fixed;
+  left:50%;
+  bottom:18px;
+  transform:translateX(-50%);
+  background:#0c1730;
+  border:1px solid var(--line);
+  border-radius:999px;
+  padding:10px 16px;
+  font-size:12px;
+  color:var(--muted);
+  display:none;
+  z-index:100;
+  box-shadow:0 10px 30px rgba(0,0,0,.3);
 }
 
-.status.info{
-    display:block;
-    background:#10284d;
-    border:1px solid #204e87;
-    color:#9dc9ff;
+.status.show{
+  display:block;
 }
 
 .status.success{
-    display:block;
-    background:#092d20;
-    border:1px solid #176c4d;
-    color:#70efb9;
+  color:var(--green);
+  border-color:rgba(32,229,138,.3);
 }
 
 .status.error{
-    display:block;
-    background:#35121b;
-    border:1px solid #7e2537;
-    color:#ff91a2;
+  color:var(--red);
+  border-color:rgba(255,82,99,.3);
 }
 
-.active-box{
-    border:1px solid rgba(33,214,139,.35);
-    background:rgba(33,214,139,.06);
-    border-radius:14px;
-    padding:18px;
+.small-note{
+  color:var(--muted);
+  font-size:10px;
+  margin-top:8px;
 }
 
-.active-title{
-    color:var(--green);
-    font-weight:bold;
-    font-size:13px;
-    letter-spacing:1px;
-    margin-bottom:10px;
-}
-
-.active-lvl{
-    font-size:28px;
-    font-weight:bold;
-}
-
-.active-opponent{
-    color:var(--muted);
-    margin-top:5px;
-}
-
-.active-score{
-    margin-top:15px;
-    font-size:28px;
-    font-weight:bold;
-}
-
-.submitted-box{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin-top:15px;
-    padding:12px 14px;
-    background:#071126;
-    border:1px solid var(--line);
-    border-radius:11px;
-}
-
-.submitted-number{
-    font-size:22px;
-    font-weight:bold;
-    color:white;
-}
-
-.submitted-label{
-    color:var(--muted);
-    font-size:12px;
-}
-
-.active-buttons{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:10px;
-}
-
-.active-buttons .button{
-    margin-top:15px;
-}
-
-.danger-zone{
-    margin-top:15px;
-    padding-top:15px;
-    border-top:1px solid rgba(255,77,103,.2);
-}
-
-.delete-button{
-    background:transparent;
-    border:1px solid rgba(255,77,103,.45);
-    color:var(--red);
-}
-
-.delete-button:hover{
-    background:rgba(255,77,103,.08);
-}
-
-.hidden{
-    display:none !important;
-}
-
-.players-header{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    gap:10px;
-    margin-bottom:12px;
-}
-
-.counter{
-    background:#071126;
-    border:1px solid var(--line);
-    border-radius:20px;
-    padding:7px 12px;
-    font-size:13px;
-    color:var(--muted);
-}
-
-.counter strong{
-    color:white;
-}
-
-.player-list{
-    display:grid;
-    grid-template-columns:repeat(2,1fr);
-    gap:8px;
-    max-height:500px;
-    overflow-y:auto;
-    padding-right:3px;
-}
-
-.player-item{
-    display:flex;
-    align-items:center;
-    gap:10px;
-    padding:11px;
-    background:#071126;
-    border:1px solid var(--line);
-    border-radius:10px;
-    cursor:pointer;
-    user-select:none;
-}
-
-.player-item:hover{
-    border-color:#31548a;
-}
-
-.player-item.selected{
-    background:rgba(36,144,255,.13);
-    border-color:var(--blue);
-}
-
-.player-item input{
-    width:18px;
-    height:18px;
-    accent-color:var(--blue);
-    flex:none;
-}
-
-.player-name{
-    font-size:14px;
-    font-weight:bold;
-}
-
-.player-id{
-    color:var(--muted);
-    font-size:11px;
-    margin-top:2px;
-}
-
-.selection-info{
-    margin-top:12px;
-    color:var(--muted);
-    font-size:13px;
-}
-
-.selection-info strong{
-    color:white;
-}
-
-.warning{
-    color:var(--yellow);
-}
-
-.success-text{
-    color:var(--green);
-}
-
-.footer{
-    text-align:center;
-    color:#526887;
-    font-size:11px;
-    padding:10px 0 25px;
-}
-
-.loading{
-    text-align:center;
-    color:var(--muted);
-    padding:25px;
+.countdown{
+  color:var(--yellow);
 }
 
 .no-active{
-    text-align:center;
-    padding:25px 10px;
-    color:var(--muted);
+  text-align:center;
+  padding:35px 10px;
 }
 
-.end-note{
-    color:var(--muted);
-    font-size:12px;
-    line-height:1.5;
-    margin-top:12px;
+.no-active-icon{
+  font-size:38px;
+  margin-bottom:10px;
 }
 
-@media(max-width:650px){
+.no-active h2{
+  margin-bottom:7px;
+}
 
-    .container{
-        padding:13px;
-    }
+.no-active p{
+  color:var(--muted);
+  font-size:12px;
+}
 
-    .form-row{
-        grid-template-columns:1fr;
-    }
+.danger-zone{
+  border-color:rgba(255,82,99,.25);
+}
 
-    .player-list{
-        grid-template-columns:1fr;
-        max-height:430px;
-    }
+.danger-zone .card-title{
+  color:var(--red);
+}
 
-    .header h1{
-        font-size:25px;
-    }
+@media(max-width:700px){
+  .info-grid{
+    grid-template-columns:repeat(2,1fr);
+  }
 
-    .active-buttons{
-        grid-template-columns:1fr;
-    }
+  .active-header{
+    flex-direction:column;
+  }
+
+  .player-grid{
+    grid-template-columns:1fr;
+  }
+
+  .actions{
+    grid-template-columns:1fr;
+  }
+}
+
+@media(max-width:430px){
+  .container{
+    padding:12px;
+  }
+
+  h1{
+    font-size:21px;
+  }
+
+  .info-grid{
+    gap:7px;
+  }
+
+  .info-box{
+    padding:10px;
+  }
+
+  .info-value{
+    font-size:16px;
+  }
 }
 </style>
 </head>
@@ -404,225 +551,233 @@ select:focus{
 
 <div class="container">
 
-    <div class="header">
-        <div class="logo">FC MOBILE • LVL SYSTEM</div>
-        <h1>LVL ADMIN</h1>
-        <p>Manage your daily 32-player LVL tournament</p>
+  <div class="header">
+    <div class="logo">
+      <div class="logo-box">FC</div>
+      <div class="logo-text">
+        LVL ADMIN
+        <span>TOURNAMENT CONTROL</span>
+      </div>
     </div>
 
-    <div id="statusBox" class="status"></div>
+    <button class="refresh-btn" onclick="loadAdmin()">
+      ↻ Refresh
+    </button>
+  </div>
 
 
-    <!-- =================================================
-         ACTIVE TOURNAMENT
-    ================================================== -->
+  <!-- ACTIVE TOURNAMENT -->
 
-    <div id="activeCard" class="card hidden">
+  <div class="card" id="activeCard">
 
-        <h2>Current Tournament</h2>
+    <div class="active-header">
+      <div>
+        <div class="card-title">CURRENT LVL</div>
+        <h1 id="activeOpponent">NO ACTIVE LVL</h1>
+      </div>
 
-        <div class="active-box">
-
-            <div class="active-title">
-                ACTIVE LVL
-            </div>
-
-            <div id="activeLvl" class="active-lvl">
-                LVL —
-            </div>
-
-            <div id="activeOpponent" class="active-opponent">
-                Opponent: —
-            </div>
-
-            <div id="activeScore" class="active-score">
-                0 : 0
-            </div>
-
-            <div class="submitted-box">
-
-                <div>
-                    <div
-                        id="submittedCount"
-                        class="submitted-number">
-                        0 / 32
-                    </div>
-
-                    <div class="submitted-label">
-                        PLAYER RESULTS SUBMITTED
-                    </div>
-                </div>
-
-                <div>
-                    <div
-                        id="waitingCount"
-                        class="submitted-number">
-                        32
-                    </div>
-
-                    <div class="submitted-label">
-                        WAITING
-                    </div>
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <div class="active-buttons">
-
-            <button
-                id="refreshButton"
-                class="button button-primary"
-                onclick="refreshAdmin()">
-                REFRESH ADMIN
-            </button>
-
-            <button
-                id="endButton"
-                class="button button-green"
-                onclick="endLVL()">
-                END LVL
-            </button>
-
-        </div>
-
-
-        <div class="danger-zone">
-
-            <button
-                id="deleteButton"
-                class="button delete-button"
-                onclick="deleteTestLVL()">
-                DELETE TEST LVL
-            </button>
-
-        </div>
-
-
-        <div class="end-note">
-            Use <strong>END LVL</strong> when the LVL is finished
-            before the 24-hour period. Use
-            <strong>DELETE TEST LVL</strong> only for test tournaments.
-        </div>
-
+      <div id="activeStatus" class="badge">
+        ● ACTIVE
+      </div>
     </div>
 
+    <div id="activeContent">
 
-    <!-- =================================================
-         CREATE TOURNAMENT
-    ================================================== -->
+      <div class="info-grid">
 
-    <div id="createCard" class="card">
-
-        <h2>Create New LVL</h2>
-
-        <div class="form-row">
-
-            <div>
-
-                <label for="lvlNumber">
-                    LVL Number
-                </label>
-
-                <input
-                    id="lvlNumber"
-                    type="number"
-                    min="1"
-                    placeholder="Example: 1">
-
-            </div>
-
-            <div>
-
-                <label for="opponent">
-                    Opponent
-                </label>
-
-                <input
-                    id="opponent"
-                    type="text"
-                    placeholder="Opponent name">
-
-            </div>
-
+        <div class="info-box">
+          <div class="info-label">LVL</div>
+          <div class="info-value" id="activeLvl">—</div>
         </div>
 
-    </div>
-
-
-    <!-- =================================================
-         PLAYERS
-    ================================================== -->
-
-    <div id="playersCard" class="card">
-
-        <div class="players-header">
-
-            <h2 style="margin:0;">
-                Select Players
-            </h2>
-
-            <div class="counter">
-                <strong id="selectedCount">0</strong> / 32
-            </div>
-
+        <div class="info-box">
+          <div class="info-label">OUR SCORE</div>
+          <div class="info-value" id="ourScore">0</div>
         </div>
 
-        <div id="playersLoading" class="loading">
+        <div class="info-box">
+          <div class="info-label">SUBMITTED</div>
+          <div class="info-value" id="submittedCount">0/32</div>
+        </div>
+
+        <div class="info-box">
+          <div class="info-label">TIME LEFT</div>
+          <div class="info-value countdown" id="countdown">—</div>
+        </div>
+
+      </div>
+
+      <div class="progress-wrap">
+        <div class="progress-head">
+          <span>PLAYER SUBMISSIONS</span>
+          <span id="progressText">0 / 32</span>
+        </div>
+
+        <div class="progress">
+          <div class="progress-bar" id="progressBar"></div>
+        </div>
+      </div>
+
+      <div class="submitted-box">
+        TOTAL TEAM SCORE:
+        <span id="teamScoreBox">0</span>
+      </div>
+
+
+      <!-- SUBMITTED PLAYERS -->
+
+      <div class="results-section">
+
+        <div class="results-title">
+          <span>SUBMITTED PLAYERS</span>
+          <span id="submittedLabel">0</span>
+        </div>
+
+        <div id="submittedList" class="results-list">
+          <div class="empty-results">
+            No results submitted yet.
+          </div>
+        </div>
+
+      </div>
+
+
+      <!-- WAITING PLAYERS -->
+
+      <div class="results-section">
+
+        <div class="results-title">
+          <span>WAITING FOR RESULTS</span>
+          <span id="waitingLabel">32</span>
+        </div>
+
+        <div id="waitingList" class="results-list">
+          <div class="empty-results">
             Loading players...
+          </div>
         </div>
 
-        <div
-            id="playerList"
-            class="player-list hidden">
-        </div>
-
-        <div class="selection-info">
-
-            You must select exactly
-            <strong>32 players</strong>.
-
-            <span id="selectionMessage"></span>
-
-        </div>
+      </div>
 
     </div>
 
+  </div>
 
-    <!-- =================================================
-         START
-    ================================================== -->
 
-    <div id="startCard" class="card">
+  <!-- CREATE NEW LVL -->
 
-        <h2>Start Tournament</h2>
+  <div class="card">
 
-        <p style="color:var(--muted);font-size:13px;line-height:1.6;">
+    <div class="create-title">
+      <div>
+        <div class="card-title">TOURNAMENT MANAGEMENT</div>
+        <h2>Create New LVL</h2>
+      </div>
+    </div>
 
-            Starting the tournament will create the LVL,
-            assign the 32 selected players and make it active
-            for the next 24 hours.
+    <div class="field">
+      <label>LVL Number</label>
+      <input
+        id="newLvl"
+        type="number"
+        placeholder="Example: 20"
+      >
+    </div>
 
-        </p>
+    <div class="field">
+      <label>Opponent</label>
+      <input
+        id="newOpponent"
+        type="text"
+        placeholder="Opponent name"
+      >
+    </div>
 
-        <button
-            id="startButton"
-            class="button button-green"
-            onclick="startTournament()"
-            disabled>
-            START LVL
-        </button>
+    <div class="field">
+      <label>Select Players</label>
+
+      <div id="playerGrid" class="player-grid">
+        Loading players...
+      </div>
+
+      <div class="selected-count">
+        Selected:
+        <strong id="selectedCount">0</strong>
+        / 32
+      </div>
+    </div>
+
+    <div class="actions">
+
+      <button
+        id="startBtn"
+        class="btn btn-primary"
+        onclick="startTournament()"
+      >
+        START LVL
+      </button>
+
+      <button
+        class="btn btn-blue"
+        onclick="loadPlayers()"
+      >
+        REFRESH PLAYERS
+      </button>
 
     </div>
 
+  </div>
 
-    <div class="footer">
-        FC Mobile LVL System • Admin Panel
+
+  <!-- END LVL -->
+
+  <div class="card">
+
+    <div class="card-title">FINISH CURRENT LVL</div>
+
+    <div class="notice">
+      When all results are collected, enter the opponent's final score.
+      Your team's score is calculated automatically from the submitted player results.
     </div>
+
+    <button
+      id="finishBtn"
+      class="btn btn-primary"
+      style="margin-top:12px"
+      onclick="finishTournament()"
+    >
+      END LVL
+    </button>
+
+  </div>
+
+
+  <!-- DANGER ZONE -->
+
+  <div class="card danger-zone">
+
+    <div class="card-title">DANGER ZONE</div>
+
+    <div class="notice">
+      This is intended for deleting the current test LVL.
+      Deleting a tournament removes its tournament data and associated results.
+    </div>
+
+    <button
+      id="deleteBtn"
+      class="btn btn-danger"
+      style="margin-top:12px"
+      onclick="deleteTournament()"
+    >
+      DELETE TEST LVL
+    </button>
+
+  </div>
 
 </div>
+
+
+<div id="status" class="status"></div>
 
 
 <script>
@@ -636,231 +791,284 @@ const API_URL =
 
 
 /* =========================================================
-   GLOBAL DATA
+   GLOBALS
 ========================================================= */
 
-let players = [];
-let selectedPlayers = new Set();
 let activeTournament = null;
+let allPlayers = [];
+let countdownTimer = null;
+let refreshTimer = null;
 
 
 /* =========================================================
-   STATUS
+   HELPERS
 ========================================================= */
 
-function showStatus(message,type="info"){
-
-    const box =
-        document.getElementById("statusBox");
-
-    box.className =
-        "status " + type;
-
-    box.textContent =
-        message;
+function $(id){
+  return document.getElementById(id);
 }
 
 
-/* =========================================================
-   JSONP GET
-========================================================= */
-
-function apiGet(action, extraParams = {}){
-
-    return new Promise((resolve,reject)=>{
-
-        const callbackName =
-            "jsonpCallback_" +
-            Date.now() +
-            "_" +
-            Math.floor(
-                Math.random()*100000
-            );
-
-
-        const script =
-            document.createElement("script");
-
-
-        const timeout =
-            setTimeout(()=>{
-
-                cleanup();
-
-                reject(
-                    new Error(
-                        "API request timed out: " +
-                        action
-                    )
-                );
-
-            },15000);
-
-
-        window[callbackName] =
-            function(data){
-
-                clearTimeout(timeout);
-
-                cleanup();
-
-                resolve(data);
-
-            };
-
-
-        function cleanup(){
-
-            delete window[callbackName];
-
-            if(script.parentNode){
-
-                script.parentNode.removeChild(
-                    script
-                );
-
-            }
-
-        }
-
-
-        script.onerror =
-            function(){
-
-                clearTimeout(timeout);
-
-                cleanup();
-
-                reject(
-                    new Error(
-                        "Could not connect to API: " +
-                        action
-                    )
-                );
-
-            };
-
-
-        let url =
-            API_URL +
-            "?action=" +
-            encodeURIComponent(action) +
-            "&callback=" +
-            encodeURIComponent(callbackName);
-
-
-        Object.keys(extraParams).forEach(
-            function(key){
-
-                url +=
-                    "&" +
-                    encodeURIComponent(key) +
-                    "=" +
-                    encodeURIComponent(
-                        extraParams[key]
-                    );
-
-            }
-        );
-
-
-        url +=
-            "&_=" +
-            Date.now();
-
-
-        script.src =
-            url;
-
-
-        document.body.appendChild(
-            script
-        );
-
+function escapeHtml(value){
+  return String(value ?? "")
+    .replace(/[&<>"']/g, function(m){
+      return {
+        "&":"&amp;",
+        "<":"&lt;",
+        ">":"&gt;",
+        '"':"&quot;",
+        "'":"&#039;"
+      }[m];
     });
+}
 
+
+function showStatus(message,type=""){
+  const el = $("status");
+
+  el.textContent = message;
+  el.className = "status show " + type;
+
+  clearTimeout(showStatus.timer);
+
+  showStatus.timer = setTimeout(function(){
+    el.className = "status";
+  },3500);
 }
 
 
 /* =========================================================
-   NORMAL GET FALLBACK
+   JSONP API
 ========================================================= */
 
-async function normalGet(
-    action,
-    extraParams = {}
-){
+function getJSONP(action){
 
-    let url =
-        API_URL +
-        "?action=" +
-        encodeURIComponent(action);
+  return new Promise(function(resolve,reject){
 
+    const callbackName =
+      "jsonp_" +
+      Date.now() +
+      "_" +
+      Math.random().toString(36).substring(2);
 
-    Object.keys(extraParams).forEach(
-        function(key){
+    const script = document.createElement("script");
 
-            url +=
-                "&" +
-                encodeURIComponent(key) +
-                "=" +
-                encodeURIComponent(
-                    extraParams[key]
-                );
+    let finished = false;
 
-        }
-    );
+    const timeout = setTimeout(function(){
 
+      if(finished) return;
 
-    const response =
-        await fetch(url);
+      finished = true;
+
+      cleanup();
+
+      reject(new Error("API timeout"));
+
+    },12000);
 
 
-    if(!response.ok){
+    function cleanup(){
 
-        throw new Error(
-            "HTTP error " +
-            response.status
-        );
+      clearTimeout(timeout);
+
+      try{
+        delete window[callbackName];
+      }catch(e){
+        window[callbackName] = undefined;
+      }
+
+      if(script.parentNode){
+        script.parentNode.removeChild(script);
+      }
 
     }
 
+
+    window[callbackName] = function(data){
+
+      if(finished) return;
+
+      finished = true;
+
+      cleanup();
+
+      resolve(data);
+
+    };
+
+
+    script.onerror = function(){
+
+      if(finished) return;
+
+      finished = true;
+
+      cleanup();
+
+      reject(new Error("API request failed"));
+
+    };
+
+
+    script.src =
+      API_URL +
+      "?action=" +
+      encodeURIComponent(action) +
+      "&callback=" +
+      callbackName +
+      "&_=" +
+      Date.now();
+
+    document.body.appendChild(script);
+
+  });
+
+}
+
+
+async function getAPI(action){
+
+  try{
+
+    return await getJSONP(action);
+
+  }catch(error){
+
+    console.log("JSONP failed:",error);
+
+    const response = await fetch(
+      API_URL +
+      "?action=" +
+      encodeURIComponent(action) +
+      "&_=" +
+      Date.now()
+    );
 
     return await response.json();
 
+  }
+
 }
 
 
 /* =========================================================
-   GET WITH FALLBACK
+   POST API
 ========================================================= */
 
-async function getAPI(
-    action,
-    extraParams = {}
-){
+function postAPI(data){
 
-    try{
+  return new Promise(function(resolve,reject){
 
-        return await apiGet(
-            action,
-            extraParams
-        );
+    const iframeName =
+      "post_" +
+      Date.now() +
+      "_" +
+      Math.random().toString(36).substring(2);
 
-    }catch(error){
+    const iframe = document.createElement("iframe");
 
-        console.log(
-            "JSONP failed, trying fetch...",
-            error
-        );
+    iframe.name = iframeName;
+
+    iframe.style.display = "none";
+
+    document.body.appendChild(iframe);
 
 
-        return await normalGet(
-            action,
-            extraParams
-        );
+    const form = document.createElement("form");
 
-    }
+    form.method = "POST";
+
+    form.action = API_URL;
+
+    form.target = iframeName;
+
+    form.style.display = "none";
+
+
+    Object.keys(data).forEach(function(key){
+
+      const input = document.createElement("input");
+
+      input.type = "hidden";
+
+      input.name = key;
+
+      input.value =
+        typeof data[key] === "object"
+          ? JSON.stringify(data[key])
+          : data[key];
+
+      form.appendChild(input);
+
+    });
+
+
+    document.body.appendChild(form);
+
+
+    let resolved = false;
+
+
+    const cleanup = function(){
+
+      if(form.parentNode){
+        form.parentNode.removeChild(form);
+      }
+
+      if(iframe.parentNode){
+        iframe.parentNode.removeChild(iframe);
+      }
+
+    };
+
+
+    iframe.onload = function(){
+
+      if(resolved) return;
+
+      resolved = true;
+
+      cleanup();
+
+      resolve({
+        success:true
+      });
+
+    };
+
+
+    iframe.onerror = function(){
+
+      if(resolved) return;
+
+      resolved = true;
+
+      cleanup();
+
+      reject(new Error("POST failed"));
+
+    };
+
+
+    form.submit();
+
+
+    setTimeout(function(){
+
+      if(resolved) return;
+
+      resolved = true;
+
+      cleanup();
+
+      resolve({
+        success:true
+      });
+
+    },1800);
+
+  });
 
 }
 
@@ -871,128 +1079,642 @@ async function getAPI(
 
 async function loadAdmin(){
 
-    try{
+  try{
 
-        showStatus(
-            "Connecting to LVL system...",
-            "info"
-        );
+    const data = await getAPI("liveLVL");
 
-
-        const activeData =
-            await getAPI(
-                "activeTournament"
-            );
+    console.log("liveLVL:",data);
 
 
-        /*
-         * IMPORTANT:
-         *
-         * If an ACTIVE tournament exists,
-         * always show the ACTIVE screen.
-         *
-         * It does NOT matter whether there
-         * are 0, 1 or 32 submitted results.
-         */
+    if(
+      data &&
+      data.success &&
+      data.data &&
+      data.data.tournament
+    ){
 
-        if(
-            activeData &&
-            activeData.success &&
-            activeData.data
-        ){
+      activeTournament =
+        data.data.tournament;
 
-            activeTournament =
-                activeData.data;
+      showActiveTournament(
+        data.data.tournament
+      );
 
+      updateLiveStats(
+        data.data
+      );
 
-            showActiveTournament(
-                activeTournament
-            );
+    }else{
 
+      const active =
+        await getAPI("activeTournament");
 
-            /*
-             * Load live data to get
-             * submitted/waiting count.
-             */
-
-            try{
-
-                const liveData =
-                    await getAPI(
-                        "liveLVL"
-                    );
+      console.log(
+        "activeTournament:",
+        active
+      );
 
 
-                if(
-                    liveData &&
-                    liveData.success &&
-                    liveData.data
-                ){
-
-                    updateLiveStats(
-                        liveData.data
-                    );
-
-                }
-
-            }catch(error){
-
-                console.log(
-                    "Could not load live stats.",
-                    error
-                );
-
-            }
-
-
-            showStatus(
-                "Active LVL loaded successfully.",
-                "success"
-            );
-
-
-            return;
-
-        }
-
-
-        /*
-         * No active tournament.
-         */
+      if(
+        active &&
+        active.success &&
+        active.data
+      ){
 
         activeTournament =
-            null;
+          active.data;
 
-
-        showCreateInterface();
-
-
-        /*
-         * Load players only when
-         * creating a new LVL.
-         */
-
-        await loadPlayers();
-
-
-        showStatus(
-            "No active LVL. Ready to create a new tournament.",
-            "info"
+        showActiveTournament(
+          active.data
         );
 
 
-    }catch(error){
+        const live =
+          await getAPI("liveLVL");
 
-        console.error(error);
+        if(
+          live &&
+          live.success &&
+          live.data
+        ){
+          updateLiveStats(
+            live.data
+          );
+        }
 
+      }else{
 
-        showStatus(
-            "ERROR: " +
-            error.message,
-            "error"
-        );
+        activeTournament = null;
+
+        showNoActive();
+
+      }
 
     }
+
+  }catch(error){
+
+    console.error(error);
+
+    showStatus(
+      "Could not load tournament data",
+      "error"
+    );
+
+  }
+
+}
+
+
+/* =========================================================
+   SHOW ACTIVE
+========================================================= */
+
+function showActiveTournament(t){
+
+  $("activeOpponent").textContent =
+    t.opponent ||
+    "UNKNOWN OPPONENT";
+
+
+  $("activeLvl").textContent =
+    t.lvl ??
+    "—";
+
+
+  $("ourScore").textContent =
+    Number(t.ourScore || t["Our Score"] || 0);
+
+
+  $("teamScoreBox").textContent =
+    Number(t.ourScore || t["Our Score"] || 0);
+
+
+  $("activeStatus").className =
+    "badge";
+
+
+  $("activeStatus").textContent =
+    "● " +
+    (t.status || "ACTIVE");
+
+
+  if(
+    String(t.status || "").toUpperCase() !==
+    "ACTIVE"
+  ){
+
+    $("activeStatus").className =
+      "badge yellow";
+
+  }
+
+  clearResultLists();
+
+  startCountdown(
+    t.endTime ||
+    t["End Time"]
+  );
+
+}
+
+
+function showNoActive(){
+
+  $("activeOpponent").textContent =
+    "NO ACTIVE LVL";
+
+  $("activeLvl").textContent =
+    "—";
+
+  $("ourScore").textContent =
+    "0";
+
+  $("teamScoreBox").textContent =
+    "0";
+
+  $("submittedCount").textContent =
+    "0/32";
+
+  $("progressText").textContent =
+    "0 / 32";
+
+  $("progressBar").style.width =
+    "0%";
+
+  $("activeStatus").className =
+    "badge red";
+
+  $("activeStatus").textContent =
+    "● INACTIVE";
+
+  $("countdown").textContent =
+    "—";
+
+  clearResultLists();
+
+}
+
+
+/* =========================================================
+   LIVE STATS
+========================================================= */
+
+function updateLiveStats(data){
+
+  if(!data) return;
+
+
+  const rows =
+    Array.isArray(data.players)
+      ? data.players
+      : [];
+
+
+  let submittedRows =
+    rows.filter(function(row){
+
+      return String(
+        row.status ??
+        row.Status ??
+        ""
+      ).toUpperCase() === "SUBMITTED";
+
+    });
+
+
+  let waitingRows =
+    rows.filter(function(row){
+
+      return String(
+        row.status ??
+        row.Status ??
+        ""
+      ).toUpperCase() !== "SUBMITTED";
+
+    });
+
+
+  let submitted =
+    data.submitted != null
+      ? Number(data.submitted)
+      : submittedRows.length;
+
+
+  let total =
+    data.total != null
+      ? Number(data.total)
+      : rows.length || 32;
+
+
+  let waiting =
+    data.waiting != null
+      ? Number(data.waiting)
+      : waitingRows.length;
+
+
+  const ourScore =
+    data.ourScore != null
+      ? Number(data.ourScore)
+      : calculateScore(submittedRows);
+
+
+  $("submittedCount").textContent =
+    submitted + "/" + total;
+
+
+  $("progressText").textContent =
+    submitted + " / " + total;
+
+
+  $("teamScoreBox").textContent =
+    ourScore;
+
+
+  $("ourScore").textContent =
+    ourScore;
+
+
+  const percent =
+    total > 0
+      ? Math.min(
+          100,
+          (submitted / total) * 100
+        )
+      : 0;
+
+
+  $("progressBar").style.width =
+    percent + "%";
+
+
+  $("submittedLabel").textContent =
+    submittedRows.length;
+
+
+  $("waitingLabel").textContent =
+    waitingRows.length;
+
+
+  renderPlayerLists(
+    submittedRows,
+    waitingRows
+  );
+
+}
+
+
+/* =========================================================
+   SCORE CALCULATION
+========================================================= */
+
+function calculateScore(rows){
+
+  return rows.reduce(
+    function(total,row){
+
+      const score =
+        row.score ??
+        row.Score ??
+        0;
+
+      return total + Number(score || 0);
+
+    },
+    0
+  );
+
+}
+
+
+/* =========================================================
+   LIVE PLAYER HELPERS
+========================================================= */
+
+function getLivePlayerId(row){
+
+  if(!row) return "";
+
+  if(row.playerId)
+    return row.playerId;
+
+  if(row["Player ID"])
+    return row["Player ID"];
+
+  if(row.player){
+
+    if(row.player["Player ID"])
+      return row.player["Player ID"];
+
+    if(row.player.id)
+      return row.player.id;
+
+  }
+
+  if(row.id)
+    return row.id;
+
+  return "";
+
+}
+
+
+function getLivePlayerName(row){
+
+  if(!row) return "Unknown Player";
+
+
+  const player =
+    row.player || row;
+
+
+  return (
+    player["FC Name"] ||
+    player.name ||
+    player["Player Name"] ||
+    player["Name"] ||
+    row.name ||
+    "Unknown Player"
+  );
+
+}
+
+
+function getLivePlayerScore(row){
+
+  if(!row) return 0;
+
+  return Number(
+    row.score ??
+    row.Score ??
+    0
+  );
+
+}
+
+
+/* =========================================================
+   RENDER PLAYER LISTS
+========================================================= */
+
+function renderPlayerLists(
+  submittedRows,
+  waitingRows
+){
+
+  const submittedList =
+    $("submittedList");
+
+  const waitingList =
+    $("waitingList");
+
+
+  submittedList.innerHTML = "";
+
+  waitingList.innerHTML = "";
+
+
+  if(!submittedRows.length){
+
+    submittedList.innerHTML =
+      '<div class="empty-results">' +
+      'No results submitted yet.' +
+      '</div>';
+
+  }else{
+
+    submittedRows.forEach(
+      function(row){
+
+        const name =
+          getLivePlayerName(row);
+
+        const playerId =
+          getLivePlayerId(row);
+
+        const score =
+          getLivePlayerScore(row);
+
+
+        const item =
+          document.createElement("div");
+
+        item.className =
+          "result-item";
+
+
+        item.innerHTML =
+
+          '<div class="result-player">' +
+
+            '<div class="result-name">' +
+              escapeHtml(name) +
+            '</div>' +
+
+            '<div class="result-id">' +
+              escapeHtml(playerId) +
+            '</div>' +
+
+          '</div>' +
+
+          '<div class="result-score">' +
+            score +
+            ' goal' +
+            (score === 1 ? '' : 's') +
+          '</div>';
+
+
+        submittedList.appendChild(item);
+
+      }
+    );
+
+  }
+
+
+  if(!waitingRows.length){
+
+    waitingList.innerHTML =
+      '<div class="empty-results">' +
+      'Everyone has submitted a result. ✓' +
+      '</div>';
+
+  }else{
+
+    waitingRows.forEach(
+      function(row){
+
+        const name =
+          getLivePlayerName(row);
+
+        const playerId =
+          getLivePlayerId(row);
+
+
+        const item =
+          document.createElement("div");
+
+        item.className =
+          "result-item waiting-item";
+
+
+        item.innerHTML =
+
+          '<div class="result-player">' +
+
+            '<div class="result-name">' +
+              escapeHtml(name) +
+            '</div>' +
+
+            '<div class="result-id">' +
+              escapeHtml(playerId) +
+            '</div>' +
+
+          '</div>' +
+
+          '<div class="result-score">' +
+            'WAITING' +
+          '</div>';
+
+
+        waitingList.appendChild(item);
+
+      }
+    );
+
+  }
+
+}
+
+
+/* =========================================================
+   CLEAR LISTS
+========================================================= */
+
+function clearResultLists(){
+
+  $("submittedList").innerHTML =
+    '<div class="empty-results">' +
+    'Loading results...' +
+    '</div>';
+
+
+  $("waitingList").innerHTML =
+    '<div class="empty-results">' +
+    'Loading players...' +
+    '</div>';
+
+
+  $("submittedLabel").textContent =
+    "0";
+
+
+  $("waitingLabel").textContent =
+    "0";
+
+}
+
+
+/* =========================================================
+   COUNTDOWN
+========================================================= */
+
+function startCountdown(endTime){
+
+  clearInterval(countdownTimer);
+
+
+  if(!endTime){
+
+    $("countdown").textContent =
+      "—";
+
+    return;
+
+  }
+
+
+  function update(){
+
+    const end =
+      new Date(endTime).getTime();
+
+    const now =
+      Date.now();
+
+    let diff =
+      end - now;
+
+
+    if(isNaN(end)){
+
+      $("countdown").textContent =
+        "—";
+
+      return;
+
+    }
+
+
+    if(diff <= 0){
+
+      $("countdown").textContent =
+        "EXPIRED";
+
+      $("activeStatus").className =
+        "badge red";
+
+      $("activeStatus").textContent =
+        "● EXPIRED";
+
+      clearInterval(countdownTimer);
+
+      return;
+
+    }
+
+
+    const hours =
+      Math.floor(
+        diff / 3600000
+      );
+
+
+    diff %= 3600000;
+
+
+    const minutes =
+      Math.floor(
+        diff / 60000
+      );
+
+
+    diff %= 60000;
+
+
+    const seconds =
+      Math.floor(
+        diff / 1000
+      );
+
+
+    $("countdown").textContent =
+      String(hours).padStart(2,"0") +
+      ":" +
+      String(minutes).padStart(2,"0") +
+      ":" +
+      String(seconds).padStart(2,"0");
+
+  }
+
+
+  update();
+
+  countdownTimer =
+    setInterval(
+      update,
+      1000
+    );
 
 }
 
@@ -1003,626 +1725,180 @@ async function loadAdmin(){
 
 async function loadPlayers(){
 
-    const loading =
-        document.getElementById(
-            "playersLoading"
-        );
+  try{
+
+    const data =
+      await getAPI("players");
+
+    console.log(
+      "players:",
+      data
+    );
 
 
-    try{
+    if(
+      !data ||
+      !data.success
+    ){
 
-        loading.textContent =
-            "Loading players...";
-
-
-        const playerData =
-            await getAPI(
-                "players"
-            );
-
-
-        if(
-            !playerData ||
-            !playerData.success
-        ){
-
-            throw new Error(
-                "Players API returned an error."
-            );
-
-        }
-
-
-        players =
-            Array.isArray(
-                playerData.data
-            )
-            ? playerData.data
-            : [];
-
-
-        renderPlayers();
-
-
-    }catch(error){
-
-        console.error(error);
-
-
-        loading.textContent =
-            "Could not load players.";
-
-        throw error;
+      throw new Error(
+        data?.error ||
+        "Players API failed"
+      );
 
     }
 
-}
+
+    allPlayers =
+      Array.isArray(data.data)
+        ? data.data
+        : [];
 
 
-/* =========================================================
-   PLAYER NAME
-========================================================= */
+    renderPlayerGrid();
 
-function getPlayerName(player){
 
-    return (
-
-        player["FC Name"] ||
-
-        player.name ||
-
-        player["Player Name"] ||
-
-        player["Name"] ||
-
-        player["FC_Name"] ||
-
-        "Unknown Player"
-
+    showStatus(
+      allPlayers.length +
+      " players loaded",
+      "success"
     );
 
+
+  }catch(error){
+
+    console.error(error);
+
+    $("playerGrid").innerHTML =
+      '<div class="empty-results">' +
+      'Could not load players.' +
+      '</div>';
+
+
+    showStatus(
+      "Could not load players",
+      "error"
+    );
+
+  }
+
 }
 
 
 /* =========================================================
-   PLAYER ID
+   RENDER PLAYER GRID
 ========================================================= */
 
-function getPlayerId(player){
+function renderPlayerGrid(){
 
-    return (
+  const grid =
+    $("playerGrid");
 
+
+  grid.innerHTML = "";
+
+
+  if(!allPlayers.length){
+
+    grid.innerHTML =
+      '<div class="empty-results">' +
+      'No active players found.' +
+      '</div>';
+
+    return;
+
+  }
+
+
+  allPlayers.forEach(
+    function(player){
+
+      const id =
         player["Player ID"] ||
-
         player.id ||
-
-        player["ID"] ||
-
-        ""
-
-    );
-
-}
-
-
-/* =========================================================
-   RENDER PLAYERS
-========================================================= */
-
-function renderPlayers(){
-
-    const loading =
-        document.getElementById(
-            "playersLoading"
-        );
-
-
-    const list =
-        document.getElementById(
-            "playerList"
-        );
-
-
-    loading.classList.add(
-        "hidden"
-    );
-
-
-    list.classList.remove(
-        "hidden"
-    );
-
-
-    list.innerHTML =
         "";
 
 
-    const activePlayers =
-        players.filter(
-            function(player){
+      const name =
+        player["FC Name"] ||
+        player.name ||
+        "Unknown";
 
-                const active =
-                    player["Active"];
 
+      const active =
+        player.Active !== false;
 
-                if(
-                    active === false ||
-                    active === "FALSE" ||
-                    active === "false"
-                ){
 
-                    return false;
+      if(!active) return;
 
-                }
 
+      const label =
+        document.createElement("label");
 
-                return true;
 
-            }
-        );
+      label.className =
+        "player-option";
 
 
-    activePlayers.forEach(
-        function(player){
+      label.innerHTML =
 
-            const id =
-                getPlayerId(player);
+        '<input type="checkbox" ' +
+        'value="' +
+        escapeHtml(id) +
+        '" ' +
+        'onchange="updateSelectedCount()">' +
 
+        '<span>' +
+        escapeHtml(name) +
+        '</span>';
 
-            const name =
-                getPlayerName(player);
 
-
-            if(!id){
-                return;
-            }
-
-
-            const item =
-                document.createElement(
-                    "label"
-                );
-
-
-            item.className =
-                "player-item";
-
-
-            const checkbox =
-                document.createElement(
-                    "input"
-                );
-
-
-            checkbox.type =
-                "checkbox";
-
-
-            checkbox.value =
-                id;
-
-
-            checkbox.checked =
-                selectedPlayers.has(id);
-
-
-            const text =
-                document.createElement(
-                    "div"
-                );
-
-
-            const nameDiv =
-                document.createElement(
-                    "div"
-                );
-
-
-            nameDiv.className =
-                "player-name";
-
-
-            nameDiv.textContent =
-                name;
-
-
-            const idDiv =
-                document.createElement(
-                    "div"
-                );
-
-
-            idDiv.className =
-                "player-id";
-
-
-            idDiv.textContent =
-                id;
-
-
-            text.appendChild(
-                nameDiv
-            );
-
-
-            text.appendChild(
-                idDiv
-            );
-
-
-            item.appendChild(
-                checkbox
-            );
-
-
-            item.appendChild(
-                text
-            );
-
-
-            if(
-                selectedPlayers.has(id)
-            ){
-
-                item.classList.add(
-                    "selected"
-                );
-
-            }
-
-
-            checkbox.addEventListener(
-                "change",
-                function(){
-
-                    if(this.checked){
-
-                        if(
-                            selectedPlayers.size >= 32
-                        ){
-
-                            this.checked =
-                                false;
-
-
-                            showStatus(
-                                "You can select exactly 32 players.",
-                                "error"
-                            );
-
-
-                            return;
-
-                        }
-
-
-                        selectedPlayers.add(
-                            id
-                        );
-
-
-                        item.classList.add(
-                            "selected"
-                        );
-
-                    }else{
-
-                        selectedPlayers.delete(
-                            id
-                        );
-
-
-                        item.classList.remove(
-                            "selected"
-                        );
-
-                    }
-
-
-                    updateSelection();
-
-                }
-            );
-
-
-            list.appendChild(
-                item
-            );
-
-        }
-    );
-
-
-    updateSelection();
-
-}
-
-
-/* =========================================================
-   SELECTION
-========================================================= */
-
-function updateSelection(){
-
-    const count =
-        selectedPlayers.size;
-
-
-    document.getElementById(
-        "selectedCount"
-    ).textContent =
-        count;
-
-
-    const button =
-        document.getElementById(
-            "startButton"
-        );
-
-
-    button.disabled =
-        count !== 32;
-
-
-    const message =
-        document.getElementById(
-            "selectionMessage"
-        );
-
-
-    if(count === 32){
-
-        message.textContent =
-            " • Ready to start.";
-
-        message.className =
-            "success-text";
-
-    }else{
-
-        message.textContent =
-            " • " +
-            (32-count) +
-            " more required.";
-
-        message.className =
-            "warning";
+      grid.appendChild(label);
 
     }
+  );
+
+
+  updateSelectedCount();
 
 }
 
 
 /* =========================================================
-   ACTIVE TOURNAMENT
+   SELECTED PLAYERS
 ========================================================= */
 
-function showActiveTournament(
-    tournament
-){
+function getSelectedPlayerIds(){
 
-    document.getElementById(
-        "activeCard"
-    ).classList.remove(
-        "hidden"
-    );
-
-
-    document.getElementById(
-        "createCard"
-    ).classList.add(
-        "hidden"
-    );
-
-
-    document.getElementById(
-        "playersCard"
-    ).classList.add(
-        "hidden"
-    );
-
-
-    document.getElementById(
-        "startCard"
-    ).classList.add(
-        "hidden"
-    );
-
-
-    document.getElementById(
-        "activeLvl"
-    ).textContent =
-        "LVL " +
-        (
-            tournament["LVL"] ||
-            tournament.LVL ||
-            tournament.lvl ||
-            "—"
-        );
-
-
-    document.getElementById(
-        "activeOpponent"
-    ).textContent =
-        "Opponent: " +
-        (
-            tournament["Opponent"] ||
-            tournament.opponent ||
-            "—"
-        );
-
-
-    document.getElementById(
-        "activeScore"
-    ).textContent =
-        (
-            tournament["Our Score"] ??
-            tournament.ourScore ??
-            0
-        ) +
-        " : " +
-        (
-            tournament["Opponent Score"] ??
-            tournament.opponentScore ??
-            0
-        );
-
-
-    document.getElementById(
-        "submittedCount"
-    ).textContent =
-        "0 / 32";
-
-
-    document.getElementById(
-        "waitingCount"
-    ).textContent =
-        "32";
-
-}
-
-
-/* =========================================================
-   UPDATE LIVE STATS
-========================================================= */
-
-function updateLiveStats(data){
-
-    if(!data){
-        return;
+  return Array.from(
+    document.querySelectorAll(
+      '#playerGrid input[type="checkbox"]:checked'
+    )
+  ).map(
+    function(input){
+      return input.value;
     }
-
-
-    const submitted =
-        Number(
-            data.submitted || 0
-        );
-
-
-    const total =
-        Number(
-            data.total || 32
-        );
-
-
-    const waiting =
-        Number(
-            data.waiting ??
-            (total-submitted)
-        );
-
-
-    document.getElementById(
-        "submittedCount"
-    ).textContent =
-        submitted +
-        " / " +
-        total;
-
-
-    document.getElementById(
-        "waitingCount"
-    ).textContent =
-        waiting;
-
-
-    if(data.tournament){
-
-        const tournament =
-            data.tournament;
-
-
-        document.getElementById(
-            "activeScore"
-        ).textContent =
-            (
-                tournament["Our Score"] ??
-                tournament.ourScore ??
-                0
-            ) +
-            " : " +
-            (
-                tournament["Opponent Score"] ??
-                tournament.opponentScore ??
-                0
-            );
-
-    }
+  );
 
 }
 
 
-/* =========================================================
-   CREATE INTERFACE
-========================================================= */
+function updateSelectedCount(){
 
-function showCreateInterface(){
-
-    document.getElementById(
-        "activeCard"
-    ).classList.add(
-        "hidden"
-    );
+  const selected =
+    getSelectedPlayerIds();
 
 
-    document.getElementById(
-        "createCard"
-    ).classList.remove(
-        "hidden"
-    );
+  $("selectedCount").textContent =
+    selected.length;
 
 
-    document.getElementById(
-        "playersCard"
-    ).classList.remove(
-        "hidden"
-    );
+  const startBtn =
+    $("startBtn");
 
 
-    document.getElementById(
-        "startCard"
-    ).classList.remove(
-        "hidden"
-    );
-
-}
-
-
-/* =========================================================
-   REFRESH ADMIN
-========================================================= */
-
-async function refreshAdmin(){
-
-    const button =
-        document.getElementById(
-            "refreshButton"
-        );
-
-
-    button.disabled =
-        true;
-
-
-    button.textContent =
-        "REFRESHING...";
-
-
-    try{
-
-        await loadAdmin();
-
-
-    }finally{
-
-        button.disabled =
-            false;
-
-
-        button.textContent =
-            "REFRESH ADMIN";
-
-    }
+  startBtn.disabled =
+    selected.length !== 32;
 
 }
 
@@ -1633,808 +1909,457 @@ async function refreshAdmin(){
 
 async function startTournament(){
 
-    const lvl =
-        document.getElementById(
-            "lvlNumber"
-        ).value.trim();
+  const lvl =
+    $("newLvl").value.trim();
 
 
-    const opponent =
-        document.getElementById(
-            "opponent"
-        ).value.trim();
+  const opponent =
+    $("newOpponent").value.trim();
 
 
-    const playerIds =
-        Array.from(
-            selectedPlayers
-        );
+  const playerIds =
+    getSelectedPlayerIds();
 
 
-    if(!lvl){
+  if(!lvl){
 
-        showStatus(
-            "Please enter the LVL number.",
-            "error"
-        );
+    alert(
+      "Please enter the LVL number."
+    );
 
-        return;
+    return;
+
+  }
+
+
+  if(!opponent){
+
+    alert(
+      "Please enter the opponent name."
+    );
+
+    return;
+
+  }
+
+
+  if(playerIds.length !== 32){
+
+    alert(
+      "You must select exactly 32 players."
+    );
+
+    return;
+
+  }
+
+
+  if(activeTournament){
+
+    if(
+      !confirm(
+        "There is already an active LVL. Start a new one anyway?"
+      )
+    ){
+
+      return;
 
     }
 
-
-    if(!opponent){
-
-        showStatus(
-            "Please enter the opponent name.",
-            "error"
-        );
-
-        return;
-
-    }
+  }
 
 
-    if(playerIds.length !== 32){
-
-        showStatus(
-            "Exactly 32 players are required.",
-            "error"
-        );
-
-        return;
-
-    }
+  const btn =
+    $("startBtn");
 
 
-    const confirmed =
-        confirm(
-            "Start LVL " +
-            lvl +
-            " against " +
-            opponent +
-            " with 32 players?"
-        );
+  btn.disabled = true;
+
+  btn.textContent =
+    "STARTING...";
 
 
-    if(!confirmed){
-        return;
-    }
+  try{
 
+    await postAPI({
 
-    const button =
-        document.getElementById(
-            "startButton"
-        );
+      action:"startTournament",
 
+      lvl:lvl,
 
-    button.disabled =
-        true;
+      opponent:opponent,
 
+      playerIds:JSON.stringify(
+        playerIds
+      )
 
-    button.textContent =
-        "STARTING...";
+    });
 
 
     showStatus(
-        "Creating tournament...",
-        "info"
+      "LVL started successfully",
+      "success"
     );
 
 
-    try{
+    $("newLvl").value = "";
 
-        await postAction(
-            "startTournament",
-            {
-                lvl:lvl,
-                opponent:opponent,
-                playerIds:
-                    JSON.stringify(
-                        playerIds
-                    )
-            }
+    $("newOpponent").value = "";
+
+
+    document.querySelectorAll(
+      '#playerGrid input[type="checkbox"]'
+    ).forEach(
+      function(input){
+        input.checked = false;
+      }
+    );
+
+
+    updateSelectedCount();
+
+
+    await new Promise(
+      function(resolve){
+        setTimeout(
+          resolve,
+          1000
         );
+      }
+    );
 
 
-        /*
-         * Wait briefly for Apps Script
-         * to finish writing.
-         */
-
-        await sleep(1800);
+    await loadAdmin();
 
 
-        /*
-         * Verify by checking active tournament.
-         */
+  }catch(error){
 
-        const active =
-            await getAPI(
-                "activeTournament"
-            );
+    console.error(error);
 
+    showStatus(
+      "Could not start LVL",
+      "error"
+    );
 
-        if(
-            active &&
-            active.success &&
-            active.data
-        ){
+  }finally{
 
-            activeTournament =
-                active.data;
+    btn.textContent =
+      "START LVL";
 
+    updateSelectedCount();
 
-            showActiveTournament(
-                activeTournament
-            );
-
-
-            showStatus(
-                "LVL started successfully!",
-                "success"
-            );
-
-
-        }else{
-
-            throw new Error(
-                "Server did not create the tournament."
-            );
-
-        }
-
-
-    }catch(error){
-
-        console.error(error);
-
-
-        showStatus(
-            "ERROR: " +
-            error.message,
-            "error"
-        );
-
-
-        button.disabled =
-            false;
-
-
-        button.textContent =
-            "START LVL";
-
-    }
+  }
 
 }
 
 
 /* =========================================================
-   END LVL
+   FINISH TOURNAMENT
 ========================================================= */
 
-async function endLVL(){
+async function finishTournament(){
 
-    if(
-        !activeTournament
-    ){
+  if(!activeTournament){
 
-        showStatus(
-            "There is no active LVL.",
-            "error"
-        );
+    alert(
+      "There is no active LVL."
+    );
 
-        return;
+    return;
 
-    }
+  }
 
 
-    const tournamentId =
-        activeTournament[
-            "Tournament ID"
-        ] ||
-        activeTournament.tournamentId;
+  const opponentScore =
+    prompt(
+      "Enter opponent's final score:"
+    );
 
 
-    const lvl =
-        activeTournament["LVL"] ||
-        activeTournament.LVL ||
-        activeTournament.lvl ||
-        "";
+  if(opponentScore === null)
+    return;
 
 
-    const opponent =
-        activeTournament["Opponent"] ||
-        activeTournament.opponent ||
-        "";
+  if(
+    opponentScore.trim() === "" ||
+    isNaN(Number(opponentScore))
+  ){
+
+    alert(
+      "Please enter a valid number."
+    );
+
+    return;
+
+  }
 
 
-    /*
-     * Ask for opponent score.
-     */
-
-    const input =
-        prompt(
-            "Enter opponent score for LVL " +
-            lvl +
-            " vs " +
-            opponent +
-            ":",
-            "0"
-        );
+  const score =
+    Number(opponentScore);
 
 
-    if(input === null){
+  if(score < 0){
 
-        return;
+    alert(
+      "Score cannot be negative."
+    );
 
-    }
+    return;
 
-
-    const opponentScore =
-        Number(
-            input.trim()
-        );
+  }
 
 
-    if(
-        !Number.isInteger(
-            opponentScore
-        ) ||
-        opponentScore < 0
-    ){
-
-        showStatus(
-            "Please enter a valid whole number for the opponent score.",
-            "error"
-        );
-
-        return;
-
-    }
+  const confirmed =
+    confirm(
+      "Finish LVL " +
+      (activeTournament.lvl || "") +
+      " vs " +
+      (activeTournament.opponent || "") +
+      " with opponent score " +
+      score +
+      "?"
+    );
 
 
-    const confirmed =
-        confirm(
-            "End LVL " +
-            lvl +
-            "?\n\n" +
-            "Opponent score: " +
-            opponentScore +
-            "\n\n" +
-            "The LVL will be marked as FINISHED."
-        );
+  if(!confirmed)
+    return;
 
 
-    if(!confirmed){
-        return;
-    }
+  const btn =
+    $("finishBtn");
 
 
-    const button =
-        document.getElementById(
-            "endButton"
-        );
+  btn.disabled = true;
+
+  btn.textContent =
+    "FINISHING...";
 
 
-    button.disabled =
-        true;
+  try{
 
+    await postAPI({
 
-    button.textContent =
-        "ENDING LVL...";
+      action:"finishTournament",
+
+      tournamentId:
+        activeTournament.id ||
+        activeTournament["Tournament ID"],
+
+      id:
+        activeTournament.id ||
+        activeTournament["Tournament ID"],
+
+      opponentScore:
+        score
+
+    });
 
 
     showStatus(
-        "Finishing LVL...",
-        "info"
+      "LVL finished successfully",
+      "success"
     );
 
 
-    try{
-
-        await postAction(
-            "finishTournament",
-            {
-                tournamentId:
-                    tournamentId,
-
-                opponentScore:
-                    opponentScore
-            }
+    await new Promise(
+      function(resolve){
+        setTimeout(
+          resolve,
+          1200
         );
+      }
+    );
 
 
-        await sleep(1800);
+    activeTournament = null;
+
+    await loadAdmin();
 
 
-        /*
-         * Check that the active LVL disappeared.
-         */
+  }catch(error){
 
-        const active =
-            await getAPI(
-                "activeTournament"
-            );
+    console.error(error);
 
+    showStatus(
+      "Could not finish LVL",
+      "error"
+    );
 
-        if(
-            active &&
-            active.success &&
-            active.data
-        ){
+  }finally{
 
-            /*
-             * Still active.
-             */
+    btn.disabled = false;
 
-            activeTournament =
-                active.data;
+    btn.textContent =
+      "END LVL";
 
-
-            throw new Error(
-                "The LVL is still active. Please refresh and try again."
-            );
-
-        }
-
-
-        activeTournament =
-            null;
-
-
-        showCreateInterface();
-
-
-        selectedPlayers =
-            new Set();
-
-
-        await loadPlayers();
-
-
-        showStatus(
-            "LVL " +
-            lvl +
-            " finished successfully. You can now create the next LVL.",
-            "success"
-        );
-
-
-    }catch(error){
-
-        console.error(error);
-
-
-        showStatus(
-            "ERROR: " +
-            error.message,
-            "error"
-        );
-
-
-    }finally{
-
-        button.disabled =
-            false;
-
-
-        button.textContent =
-            "END LVL";
-
-    }
+  }
 
 }
 
 
 /* =========================================================
-   DELETE TEST LVL
+   DELETE TOURNAMENT
 ========================================================= */
 
-async function deleteTestLVL(){
+async function deleteTournament(){
 
-    if(
-        !activeTournament
-    ){
+  if(!activeTournament){
 
-        showStatus(
-            "There is no active LVL to delete.",
-            "error"
-        );
+    alert(
+      "There is no active LVL."
+    );
 
-        return;
+    return;
 
-    }
+  }
 
 
-    const tournamentId =
-        activeTournament[
-            "Tournament ID"
-        ] ||
-        activeTournament.tournamentId;
+  const id =
+    activeTournament.id ||
+    activeTournament["Tournament ID"];
 
 
-    const lvl =
-        activeTournament["LVL"] ||
-        activeTournament.LVL ||
-        activeTournament.lvl ||
-        "";
+  const opponent =
+    activeTournament.opponent ||
+    activeTournament["Opponent"] ||
+    "";
 
 
-    const opponent =
-        activeTournament["Opponent"] ||
-        activeTournament.opponent ||
-        "";
+  const lvl =
+    activeTournament.lvl ||
+    activeTournament["LVL"] ||
+    "";
 
 
-    /*
-     * Strong warning because this deletes
-     * data from the database.
-     */
-
-    const confirmed =
-        confirm(
-            "DELETE TEST LVL?\n\n" +
-            "LVL: " +
-            lvl +
-            "\n" +
-            "Opponent: " +
-            opponent +
-            "\n\n" +
-            "This will permanently delete this tournament " +
-            "from Tournaments, Tournament Players, History " +
-            "and LVL Results.\n\n" +
-            "Press OK only if this is a TEST LVL."
-        );
+  const first =
+    confirm(
+      "DELETE TEST LVL?\n\n" +
+      "LVL: " +
+      lvl +
+      "\n" +
+      "Opponent: " +
+      opponent +
+      "\n\n" +
+      "This will delete the tournament and its submitted results."
+    );
 
 
-    if(!confirmed){
-        return;
-    }
+  if(!first)
+    return;
 
 
-    const secondConfirm =
-        confirm(
-            "FINAL CONFIRMATION\n\n" +
-            "Delete this TEST LVL permanently?"
-        );
+  const second =
+    confirm(
+      "Are you absolutely sure?\n\n" +
+      "This action cannot be undone."
+    );
 
 
-    if(!secondConfirm){
-        return;
-    }
+  if(!second)
+    return;
 
 
-    const button =
-        document.getElementById(
-            "deleteButton"
-        );
+  const btn =
+    $("deleteBtn");
 
 
-    button.disabled =
-        true;
+  btn.disabled = true;
+
+  btn.textContent =
+    "DELETING...";
 
 
-    button.textContent =
-        "DELETING...";
+  try{
+
+    await postAPI({
+
+      action:"deleteTournament",
+
+      tournamentId:id,
+
+      id:id
+
+    });
 
 
     showStatus(
-        "Deleting test LVL...",
-        "info"
+      "Tournament deleted",
+      "success"
     );
 
 
-    try{
-
-        await postAction(
-            "deleteTournament",
-            {
-                tournamentId:
-                    tournamentId
-            }
+    await new Promise(
+      function(resolve){
+        setTimeout(
+          resolve,
+          1200
         );
+      }
+    );
 
 
-        await sleep(1800);
+    activeTournament = null;
+
+    await loadAdmin();
 
 
-        /*
-         * Verify active tournament is gone.
-         */
+  }catch(error){
 
-        const active =
-            await getAPI(
-                "activeTournament"
-            );
+    console.error(error);
 
+    showStatus(
+      "Could not delete tournament",
+      "error"
+    );
 
-        if(
-            active &&
-            active.success &&
-            active.data
-        ){
+  }finally{
 
-            throw new Error(
-                "The tournament could not be deleted."
-            );
+    btn.disabled = false;
 
-        }
+    btn.textContent =
+      "DELETE TEST LVL";
+
+  }
+
+}
 
 
-        activeTournament =
-            null;
+/* =========================================================
+   AUTO REFRESH LIVE STATS
+========================================================= */
+
+async function refreshLiveStats(){
+
+  if(!activeTournament)
+    return;
 
 
-        selectedPlayers =
-            new Set();
+  try{
+
+    const data =
+      await getAPI("liveLVL");
 
 
-        showCreateInterface();
+    if(
+      data &&
+      data.success &&
+      data.data
+    ){
 
-
-        await loadPlayers();
-
-
-        showStatus(
-            "TEST LVL deleted successfully.",
-            "success"
-        );
-
-
-    }catch(error){
-
-        console.error(error);
-
-
-        showStatus(
-            "ERROR: " +
-            error.message,
-            "error"
-        );
-
-
-    }finally{
-
-        button.disabled =
-            false;
-
-
-        button.textContent =
-            "DELETE TEST LVL";
+      updateLiveStats(
+        data.data
+      );
 
     }
 
-}
-
-
-/* =========================================================
-   GENERIC POST
-========================================================= */
-
-function postAction(
-    action,
-    data
-){
-
-    return new Promise(
-        function(resolve,reject){
-
-            const iframeName =
-                "postFrame_" +
-                Date.now() +
-                "_" +
-                Math.floor(
-                    Math.random()*100000
-                );
-
-
-            const iframe =
-                document.createElement(
-                    "iframe"
-                );
-
-
-            iframe.name =
-                iframeName;
-
-
-            iframe.style.display =
-                "none";
-
-
-            document.body.appendChild(
-                iframe
-            );
-
-
-            const form =
-                document.createElement(
-                    "form"
-                );
-
-
-            form.method =
-                "POST";
-
-
-            form.action =
-                API_URL;
-
-
-            form.target =
-                iframeName;
-
-
-            form.style.display =
-                "none";
-
-
-            addHiddenField(
-                form,
-                "action",
-                action
-            );
-
-
-            Object.keys(data || {}).forEach(
-                function(key){
-
-                    addHiddenField(
-                        form,
-                        key,
-                        data[key]
-                    );
-
-                }
-            );
-
-
-            document.body.appendChild(
-                form
-            );
-
-
-            let finished =
-                false;
-
-
-            /*
-             * We cannot read the cross-origin
-             * iframe response.
-             *
-             * So we wait for Apps Script to
-             * process the request, then verify
-             * with a GET request.
-             */
-
-            const timeout =
-                setTimeout(
-                    function(){
-
-                        if(finished){
-                            return;
-                        }
-
-
-                        finished =
-                            true;
-
-
-                        cleanup();
-
-
-                        resolve({
-                            success:true
-                        });
-
-                    },
-                    1500
-                );
-
-
-            function cleanup(){
-
-                clearTimeout(
-                    timeout
-                );
-
-
-                if(form.parentNode){
-
-                    form.parentNode.removeChild(
-                        form
-                    );
-
-                }
-
-
-                if(iframe.parentNode){
-
-                    iframe.parentNode.removeChild(
-                        iframe
-                    );
-
-                }
-
-            }
-
-
-            try{
-
-                form.submit();
-
-            }catch(error){
-
-                if(!finished){
-
-                    finished =
-                        true;
-
-
-                    cleanup();
-
-
-                    reject(error);
-
-                }
-
-            }
-
-        }
+  }catch(error){
+
+    console.log(
+      "Auto refresh failed:",
+      error
     );
 
-}
-
-
-/* =========================================================
-   ADD HIDDEN FORM FIELD
-========================================================= */
-
-function addHiddenField(
-    form,
-    name,
-    value
-){
-
-    const input =
-        document.createElement(
-            "input"
-        );
-
-
-    input.type =
-        "hidden";
-
-
-    input.name =
-        name;
-
-
-    input.value =
-        value;
-
-
-    form.appendChild(
-        input
-    );
-
-}
-
-
-/* =========================================================
-   SLEEP
-========================================================= */
-
-function sleep(ms){
-
-    return new Promise(
-        resolve =>
-            setTimeout(
-                resolve,
-                ms
-            )
-    );
+  }
 
 }
 
@@ -2444,12 +2369,21 @@ function sleep(ms){
 ========================================================= */
 
 document.addEventListener(
-    "DOMContentLoaded",
-    function(){
+  "DOMContentLoaded",
+  async function(){
 
-        loadAdmin();
+    await loadPlayers();
 
-    }
+    await loadAdmin();
+
+
+    refreshTimer =
+      setInterval(
+        refreshLiveStats,
+        30000
+      );
+
+  }
 );
 
 </script>
