@@ -103,4 +103,1367 @@ select:focus{
 
 .form-row{
     display:grid;
-    grid-template
+    grid-template-columns:1fr 1fr;
+    gap:15px;
+}
+
+.button{
+    width:100%;
+    border:0;
+    border-radius:11px;
+    padding:14px 18px;
+    font-size:15px;
+    font-weight:bold;
+    cursor:pointer;
+    margin-top:15px;
+    transition:.15s;
+}
+
+.button:hover{
+    transform:translateY(-1px);
+}
+
+.button-primary{
+    background:var(--blue);
+    color:white;
+}
+
+.button-green{
+    background:var(--green);
+    color:#03150e;
+}
+
+.button-red{
+    background:var(--red);
+    color:white;
+}
+
+.button:disabled{
+    opacity:.45;
+    cursor:not-allowed;
+    transform:none;
+}
+
+.status{
+    padding:14px;
+    border-radius:11px;
+    margin-bottom:15px;
+    font-size:14px;
+    display:none;
+}
+
+.status.info{
+    display:block;
+    background:#10284d;
+    border:1px solid #204e87;
+    color:#9dc9ff;
+}
+
+.status.success{
+    display:block;
+    background:#092d20;
+    border:1px solid #176c4d;
+    color:#70efb9;
+}
+
+.status.error{
+    display:block;
+    background:#35121b;
+    border:1px solid #7e2537;
+    color:#ff91a2;
+}
+
+.active-box{
+    border:1px solid rgba(33,214,139,.35);
+    background:rgba(33,214,139,.06);
+    border-radius:14px;
+    padding:18px;
+}
+
+.active-title{
+    color:var(--green);
+    font-weight:bold;
+    font-size:13px;
+    letter-spacing:1px;
+    margin-bottom:10px;
+}
+
+.active-lvl{
+    font-size:28px;
+    font-weight:bold;
+}
+
+.active-opponent{
+    color:var(--muted);
+    margin-top:5px;
+}
+
+.active-score{
+    margin-top:15px;
+    font-size:24px;
+    font-weight:bold;
+}
+
+.hidden{
+    display:none !important;
+}
+
+.players-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:10px;
+    margin-bottom:12px;
+}
+
+.counter{
+    background:#071126;
+    border:1px solid var(--line);
+    border-radius:20px;
+    padding:7px 12px;
+    font-size:13px;
+    color:var(--muted);
+}
+
+.counter strong{
+    color:white;
+}
+
+.player-list{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:8px;
+    max-height:500px;
+    overflow-y:auto;
+    padding-right:3px;
+}
+
+.player-item{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:11px;
+    background:#071126;
+    border:1px solid var(--line);
+    border-radius:10px;
+    cursor:pointer;
+    user-select:none;
+}
+
+.player-item:hover{
+    border-color:#31548a;
+}
+
+.player-item.selected{
+    background:rgba(36,144,255,.13);
+    border-color:var(--blue);
+}
+
+.player-item input{
+    width:18px;
+    height:18px;
+    accent-color:var(--blue);
+    flex:none;
+}
+
+.player-name{
+    font-size:14px;
+    font-weight:bold;
+}
+
+.player-id{
+    color:var(--muted);
+    font-size:11px;
+    margin-top:2px;
+}
+
+.selection-info{
+    margin-top:12px;
+    color:var(--muted);
+    font-size:13px;
+}
+
+.selection-info strong{
+    color:white;
+}
+
+.warning{
+    color:var(--yellow);
+}
+
+.success-text{
+    color:var(--green);
+}
+
+.footer{
+    text-align:center;
+    color:#526887;
+    font-size:11px;
+    padding:10px 0 25px;
+}
+
+.loading{
+    text-align:center;
+    color:var(--muted);
+    padding:25px;
+}
+
+.no-active{
+    text-align:center;
+    padding:25px 10px;
+    color:var(--muted);
+}
+
+@media(max-width:650px){
+    .container{
+        padding:13px;
+    }
+
+    .form-row{
+        grid-template-columns:1fr;
+    }
+
+    .player-list{
+        grid-template-columns:1fr;
+        max-height:430px;
+    }
+
+    .header h1{
+        font-size:25px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="header">
+        <div class="logo">FC MOBILE • LVL SYSTEM</div>
+        <h1>LVL ADMIN</h1>
+        <p>Manage your daily 32-player LVL tournament</p>
+    </div>
+
+    <div id="statusBox" class="status"></div>
+
+    <!-- ACTIVE TOURNAMENT -->
+    <div id="activeCard" class="card hidden">
+        <h2>Current Tournament</h2>
+
+        <div class="active-box">
+            <div class="active-title">ACTIVE LVL</div>
+
+            <div id="activeLvl" class="active-lvl">LVL —</div>
+
+            <div id="activeOpponent" class="active-opponent">
+                Opponent: —
+            </div>
+
+            <div id="activeScore" class="active-score">
+                0 : 0
+            </div>
+        </div>
+
+        <button
+            class="button button-red"
+            onclick="location.reload()">
+            REFRESH ADMIN
+        </button>
+    </div>
+
+
+    <!-- CREATE TOURNAMENT -->
+    <div id="createCard" class="card">
+
+        <h2>Create New LVL</h2>
+
+        <div class="form-row">
+
+            <div>
+                <label for="lvlNumber">LVL Number</label>
+
+                <input
+                    id="lvlNumber"
+                    type="number"
+                    min="1"
+                    placeholder="Example: 1">
+            </div>
+
+            <div>
+                <label for="opponent">Opponent</label>
+
+                <input
+                    id="opponent"
+                    type="text"
+                    placeholder="Opponent name">
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- PLAYERS -->
+    <div id="playersCard" class="card">
+
+        <div class="players-header">
+
+            <h2 style="margin:0;">
+                Select Players
+            </h2>
+
+            <div class="counter">
+                <strong id="selectedCount">0</strong> / 32
+            </div>
+
+        </div>
+
+        <div id="playersLoading" class="loading">
+            Loading players...
+        </div>
+
+        <div
+            id="playerList"
+            class="player-list hidden">
+        </div>
+
+        <div class="selection-info">
+            You must select exactly
+            <strong>32 players</strong>.
+            <span id="selectionMessage"></span>
+        </div>
+
+    </div>
+
+
+    <!-- START -->
+    <div id="startCard" class="card">
+
+        <h2>Start Tournament</h2>
+
+        <p style="color:var(--muted);font-size:13px;line-height:1.6;">
+            Starting the tournament will create the LVL,
+            assign the 32 selected players and make it active
+            for the next 24 hours.
+        </p>
+
+        <button
+            id="startButton"
+            class="button button-green"
+            onclick="startTournament()"
+            disabled>
+            START LVL
+        </button>
+
+    </div>
+
+
+    <div class="footer">
+        FC Mobile LVL System • Admin Panel
+    </div>
+
+</div>
+
+
+<script>
+
+/* =========================================================
+   CONFIG
+========================================================= */
+
+const API_URL =
+"https://script.google.com/macros/s/AKfycby3nXVRE6Z1ZB4kQA4o037qJfwoeqhTq0YOwqxVoye4pAHbp1BuZustn9qmMx-E8d19/exec";
+
+
+/* =========================================================
+   GLOBAL DATA
+========================================================= */
+
+let players = [];
+let selectedPlayers = new Set();
+let activeTournament = null;
+
+
+/* =========================================================
+   STATUS
+========================================================= */
+
+function showStatus(message,type="info"){
+
+    const box = document.getElementById("statusBox");
+
+    box.className = "status " + type;
+    box.textContent = message;
+}
+
+
+/* =========================================================
+   JSONP GET
+   Avoids GitHub Pages -> Apps Script CORS problem
+========================================================= */
+
+function apiGet(action){
+
+    return new Promise((resolve,reject)=>{
+
+        const callbackName =
+            "jsonpCallback_" +
+            Date.now() +
+            "_" +
+            Math.floor(Math.random()*100000);
+
+        const script = document.createElement("script");
+
+        const timeout = setTimeout(()=>{
+
+            cleanup();
+
+            reject(
+                new Error(
+                    "API request timed out: " + action
+                )
+            );
+
+        },15000);
+
+
+        window[callbackName] = function(data){
+
+            clearTimeout(timeout);
+
+            cleanup();
+
+            resolve(data);
+        };
+
+
+        function cleanup(){
+
+            delete window[callbackName];
+
+            if(script.parentNode){
+                script.parentNode.removeChild(script);
+            }
+        }
+
+
+        script.onerror = function(){
+
+            clearTimeout(timeout);
+
+            cleanup();
+
+            reject(
+                new Error(
+                    "Could not connect to API: " + action
+                )
+            );
+        };
+
+
+        script.src =
+            API_URL +
+            "?action=" +
+            encodeURIComponent(action) +
+            "&callback=" +
+            encodeURIComponent(callbackName) +
+            "&_=" +
+            Date.now();
+
+
+        document.body.appendChild(script);
+
+    });
+
+}
+
+
+/* =========================================================
+   NORMAL GET FALLBACK
+========================================================= */
+
+async function normalGet(action){
+
+    const response =
+        await fetch(
+            API_URL +
+            "?action=" +
+            encodeURIComponent(action)
+        );
+
+    if(!response.ok){
+        throw new Error(
+            "HTTP error " + response.status
+        );
+    }
+
+    return await response.json();
+}
+
+
+/* =========================================================
+   LOAD DATA
+========================================================= */
+
+async function loadAdmin(){
+
+    try{
+
+        showStatus(
+            "Connecting to LVL system...",
+            "info"
+        );
+
+
+        /*
+         * First try JSONP.
+         */
+
+        let activeData;
+
+        try{
+
+            activeData =
+                await apiGet("activeTournament");
+
+        }catch(e){
+
+            /*
+             * Fallback to normal fetch.
+             */
+
+            activeData =
+                await normalGet("activeTournament");
+        }
+
+
+        if(
+            activeData &&
+            activeData.success &&
+            activeData.data
+        ){
+
+            activeTournament =
+                activeData.data;
+
+            showActiveTournament(
+                activeTournament
+            );
+
+        }else{
+
+            activeTournament = null;
+
+            showCreateInterface();
+        }
+
+
+        /*
+         * Load players.
+         */
+
+        let playerData;
+
+        try{
+
+            playerData =
+                await apiGet("players");
+
+        }catch(e){
+
+            playerData =
+                await normalGet("players");
+        }
+
+
+        if(
+            !playerData ||
+            !playerData.success
+        ){
+
+            throw new Error(
+                "Players API returned an error."
+            );
+        }
+
+
+        players =
+            Array.isArray(playerData.data)
+            ? playerData.data
+            : [];
+
+
+        renderPlayers();
+
+
+        if(players.length > 0){
+
+            showStatus(
+                "Connected successfully. " +
+                players.length +
+                " players loaded.",
+                "success"
+            );
+
+        }else{
+
+            showStatus(
+                "Connected, but no players were returned.",
+                "error"
+            );
+        }
+
+
+    }catch(error){
+
+        console.error(error);
+
+        showStatus(
+            "ERROR: " + error.message,
+            "error"
+        );
+
+
+        document.getElementById(
+            "playersLoading"
+        ).textContent =
+            "Could not load players.";
+    }
+
+}
+
+
+/* =========================================================
+   PLAYER NAME
+========================================================= */
+
+function getPlayerName(player){
+
+    return (
+        player["FC Name"] ||
+        player.name ||
+        player["Player Name"] ||
+        player["Name"] ||
+        player["FC_Name"] ||
+        "Unknown Player"
+    );
+
+}
+
+
+/* =========================================================
+   PLAYER ID
+========================================================= */
+
+function getPlayerId(player){
+
+    return (
+        player["Player ID"] ||
+        player.id ||
+        player["ID"] ||
+        ""
+    );
+
+}
+
+
+/* =========================================================
+   RENDER PLAYERS
+========================================================= */
+
+function renderPlayers(){
+
+    const loading =
+        document.getElementById(
+            "playersLoading"
+        );
+
+    const list =
+        document.getElementById(
+            "playerList"
+        );
+
+
+    loading.classList.add("hidden");
+
+    list.classList.remove("hidden");
+
+    list.innerHTML = "";
+
+
+    /*
+     * Only active players.
+     */
+
+    const activePlayers =
+        players.filter(player => {
+
+            const active =
+                player["Active"];
+
+            if(
+                active === false ||
+                active === "FALSE" ||
+                active === "false"
+            ){
+                return false;
+            }
+
+            return true;
+        });
+
+
+    activePlayers.forEach(player => {
+
+        const id =
+            getPlayerId(player);
+
+        const name =
+            getPlayerName(player);
+
+
+        if(!id){
+            return;
+        }
+
+
+        const item =
+            document.createElement("label");
+
+        item.className =
+            "player-item";
+
+
+        const checkbox =
+            document.createElement("input");
+
+        checkbox.type = "checkbox";
+
+        checkbox.value = id;
+
+        checkbox.checked =
+            selectedPlayers.has(id);
+
+
+        const text =
+            document.createElement("div");
+
+
+        const nameDiv =
+            document.createElement("div");
+
+        nameDiv.className =
+            "player-name";
+
+        nameDiv.textContent =
+            name;
+
+
+        const idDiv =
+            document.createElement("div");
+
+        idDiv.className =
+            "player-id";
+
+        idDiv.textContent =
+            id;
+
+
+        text.appendChild(nameDiv);
+        text.appendChild(idDiv);
+
+
+        item.appendChild(checkbox);
+        item.appendChild(text);
+
+
+        if(
+            selectedPlayers.has(id)
+        ){
+            item.classList.add("selected");
+        }
+
+
+        checkbox.addEventListener(
+            "change",
+            function(){
+
+                if(this.checked){
+
+                    /*
+                     * Do not allow more than 32.
+                     */
+
+                    if(
+                        selectedPlayers.size >= 32
+                    ){
+
+                        this.checked = false;
+
+                        showStatus(
+                            "You can select exactly 32 players.",
+                            "error"
+                        );
+
+                        return;
+                    }
+
+                    selectedPlayers.add(id);
+
+                    item.classList.add(
+                        "selected"
+                    );
+
+                }else{
+
+                    selectedPlayers.delete(id);
+
+                    item.classList.remove(
+                        "selected"
+                    );
+                }
+
+
+                updateSelection();
+            }
+        );
+
+
+        list.appendChild(item);
+
+    });
+
+
+    updateSelection();
+}
+
+
+/* =========================================================
+   SELECTION
+========================================================= */
+
+function updateSelection(){
+
+    const count =
+        selectedPlayers.size;
+
+
+    document.getElementById(
+        "selectedCount"
+    ).textContent =
+        count;
+
+
+    const button =
+        document.getElementById(
+            "startButton"
+        );
+
+
+    button.disabled =
+        count !== 32;
+
+
+    const message =
+        document.getElementById(
+            "selectionMessage"
+        );
+
+
+    if(count === 32){
+
+        message.textContent =
+            " • Ready to start.";
+
+        message.className =
+            "success-text";
+
+    }else{
+
+        message.textContent =
+            " • " +
+            (32-count) +
+            " more required.";
+
+        message.className =
+            "warning";
+    }
+
+}
+
+
+/* =========================================================
+   ACTIVE TOURNAMENT
+========================================================= */
+
+function showActiveTournament(tournament){
+
+    document.getElementById(
+        "activeCard"
+    ).classList.remove("hidden");
+
+
+    document.getElementById(
+        "createCard"
+    ).classList.add("hidden");
+
+
+    document.getElementById(
+        "playersCard"
+    ).classList.add("hidden");
+
+
+    document.getElementById(
+        "startCard"
+    ).classList.add("hidden");
+
+
+    document.getElementById(
+        "activeLvl"
+    ).textContent =
+        "LVL " +
+        (
+            tournament.LVL ||
+            tournament.lvl ||
+            "—"
+        );
+
+
+    document.getElementById(
+        "activeOpponent"
+    ).textContent =
+        "Opponent: " +
+        (
+            tournament.Opponent ||
+            tournament.opponent ||
+            "—"
+        );
+
+
+    document.getElementById(
+        "activeScore"
+    ).textContent =
+        (
+            tournament["Our Score"] ??
+            tournament.ourScore ??
+            0
+        ) +
+        " : " +
+        (
+            tournament["Opponent Score"] ??
+            tournament.opponentScore ??
+            0
+        );
+}
+
+
+/* =========================================================
+   CREATE INTERFACE
+========================================================= */
+
+function showCreateInterface(){
+
+    document.getElementById(
+        "activeCard"
+    ).classList.add("hidden");
+
+
+    document.getElementById(
+        "createCard"
+    ).classList.remove("hidden");
+
+
+    document.getElementById(
+        "playersCard"
+    ).classList.remove("hidden");
+
+
+    document.getElementById(
+        "startCard"
+    ).classList.remove("hidden");
+}
+
+
+/* =========================================================
+   START TOURNAMENT
+========================================================= */
+
+async function startTournament(){
+
+    const lvl =
+        document.getElementById(
+            "lvlNumber"
+        ).value.trim();
+
+
+    const opponent =
+        document.getElementById(
+            "opponent"
+        ).value.trim();
+
+
+    const playerIds =
+        Array.from(selectedPlayers);
+
+
+    if(!lvl){
+
+        showStatus(
+            "Please enter the LVL number.",
+            "error"
+        );
+
+        return;
+    }
+
+
+    if(!opponent){
+
+        showStatus(
+            "Please enter the opponent name.",
+            "error"
+        );
+
+        return;
+    }
+
+
+    if(playerIds.length !== 32){
+
+        showStatus(
+            "Exactly 32 players are required.",
+            "error"
+        );
+
+        return;
+    }
+
+
+    const confirmed =
+        confirm(
+            "Start LVL " +
+            lvl +
+            " against " +
+            opponent +
+            " with 32 players?"
+        );
+
+
+    if(!confirmed){
+        return;
+    }
+
+
+    const button =
+        document.getElementById(
+            "startButton"
+        );
+
+
+    button.disabled = true;
+
+    button.textContent =
+        "STARTING...";
+
+
+    showStatus(
+        "Creating tournament...",
+        "info"
+    );
+
+
+    try{
+
+        /*
+         * Apps Script POST.
+         *
+         * We use a hidden iframe + form instead of
+         * fetch() to avoid GitHub Pages CORS restrictions.
+         */
+
+        const result =
+            await postStartTournament({
+                lvl:lvl,
+                opponent:opponent,
+                playerIds:playerIds
+            });
+
+
+        if(
+            !result ||
+            !result.success
+        ){
+
+            throw new Error(
+                result && result.error
+                ? result.error
+                : "Tournament could not be created."
+            );
+        }
+
+
+        showStatus(
+            "LVL started successfully!",
+            "success"
+        );
+
+
+        setTimeout(
+            function(){
+                location.reload();
+            },
+            1200
+        );
+
+
+    }catch(error){
+
+        console.error(error);
+
+        showStatus(
+            "ERROR: " +
+            error.message,
+            "error"
+        );
+
+
+        button.disabled = false;
+
+        button.textContent =
+            "START LVL";
+    }
+
+}
+
+
+/* =========================================================
+   POST START TOURNAMENT
+========================================================= */
+
+function postStartTournament(data){
+
+    return new Promise(
+        (resolve,reject)=>{
+
+            const callbackName =
+                "postCallback_" +
+                Date.now() +
+                "_" +
+                Math.floor(
+                    Math.random()*100000
+                );
+
+
+            /*
+             * Apps Script doPost returns JSON.
+             *
+             * We submit through an invisible iframe.
+             */
+
+            const iframe =
+                document.createElement("iframe");
+
+            iframe.name =
+                callbackName;
+
+            iframe.style.display =
+                "none";
+
+
+            document.body.appendChild(
+                iframe
+            );
+
+
+            const form =
+                document.createElement("form");
+
+            form.method =
+                "POST";
+
+            form.action =
+                API_URL;
+
+            form.target =
+                callbackName;
+
+            form.style.display =
+                "none";
+
+
+            function addField(name,value){
+
+                const input =
+                    document.createElement("input");
+
+                input.type =
+                    "hidden";
+
+                input.name =
+                    name;
+
+                input.value =
+                    value;
+
+                form.appendChild(
+                    input
+                );
+            }
+
+
+            addField(
+                "action",
+                "startTournament"
+            );
+
+
+            addField(
+                "lvl",
+                data.lvl
+            );
+
+
+            addField(
+                "opponent",
+                data.opponent
+            );
+
+
+            /*
+             * Send player IDs as JSON.
+             */
+
+            addField(
+                "playerIds",
+                JSON.stringify(
+                    data.playerIds
+                )
+            );
+
+
+            document.body.appendChild(
+                form
+            );
+
+
+            /*
+             * Apps Script response is loaded
+             * inside the iframe.
+             *
+             * We cannot directly read cross-origin
+             * iframe content, so we verify by checking
+             * activeTournament after submission.
+             */
+
+            let finished = false;
+
+
+            const timeout =
+                setTimeout(
+                    async function(){
+
+                        if(finished){
+                            return;
+                        }
+
+                        finished = true;
+
+
+                        cleanup();
+
+
+                        /*
+                         * Verify if tournament was
+                         * actually created.
+                         */
+
+                        try{
+
+                            const active =
+                                await apiGet(
+                                    "activeTournament"
+                                );
+
+
+                            if(
+                                active &&
+                                active.success &&
+                                active.data
+                            ){
+
+                                resolve({
+                                    success:true,
+                                    data:active.data
+                                });
+
+                            }else{
+
+                                reject(
+                                    new Error(
+                                        "Server did not create the tournament."
+                                    )
+                                );
+                            }
+
+                        }catch(e){
+
+                            reject(
+                                new Error(
+                                    "Could not verify tournament creation."
+                                )
+                            );
+                        }
+
+                    },
+                    1800
+                );
+
+
+            function cleanup(){
+
+                clearTimeout(timeout);
+
+                if(form.parentNode){
+                    form.parentNode.removeChild(
+                        form
+                    );
+                }
+
+                if(iframe.parentNode){
+                    iframe.parentNode.removeChild(
+                        iframe
+                    );
+                }
+            }
+
+
+            /*
+             * Submit.
+             */
+
+            form.submit();
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   INITIAL LOAD
+========================================================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function(){
+
+        loadAdmin();
+
+    }
+);
+
+</script>
+
+</body>
+</html>
