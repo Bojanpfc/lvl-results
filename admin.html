@@ -590,41 +590,6 @@ button{
 }
 
 /* =========================================================
-   NO ACTIVE
-========================================================= */
-
-.no-active{
-  text-align:center;
-  padding:35px 10px;
-}
-
-.no-active-icon{
-  font-size:38px;
-  margin-bottom:10px;
-}
-
-.no-active h2{
-  margin-bottom:7px;
-}
-
-.no-active p{
-  color:var(--muted);
-  font-size:12px;
-}
-
-/* =========================================================
-   DANGER
-========================================================= */
-
-.danger-zone{
-  border-color:rgba(255,82,99,.25);
-}
-
-.danger-zone .card-title{
-  color:var(--red);
-}
-
-/* =========================================================
    MOBILE
 ========================================================= */
 
@@ -675,7 +640,6 @@ button{
 </style>
 </head>
 
-
 <body>
 
 <div class="container">
@@ -701,7 +665,6 @@ button{
       </div>
 
     </div>
-
 
     <button
       class="refresh-btn"
@@ -733,7 +696,6 @@ button{
         </h1>
 
       </div>
-
 
       <div
         id="activeStatus"
@@ -1055,11 +1017,6 @@ button{
 
 
   <!-- FINISH -->
-
-  <!--
-    IMPORTANT:
-    This card is now hidden when there is no active LVL.
-  -->
 
   <div
     class="card"
@@ -1774,15 +1731,14 @@ function showActiveTournament(t){
   );
 
 
-  /*
-    SHOW FINISH BUTTON
-    ONLY WHEN THERE IS AN ACTIVE LVL
-  */
-
   $("finishCard").style.display =
     status === "ACTIVE"
       ? "block"
       : "none";
+
+
+  $("finishBtn").disabled =
+    status !== "ACTIVE";
 
 
   setCreateLocked(
@@ -1834,11 +1790,6 @@ function setCreateLocked(locked){
 ========================================================= */
 
 function showNoActive(){
-
-  /*
-    VERY IMPORTANT:
-    Stop the old countdown completely.
-  */
 
   clearInterval(
     countdownTimer
@@ -1896,21 +1847,16 @@ function showNoActive(){
     "—";
 
 
-  /*
-    HIDE FINISH CARD COMPLETELY.
-  */
-
   $("finishCard").style.display =
     "none";
 
 
+  $("finishBtn").disabled =
+    true;
+
+
   clearResultLists();
 
-
-  /*
-    NO ACTIVE LVL =
-    CREATE NEW LVL UNLOCKED.
-  */
 
   setCreateLocked(false);
 
@@ -1933,6 +1879,21 @@ async function loadAdmin(){
 
   try{
 
+    /*
+      NEW BACKEND FORMAT:
+
+      {
+        success:true,
+        active:true,
+        tournament:{...},
+        players:[...],
+        submitted:...,
+        waiting:...,
+        total:...,
+        ourScore:...
+      }
+    */
+
     const data =
       await getAPI(
         "liveLVL"
@@ -1948,12 +1909,12 @@ async function loadAdmin(){
     if(
       data &&
       data.success &&
-      data.data &&
-      data.data.tournament
+      data.active &&
+      data.tournament
     ){
 
       activeTournament =
-        data.data.tournament;
+        data.tournament;
 
 
       showActiveTournament(
@@ -1962,7 +1923,7 @@ async function loadAdmin(){
 
 
       updateLiveStats(
-        data.data
+        data
       );
 
 
@@ -1970,6 +1931,10 @@ async function loadAdmin(){
 
     }
 
+
+    /*
+      Fallback to activeTournament.
+    */
 
     const active =
       await getAPI(
@@ -1986,11 +1951,12 @@ async function loadAdmin(){
     if(
       active &&
       active.success &&
-      active.data
+      active.active &&
+      active.tournament
     ){
 
       activeTournament =
-        active.data;
+        active.tournament;
 
 
       showActiveTournament(
@@ -2009,11 +1975,11 @@ async function loadAdmin(){
         if(
           live &&
           live.success &&
-          live.data
+          live.active
         ){
 
           updateLiveStats(
-            live.data
+            live
           );
 
         }
@@ -2112,17 +2078,26 @@ function updateLiveStats(data){
       : [];
 
 
+  /*
+    Backend now already knows
+    which players are submitted.
+
+    We use that information directly.
+  */
+
   const submittedRows =
     rows.filter(
       function(row){
 
-        return String(
-          row.status ??
-          row.Status ??
-          ""
-        )
-        .toUpperCase()
-        === "SUBMITTED";
+        return (
+          row.submitted === true ||
+          String(
+            row.status ??
+            row.Status ??
+            ""
+          ).toUpperCase()
+          === "SUBMITTED"
+        );
 
       }
     );
@@ -2132,13 +2107,15 @@ function updateLiveStats(data){
     rows.filter(
       function(row){
 
-        return String(
-          row.status ??
-          row.Status ??
-          ""
-        )
-        .toUpperCase()
-        !== "SUBMITTED";
+        return !(
+          row.submitted === true ||
+          String(
+            row.status ??
+            row.Status ??
+            ""
+          ).toUpperCase()
+          === "SUBMITTED"
+        );
 
       }
     );
@@ -2254,12 +2231,12 @@ function getLivePlayerId(row){
     return "";
 
 
-  if(row.playerId)
-    return row.playerId;
-
-
   if(row["Player ID"])
     return row["Player ID"];
+
+
+  if(row.playerId)
+    return row.playerId;
 
 
   if(row.player){
@@ -2681,11 +2658,16 @@ async function loadPlayers(){
     }
 
 
+    /*
+      NEW BACKEND FORMAT:
+      data.players
+    */
+
     allPlayers =
       Array.isArray(
-        data.data
+        data.players
       )
-        ? data.data
+        ? data.players
         : [];
 
 
@@ -2754,8 +2736,19 @@ function renderPlayerGrid(){
         "Unknown";
 
 
+      const activeValue =
+        player["Active"];
+
+
       const active =
-        player.Active !== false;
+        !(
+          String(
+            activeValue
+          )
+          .trim()
+          .toUpperCase()
+          === "FALSE"
+        );
 
 
       if(!active)
@@ -2843,13 +2836,49 @@ function updateSelectedCount(){
 
 async function startTournament(){
 
-  if(activeTournament){
+  /*
+    Double safety check.
+  */
 
-    alert(
-      "A LVL is already active. Finish the current LVL before starting a new one."
+  try{
+
+    const check =
+      await getAPI(
+        "activeTournament"
+      );
+
+
+    if(
+      check &&
+      check.success &&
+      check.active &&
+      check.tournament
+    ){
+
+      activeTournament =
+        check.tournament;
+
+
+      showActiveTournament(
+        activeTournament
+      );
+
+
+      alert(
+        "A LVL is already active. Finish the current LVL before starting a new one."
+      );
+
+
+      return;
+
+    }
+
+  }catch(e){
+
+    console.log(
+      "Active check failed:",
+      e
     );
-
-    return;
 
   }
 
@@ -2935,23 +2964,30 @@ async function startTournament(){
 
   try{
 
-    await postAPI({
+    const response =
+      await postAPI({
 
-      action:
-        "startTournament",
+        action:
+          "startTournament",
 
-      lvl:
-        lvl,
+        lvl:
+          lvl,
 
-      opponent:
-        opponent,
+        opponent:
+          opponent,
 
-      playerIds:
-        JSON.stringify(
-          playerIds
-        )
+        playerIds:
+          JSON.stringify(
+            playerIds
+          )
 
-    });
+      });
+
+
+    console.log(
+      "startTournament response:",
+      response
+    );
 
 
     showStatus(
@@ -2989,7 +3025,7 @@ async function startTournament(){
 
         setTimeout(
           resolve,
-          1000
+          1200
         );
 
       }
@@ -3136,21 +3172,28 @@ async function finishTournament(){
 
   try{
 
-    await postAPI({
+    const response =
+      await postAPI({
 
-      action:
-        "finishTournament",
+        action:
+          "finishTournament",
 
-      tournamentId:
-        tournamentId,
+        tournamentId:
+          tournamentId,
 
-      id:
-        tournamentId,
+        id:
+          tournamentId,
 
-      opponentScore:
-        score
+        opponentScore:
+          score
 
-    });
+      });
+
+
+    console.log(
+      "finishTournament response:",
+      response
+    );
 
 
     showStatus(
@@ -3159,33 +3202,12 @@ async function finishTournament(){
     );
 
 
-    await new Promise(
-      function(resolve){
-
-        setTimeout(
-          resolve,
-          1200
-        );
-
-      }
-    );
-
-
-    /*
-      Clear local active state
-      immediately after successful finish.
-    */
-
     clearCachedTournament();
 
 
     activeTournament =
       null;
 
-
-    /*
-      Also stop countdown immediately.
-    */
 
     clearInterval(
       countdownTimer
@@ -3200,12 +3222,20 @@ async function finishTournament(){
       "—";
 
 
-    /*
-      Hide END LVL immediately.
-    */
-
     $("finishCard").style.display =
       "none";
+
+
+    await new Promise(
+      function(resolve){
+
+        setTimeout(
+          resolve,
+          1200
+        );
+
+      }
+    );
 
 
     await loadAdmin();
@@ -3320,35 +3350,30 @@ async function deleteTournament(){
 
   try{
 
-    await postAPI({
+    const response =
+      await postAPI({
 
-      action:
-        "deleteTournament",
+        action:
+          "deleteTournament",
 
-      tournamentId:
-        id,
+        tournamentId:
+          id,
 
-      id:
-        id
+        id:
+          id
 
-    });
+      });
+
+
+    console.log(
+      "deleteTournament response:",
+      response
+    );
 
 
     showStatus(
       "Tournament deleted",
       "success"
-    );
-
-
-    await new Promise(
-      function(resolve){
-
-        setTimeout(
-          resolve,
-          1200
-        );
-
-      }
     );
 
 
@@ -3370,6 +3395,18 @@ async function deleteTournament(){
 
     $("finishCard").style.display =
       "none";
+
+
+    await new Promise(
+      function(resolve){
+
+        setTimeout(
+          resolve,
+          1200
+        );
+
+      }
+    );
 
 
     await loadAdmin();
@@ -3426,12 +3463,12 @@ async function refreshLiveStats(){
     if(
       data &&
       data.success &&
-      data.data &&
-      data.data.tournament
+      data.active &&
+      data.tournament
     ){
 
       activeTournament =
-        data.data.tournament;
+        data.tournament;
 
 
       showActiveTournament(
@@ -3440,7 +3477,7 @@ async function refreshLiveStats(){
 
 
       updateLiveStats(
-        data.data
+        data
       );
 
 
@@ -3458,11 +3495,12 @@ async function refreshLiveStats(){
     if(
       active &&
       active.success &&
-      active.data
+      active.active &&
+      active.tournament
     ){
 
       activeTournament =
-        active.data;
+        active.tournament;
 
 
       showActiveTournament(
@@ -3497,12 +3535,31 @@ document.addEventListener(
   "DOMContentLoaded",
   async function(){
 
+    /*
+      Show cached LVL immediately
+      if available.
+    */
+
     restoreCachedTournament();
+
+
+    /*
+      Load players.
+    */
 
     await loadPlayers();
 
+
+    /*
+      Then load live tournament.
+    */
+
     await loadAdmin();
 
+
+    /*
+      Refresh every 30 seconds.
+    */
 
     refreshTimer =
       setInterval(
