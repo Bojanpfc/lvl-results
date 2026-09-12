@@ -1100,149 +1100,78 @@ async function getAPI(action){
 
 /* =========================================================
    POST
+   FIXED
 ========================================================= */
 
-function postAPI(data){
+async function postAPI(data){
 
-  return new Promise(function(resolve,reject){
+  /*
+    Google Apps Script Web Apps can receive
+    a normal form-encoded POST.
 
-    const iframeName =
-      "post_" +
-      Date.now() +
-      "_" +
-      Math.random()
-        .toString(36)
-        .slice(2);
+    We use no-cors so the browser actually
+    sends the request without requiring CORS
+    headers from Apps Script.
 
+    IMPORTANT:
+    The result is verified afterwards by
+    calling activeTournament/liveLVL.
+  */
 
-    const iframe =
-      document.createElement("iframe");
-
-
-    iframe.name =
-      iframeName;
-
-    iframe.style.display =
-      "none";
+  const body =
+    new URLSearchParams();
 
 
-    document.body.appendChild(
-      iframe
-    );
+  Object.keys(data).forEach(function(key){
+
+    let value =
+      data[key];
 
 
-    const form =
-      document.createElement("form");
+    if(
+      value !== null &&
+      typeof value === "object"
+    ){
 
-
-    form.method =
-      "POST";
-
-    form.action =
-      API_URL;
-
-    form.target =
-      iframeName;
-
-    form.style.display =
-      "none";
-
-
-    Object.keys(data).forEach(function(key){
-
-      const input =
-        document.createElement("input");
-
-
-      input.type =
-        "hidden";
-
-      input.name =
-        key;
-
-      input.value =
-        typeof data[key] === "object"
-          ? JSON.stringify(data[key])
-          : data[key];
-
-
-      form.appendChild(input);
-
-    });
-
-
-    document.body.appendChild(
-      form
-    );
-
-
-    let finished = false;
-
-
-    function cleanup(){
-
-      if(form.parentNode)
-        form.parentNode.removeChild(form);
-
-      if(iframe.parentNode)
-        iframe.parentNode.removeChild(iframe);
+      value =
+        JSON.stringify(value);
 
     }
 
 
-    iframe.onload =
-      function(){
-
-        if(finished)
-          return;
-
-        finished = true;
-
-        cleanup();
-
-        resolve({
-          success:true
-        });
-
-      };
-
-
-    iframe.onerror =
-      function(){
-
-        if(finished)
-          return;
-
-        finished = true;
-
-        cleanup();
-
-        reject(
-          new Error("POST failed")
-        );
-
-      };
-
-
-    form.submit();
-
-
-    setTimeout(function(){
-
-      if(finished)
-        return;
-
-      finished = true;
-
-      cleanup();
-
-      resolve({
-        success:true
-      });
-
-    },1800);
+    body.append(
+      key,
+      value ?? ""
+    );
 
   });
+
+
+  try{
+
+    await fetch(
+      API_URL,
+      {
+        method:"POST",
+        mode:"no-cors",
+        body:body
+      }
+    );
+
+    return {
+      success:true
+    };
+
+  }catch(error){
+
+    console.error(
+      "POST ERROR:",
+      error
+    );
+
+    throw error;
+
+  }
 
 }
 
@@ -1598,11 +1527,6 @@ function renderLiveData(data){
     score = 0;
 
 
-  /*
-    If backend sends player scores,
-    calculate the total as a fallback.
-  */
-
   if(
     !("ourScore" in d) &&
     rows.length
@@ -1685,11 +1609,6 @@ function renderLiveData(data){
     waitingRows
   );
 
-
-  /*
-    Keep active tournament's score
-    synchronized with live data.
-  */
 
   activeTournament.ourScore =
     score;
@@ -1791,12 +1710,6 @@ async function loadAdmin(){
 
   try{
 
-    /*
-      IMPORTANT:
-      liveLVL is now the FIRST and
-      AUTHORITATIVE source.
-    */
-
     const live =
       await getAPI(
         "liveLVL"
@@ -1817,25 +1730,14 @@ async function loadAdmin(){
 
     if(liveTournament){
 
-      /*
-        Always render live data if
-        tournament exists.
-      */
-
       renderLiveData(
         live
       );
-
 
       return;
 
     }
 
-
-    /*
-      Only if liveLVL has no tournament,
-      ask activeTournament.
-    */
 
     const active =
       await getAPI(
@@ -1865,11 +1767,6 @@ async function loadAdmin(){
       );
 
 
-      /*
-        Keep default stats until
-        liveLVL becomes available.
-      */
-
       $("submittedCount").textContent =
         "0/32";
 
@@ -1881,11 +1778,6 @@ async function loadAdmin(){
     }
 
 
-    /*
-      Only here do we know that there
-      really isn't an active LVL.
-    */
-
     showNoActive();
 
   }catch(error){
@@ -1895,12 +1787,6 @@ async function loadAdmin(){
       error
     );
 
-
-    /*
-      VERY IMPORTANT:
-      Connection error must NOT
-      unlock Create New LVL.
-    */
 
     if(activeTournament){
 
@@ -2464,11 +2350,6 @@ function updateSelectedCount(){
     count;
 
 
-  /*
-    If there is an active tournament,
-    START must remain disabled.
-  */
-
   if(activeTournament){
 
     $("startBtn").disabled =
@@ -2491,10 +2372,6 @@ function updateSelectedCount(){
 
 async function startTournament(){
 
-  /*
-    Absolute frontend protection.
-  */
-
   if(activeTournament){
 
     alert(
@@ -2507,35 +2384,52 @@ async function startTournament(){
 
 
   /*
-    FINAL SERVER CHECK.
+    Check server first.
   */
 
-  const check =
-    await getAPI(
-      "activeTournament"
+  try{
+
+    const check =
+      await getAPI(
+        "activeTournament"
+      );
+
+
+    const serverTournament =
+      getTournamentFromResponse(
+        check
+      );
+
+
+    if(
+      serverTournament &&
+      isActive(serverTournament)
+    ){
+
+      showActiveTournament(
+        serverTournament
+      );
+
+
+      alert(
+        "A LVL is already active. Finish the current LVL first."
+      );
+
+
+      return;
+
+    }
+
+  }catch(error){
+
+    console.error(
+      "Server check:",
+      error
     );
-
-
-  const serverTournament =
-    getTournamentFromResponse(
-      check
-    );
-
-
-  if(
-    serverTournament &&
-    isActive(serverTournament)
-  ){
-
-    showActiveTournament(
-      serverTournament
-    );
-
 
     alert(
-      "A LVL is already active. Finish the current LVL first."
+      "Could not verify the server. Please try again."
     );
-
 
     return;
 
@@ -2612,6 +2506,11 @@ async function startTournament(){
 
   try{
 
+    /*
+      Send exactly the fields expected
+      by Code.gs.
+    */
+
     await postAPI({
 
       action:
@@ -2630,6 +2529,75 @@ async function startTournament(){
 
     });
 
+
+    showStatus(
+      "Creating LVL...",
+      "success"
+    );
+
+
+    /*
+      Give Apps Script time to finish
+      writing to Google Sheets.
+    */
+
+    await new Promise(function(resolve){
+
+      setTimeout(
+        resolve,
+        2500
+      );
+
+    });
+
+
+    /*
+      VERY IMPORTANT:
+      Do NOT assume POST succeeded.
+
+      Verify by asking the backend whether
+      an ACTIVE tournament now exists.
+    */
+
+    const verify =
+      await getAPI(
+        "activeTournament"
+      );
+
+
+    console.log(
+      "START VERIFY:",
+      verify
+    );
+
+
+    const createdTournament =
+      getTournamentFromResponse(
+        verify
+      );
+
+
+    if(
+      !createdTournament ||
+      !isActive(createdTournament)
+    ){
+
+      /*
+        The backend did not create the LVL.
+        Therefore we show a real error instead
+        of falsely saying it succeeded.
+      */
+
+      throw new Error(
+        "Server did not create an ACTIVE LVL."
+      );
+
+    }
+
+
+    /*
+      Success.
+    */
 
     showStatus(
       "LVL started successfully",
@@ -2657,14 +2625,13 @@ async function startTournament(){
     updateSelectedCount();
 
 
-    await new Promise(function(resolve){
+    /*
+      Immediately render the new LVL.
+    */
 
-      setTimeout(
-        resolve,
-        1200
-      );
-
-    });
+    showActiveTournament(
+      createdTournament
+    );
 
 
     await loadAdmin();
@@ -2680,6 +2647,12 @@ async function startTournament(){
     showStatus(
       "Could not start LVL",
       "error"
+    );
+
+
+    alert(
+      "LVL was NOT confirmed by the server.\n\n" +
+      "Please check the Tournaments sheet."
     );
 
   }finally{
@@ -2797,6 +2770,16 @@ async function finishTournament(){
     });
 
 
+    await new Promise(function(resolve){
+
+      setTimeout(
+        resolve,
+        2000
+      );
+
+    });
+
+
     showStatus(
       "LVL finished successfully",
       "success"
@@ -2814,16 +2797,6 @@ async function finishTournament(){
 
     countdownTimer =
       null;
-
-
-    await new Promise(function(resolve){
-
-      setTimeout(
-        resolve,
-        1200
-      );
-
-    });
 
 
     await loadAdmin();
