@@ -298,7 +298,8 @@ h2{
   letter-spacing:1px;
 }
 
-input{
+input[type="text"],
+input[type="number"]{
   width:100%;
   border:1px solid var(--line);
   background:#050d1d;
@@ -318,26 +319,48 @@ input:focus{
   gap:7px;
   max-height:430px;
   overflow-y:auto;
+  padding:2px;
+  -webkit-overflow-scrolling:touch;
 }
 
 .player-option{
   display:flex;
   align-items:center;
-  gap:8px;
-  padding:10px;
+  gap:10px;
+  padding:12px;
   border:1px solid var(--line);
   background:#071126;
   border-radius:9px;
   cursor:pointer;
+  user-select:none;
+  -webkit-tap-highlight-color:transparent;
+  min-height:46px;
+  transition:.15s;
+  touch-action:manipulation;
 }
 
-.player-option input{
-  width:auto;
+.player-option:active{
+  transform:scale(.98);
+}
+
+.player-option.selected{
+  border-color:var(--green);
+  background:rgba(32,229,138,.10);
+}
+
+.player-option input[type="checkbox"]{
+  width:20px;
+  height:20px;
+  min-width:20px;
+  margin:0;
   accent-color:var(--green);
+  cursor:pointer;
 }
 
 .player-option span{
   font-size:12px;
+  flex:1;
+  cursor:pointer;
 }
 
 .selected-count{
@@ -389,6 +412,7 @@ input:focus{
   padding:13px 15px;
   font-weight:900;
   cursor:pointer;
+  touch-action:manipulation;
 }
 
 .btn-primary{
@@ -434,6 +458,7 @@ input:focus{
   font-size:12px;
   display:none;
   z-index:100;
+  white-space:nowrap;
 }
 
 .status.show{
@@ -503,10 +528,7 @@ input:focus{
 
     </div>
 
-    <button
-      class="refresh-btn"
-      onclick="manualRefresh()"
-    >
+    <button class="refresh-btn" onclick="manualRefresh()">
       ↻ Refresh
     </button>
 
@@ -531,10 +553,7 @@ input:focus{
 
       </div>
 
-      <div
-        id="activeStatus"
-        class="badge yellow"
-      >
+      <div id="activeStatus" class="badge yellow">
         ● LOADING
       </div>
 
@@ -545,49 +564,22 @@ input:focus{
 
       <div class="info-box">
         <div class="info-label">LVL</div>
-
-        <div
-          id="activeLvl"
-          class="info-value"
-        >
-          —
-        </div>
+        <div id="activeLvl" class="info-value">—</div>
       </div>
-
 
       <div class="info-box">
         <div class="info-label">OUR SCORE</div>
-
-        <div
-          id="ourScore"
-          class="info-value"
-        >
-          0
-        </div>
+        <div id="ourScore" class="info-value">0</div>
       </div>
-
 
       <div class="info-box">
         <div class="info-label">SUBMITTED</div>
-
-        <div
-          id="submittedCount"
-          class="info-value"
-        >
-          0/32
-        </div>
+        <div id="submittedCount" class="info-value">0/32</div>
       </div>
-
 
       <div class="info-box">
         <div class="info-label">TIME LEFT</div>
-
-        <div
-          id="countdown"
-          class="info-value countdown"
-        >
-          —
-        </div>
+        <div id="countdown" class="info-value countdown">—</div>
       </div>
 
     </div>
@@ -596,61 +588,32 @@ input:focus{
     <div class="progress-wrap">
 
       <div class="progress-head">
-
-        <span>
-          PLAYER SUBMISSIONS
-        </span>
-
-        <span id="progressText">
-          0 / 32
-        </span>
-
+        <span>PLAYER SUBMISSIONS</span>
+        <span id="progressText">0 / 32</span>
       </div>
 
       <div class="progress">
-
-        <div
-          id="progressBar"
-          class="progress-bar"
-        ></div>
-
+        <div id="progressBar" class="progress-bar"></div>
       </div>
 
     </div>
 
 
     <div class="submitted-box">
-
       TOTAL TEAM SCORE:
-
-      <span id="teamScoreBox">
-        0
-      </span>
-
+      <span id="teamScoreBox">0</span>
     </div>
 
 
     <div class="results-section">
 
       <div class="results-title">
-
-        <span>
-          SUBMITTED PLAYERS
-        </span>
-
-        <span id="submittedLabel">
-          0
-        </span>
-
+        <span>SUBMITTED PLAYERS</span>
+        <span id="submittedLabel">0</span>
       </div>
 
-      <div
-        id="submittedList"
-        class="results-list"
-      >
-        <div class="empty-results">
-          Loading...
-        </div>
+      <div id="submittedList" class="results-list">
+        <div class="empty-results">Loading...</div>
       </div>
 
     </div>
@@ -659,24 +622,12 @@ input:focus{
     <div class="results-section">
 
       <div class="results-title">
-
-        <span>
-          WAITING FOR RESULTS
-        </span>
-
-        <span id="waitingLabel">
-          0
-        </span>
-
+        <span>WAITING FOR RESULTS</span>
+        <span id="waitingLabel">0</span>
       </div>
 
-      <div
-        id="waitingList"
-        class="results-list"
-      >
-        <div class="empty-results">
-          Loading...
-        </div>
+      <div id="waitingList" class="results-list">
+        <div class="empty-results">Loading...</div>
       </div>
 
     </div>
@@ -686,10 +637,7 @@ input:focus{
 
   <!-- CREATE -->
 
-  <div
-    id="createCard"
-    class="card"
-  >
+  <div id="createCard" class="card">
 
     <div class="create-title">
 
@@ -697,28 +645,18 @@ input:focus{
         TOURNAMENT MANAGEMENT
       </div>
 
-      <h2>
-        Create New LVL
-      </h2>
+      <h2>Create New LVL</h2>
 
     </div>
 
 
-    <div
-      id="createLocked"
-      class="lock-box"
-      style="display:none"
-    >
+    <div id="createLocked" class="lock-box" style="display:none">
 
-      <div class="lock-icon">
-        🔒
-      </div>
+      <div class="lock-icon">🔒</div>
 
       <div class="lock-text">
 
-        <strong>
-          NEW LVL LOCKED
-        </strong>
+        <strong>NEW LVL LOCKED</strong>
 
         <span>
           Finish the current LVL before starting a new tournament.
@@ -733,9 +671,7 @@ input:focus{
 
       <div class="field">
 
-        <label>
-          LVL Number
-        </label>
+        <label>LVL Number</label>
 
         <input
           id="newLvl"
@@ -748,9 +684,7 @@ input:focus{
 
       <div class="field">
 
-        <label>
-          Opponent
-        </label>
+        <label>Opponent</label>
 
         <input
           id="newOpponent"
@@ -763,14 +697,9 @@ input:focus{
 
       <div class="field">
 
-        <label>
-          Select Players
-        </label>
+        <label>Select Players</label>
 
-        <div
-          id="playerGrid"
-          class="player-grid"
-        >
+        <div id="playerGrid" class="player-grid">
           Loading players...
         </div>
 
@@ -778,9 +707,7 @@ input:focus{
 
           Selected:
 
-          <strong id="selectedCount">
-            0
-          </strong>
+          <strong id="selectedCount">0</strong>
 
           / 32
 
@@ -816,22 +743,16 @@ input:focus{
 
   <!-- FINISH -->
 
-  <div
-    id="finishCard"
-    class="card"
-    style="display:none"
-  >
+  <div id="finishCard" class="card" style="display:none">
 
     <div class="card-title">
       FINISH CURRENT LVL
     </div>
 
     <div class="notice">
-
       When all results are collected,
       enter the opponent's final score.
       Your team's score is calculated automatically.
-
     </div>
 
     <button
@@ -848,19 +769,14 @@ input:focus{
 
   <!-- DELETE -->
 
-  <div
-    id="deleteCard"
-    class="card"
-  >
+  <div id="deleteCard" class="card">
 
     <div class="card-title">
       DANGER ZONE
     </div>
 
     <div class="notice">
-
       Delete the current test LVL and its submitted results.
-
     </div>
 
     <button
@@ -877,26 +793,20 @@ input:focus{
 </div>
 
 
-<div
-  id="status"
-  class="status"
-></div>
+<div id="status" class="status"></div>
 
 
 <script>
 
-/* =========================================================
-   API
-========================================================= */
-
 const API_URL =
 "https://script.google.com/macros/s/AKfycby3nXVRE6Z1ZB4kQA4o037qJfwoeqhTq0YOwqxVoye4pAHbp1BuZustn9qmMx-E8d19/exec";
-
 
 let activeTournament = null;
 let allPlayers = [];
 let countdownTimer = null;
 let loadingAdmin = false;
+let loadingPlayers = false;
+let lastRefresh = 0;
 
 
 /* =========================================================
@@ -932,17 +842,124 @@ function showStatus(message,type=""){
 
   el.textContent = message;
 
-  el.className =
-    "status show " + type;
+  el.className = "status show " + type;
 
   clearTimeout(showStatus.timer);
 
   showStatus.timer =
     setTimeout(function(){
-
       el.className = "status";
+    },3000);
 
-    },3500);
+}
+
+
+function sleep(ms){
+  return new Promise(function(resolve){
+    setTimeout(resolve,ms);
+  });
+}
+
+
+/* =========================================================
+   GET API
+========================================================= */
+
+async function getAPI(action){
+
+  const url =
+    API_URL +
+    "?action=" +
+    encodeURIComponent(action) +
+    "&_=" +
+    Date.now();
+
+
+  /*
+    Try normal GET first.
+    Short timeout prevents the page from hanging.
+  */
+
+  const controller =
+    new AbortController();
+
+  const timeout =
+    setTimeout(function(){
+      controller.abort();
+    },7000);
+
+
+  try{
+
+    const response =
+      await fetch(
+        url,
+        {
+          method:"GET",
+          cache:"no-store",
+          signal:controller.signal
+        }
+      );
+
+
+    if(!response.ok){
+      throw new Error(
+        "HTTP " + response.status
+      );
+    }
+
+
+    const text =
+      await response.text();
+
+
+    if(!text){
+      throw new Error(
+        "Empty API response"
+      );
+    }
+
+
+    try{
+
+      return JSON.parse(text);
+
+    }catch(error){
+
+      /*
+        If Apps Script returned something
+        other than JSON, use JSONP below.
+      */
+
+      console.log(
+        "GET JSON parse failed:",
+        action,
+        text
+      );
+
+    }
+
+  }catch(error){
+
+    console.log(
+      "GET fetch failed:",
+      action,
+      error
+    );
+
+  }finally{
+
+    clearTimeout(timeout);
+
+  }
+
+
+  /*
+    JSONP fallback.
+    Only 3 seconds, not 12.
+  */
+
+  return getJSONP(action);
 
 }
 
@@ -956,7 +973,7 @@ function getJSONP(action){
   return new Promise(function(resolve,reject){
 
     const callbackName =
-      "cb_" +
+      "fcCallback_" +
       Date.now() +
       "_" +
       Math.random()
@@ -968,24 +985,8 @@ function getJSONP(action){
       document.createElement("script");
 
 
-    let done = false;
-
-
-    const timer =
-      setTimeout(function(){
-
-        if(done)
-          return;
-
-        done = true;
-
-        cleanup();
-
-        reject(
-          new Error("API timeout")
-        );
-
-      },12000);
+    let finished =
+      false;
 
 
     function cleanup(){
@@ -1005,13 +1006,32 @@ function getJSONP(action){
     }
 
 
+    const timer =
+      setTimeout(function(){
+
+        if(finished)
+          return;
+
+        finished = true;
+
+        cleanup();
+
+        reject(
+          new Error(
+            "API timeout: " + action
+          )
+        );
+
+      },3000);
+
+
     window[callbackName] =
       function(data){
 
-        if(done)
+        if(finished)
           return;
 
-        done = true;
+        finished = true;
 
         cleanup();
 
@@ -1023,15 +1043,17 @@ function getJSONP(action){
     script.onerror =
       function(){
 
-        if(done)
+        if(finished)
           return;
 
-        done = true;
+        finished = true;
 
         cleanup();
 
         reject(
-          new Error("API failed")
+          new Error(
+            "API failed: " + action
+          )
         );
 
       };
@@ -1042,7 +1064,7 @@ function getJSONP(action){
       "?action=" +
       encodeURIComponent(action) +
       "&callback=" +
-      callbackName +
+      encodeURIComponent(callbackName) +
       "&_=" +
       Date.now();
 
@@ -1054,69 +1076,17 @@ function getJSONP(action){
 }
 
 
-async function getAPI(action){
-
-  try{
-
-    return await getJSONP(action);
-
-  }catch(e){
-
-    console.log(
-      "JSONP failed:",
-      action,
-      e
-    );
-
-
-    const response =
-      await fetch(
-        API_URL +
-        "?action=" +
-        encodeURIComponent(action) +
-        "&_=" +
-        Date.now(),
-        {
-          cache:"no-store"
-        }
-      );
-
-
-    if(!response.ok){
-
-      throw new Error(
-        "HTTP " + response.status
-      );
-
-    }
-
-
-    return await response.json();
-
-  }
-
-}
-
-
 /* =========================================================
-   POST
-   FIXED
+   POST API
 ========================================================= */
 
+/*
+  Apps Script POST response is cross-origin.
+  Therefore we send the request and VERIFY
+  the result afterwards instead of trusting iframe.onload.
+*/
+
 async function postAPI(data){
-
-  /*
-    Google Apps Script Web Apps can receive
-    a normal form-encoded POST.
-
-    We use no-cors so the browser actually
-    sends the request without requiring CORS
-    headers from Apps Script.
-
-    IMPORTANT:
-    The result is verified afterwards by
-    calling activeTournament/liveLVL.
-  */
 
   const body =
     new URLSearchParams();
@@ -1141,11 +1111,17 @@ async function postAPI(data){
 
     body.append(
       key,
-      value ?? ""
+      String(value ?? "")
     );
 
   });
 
+
+  /*
+    no-cors allows the browser to send
+    the Apps Script request even when the
+    response cannot be read.
+  */
 
   try{
 
@@ -1154,18 +1130,21 @@ async function postAPI(data){
       {
         method:"POST",
         mode:"no-cors",
-        body:body
+        body:body,
+        cache:"no-store"
       }
     );
 
+
     return {
-      success:true
+      success:true,
+      sent:true
     };
 
   }catch(error){
 
     console.error(
-      "POST ERROR:",
+      "POST failed:",
       error
     );
 
@@ -1177,7 +1156,7 @@ async function postAPI(data){
 
 
 /* =========================================================
-   NORMALIZE API RESPONSE
+   RESPONSE HELPERS
 ========================================================= */
 
 function unwrap(data){
@@ -1202,6 +1181,7 @@ function getTournamentFromResponse(data){
   const d =
     unwrap(data);
 
+
   return (
     d.tournament ||
     d.activeTournament ||
@@ -1216,14 +1196,20 @@ function getPlayersFromResponse(data){
   const d =
     unwrap(data);
 
+
   if(Array.isArray(d.players))
     return d.players;
+
 
   if(
     d.data &&
     Array.isArray(d.data.players)
-  )
+  ){
+
     return d.data.players;
+
+  }
+
 
   return [];
 
@@ -1231,7 +1217,7 @@ function getPlayersFromResponse(data){
 
 
 /* =========================================================
-   TOURNAMENT NORMALIZATION
+   TOURNAMENT
 ========================================================= */
 
 function normalizeTournament(t){
@@ -1298,21 +1284,19 @@ function isActive(t){
     return false;
 
 
-  const status =
+  return (
     String(
       t.status ??
       t.Status ??
       ""
-    ).toUpperCase();
-
-
-  return status === "ACTIVE";
+    ).toUpperCase() === "ACTIVE"
+  );
 
 }
 
 
 /* =========================================================
-   LOCK / UNLOCK CREATE
+   CREATE LOCK
 ========================================================= */
 
 function setCreateLocked(locked){
@@ -1344,7 +1328,7 @@ function setCreateLocked(locked){
 
 
 /* =========================================================
-   DISPLAY ACTIVE TOURNAMENT
+   ACTIVE
 ========================================================= */
 
 function showActiveTournament(t){
@@ -1372,15 +1356,11 @@ function showActiveTournament(t){
 
 
   $("ourScore").textContent =
-    Number.isFinite(tournament.ourScore)
-      ? tournament.ourScore
-      : 0;
+    tournament.ourScore;
 
 
   $("teamScoreBox").textContent =
-    Number.isFinite(tournament.ourScore)
-      ? tournament.ourScore
-      : 0;
+    tournament.ourScore;
 
 
   if(isActive(tournament)){
@@ -1394,7 +1374,6 @@ function showActiveTournament(t){
 
     $("finishCard").style.display =
       "block";
-
 
     $("finishBtn").disabled =
       false;
@@ -1418,7 +1397,6 @@ function showActiveTournament(t){
     $("finishCard").style.display =
       "none";
 
-
     $("finishBtn").disabled =
       true;
 
@@ -1436,7 +1414,7 @@ function showActiveTournament(t){
 
 
 /* =========================================================
-   RENDER LIVE DATA
+   LIVE DATA
 ========================================================= */
 
 function renderLiveData(data){
@@ -1521,14 +1499,19 @@ function renderLiveData(data){
     );
 
 
-  if(
-    !Number.isFinite(score)
-  )
+  if(!Number.isFinite(score))
     score = 0;
 
 
+  /*
+    Fallback calculation.
+  */
+
   if(
-    !("ourScore" in d) &&
+    !Object.prototype.hasOwnProperty.call(
+      d,
+      "ourScore"
+    ) &&
     rows.length
   ){
 
@@ -1584,10 +1567,7 @@ function renderLiveData(data){
     total > 0
       ? Math.min(
           100,
-          Math.max(
-            0,
-            submitted / total * 100
-          )
+          submitted / total * 100
         )
       : 0;
 
@@ -1708,6 +1688,21 @@ async function loadAdmin(){
     true;
 
 
+  /*
+    Show loading only the first time.
+  */
+
+  if(
+    $("activeOpponent").textContent ===
+    "LOADING..."
+  ){
+
+    $("activeStatus").textContent =
+      "● CONNECTING";
+
+  }
+
+
   try{
 
     const live =
@@ -1746,7 +1741,7 @@ async function loadAdmin(){
 
 
     console.log(
-      "ACTIVE TOURNAMENT:",
+      "ACTIVE:",
       active
     );
 
@@ -1766,13 +1761,6 @@ async function loadAdmin(){
         activeTournamentData
       );
 
-
-      $("submittedCount").textContent =
-        "0/32";
-
-      $("progressText").textContent =
-        "0 / 32";
-
       return;
 
     }
@@ -1783,35 +1771,25 @@ async function loadAdmin(){
   }catch(error){
 
     console.error(
-      "loadAdmin ERROR:",
+      "loadAdmin:",
       error
     );
 
 
-    if(activeTournament){
+    $("activeOpponent").textContent =
+      "CONNECTION ERROR";
 
-      showActiveTournament(
-        activeTournament
-      );
 
-    }else{
+    $("activeStatus").className =
+      "badge red";
 
-      $("activeOpponent").textContent =
-        "CONNECTION ERROR";
 
-      $("activeStatus").className =
-        "badge red";
-
-      $("activeStatus").textContent =
-        "● API ERROR";
-
-      setCreateLocked(true);
-
-    }
+    $("activeStatus").textContent =
+      "● ERROR";
 
 
     showStatus(
-      "Could not refresh data",
+      "Could not connect to server",
       "error"
     );
 
@@ -1917,9 +1895,7 @@ function renderPlayerLists(
     submittedRows.forEach(function(row){
 
       const item =
-        document.createElement(
-          "div"
-        );
+        document.createElement("div");
 
 
       item.className =
@@ -1939,7 +1915,6 @@ function renderPlayerLists(
 
 
       item.innerHTML =
-
         '<div>' +
 
           '<div class="result-name">' +
@@ -1980,9 +1955,7 @@ function renderPlayerLists(
     waitingRows.forEach(function(row){
 
       const item =
-        document.createElement(
-          "div"
-        );
+        document.createElement("div");
 
 
       item.className =
@@ -1990,7 +1963,6 @@ function renderPlayerLists(
 
 
       item.innerHTML =
-
         '<div>' +
 
           '<div class="result-name">' +
@@ -2024,7 +1996,7 @@ function renderPlayerLists(
 
 
 /* =========================================================
-   CLEAR LISTS
+   CLEAR
 ========================================================= */
 
 function clearResultLists(){
@@ -2113,6 +2085,17 @@ function startCountdown(endTime){
       );
 
 
+      /*
+        Refresh after expiration so backend
+        can mark the tournament expired.
+      */
+
+      setTimeout(
+        loadAdmin,
+        1000
+      );
+
+
       return;
 
     }
@@ -2143,13 +2126,10 @@ function startCountdown(endTime){
 
 
     $("countdown").textContent =
-
       String(hours).padStart(2,"0") +
       ":" +
-
       String(minutes).padStart(2,"0") +
       ":" +
-
       String(seconds).padStart(2,"0");
 
   }
@@ -2173,6 +2153,24 @@ function startCountdown(endTime){
 
 async function loadPlayers(){
 
+  if(loadingPlayers)
+    return;
+
+
+  loadingPlayers =
+    true;
+
+
+  const grid =
+    $("playerGrid");
+
+
+  grid.innerHTML =
+    '<div class="empty-results">' +
+    'Loading players...' +
+    '</div>';
+
+
   try{
 
     const data =
@@ -2181,17 +2179,23 @@ async function loadPlayers(){
       );
 
 
+    console.log(
+      "PLAYERS:",
+      data
+    );
+
+
     const d =
       unwrap(data);
 
 
     if(
-      !d ||
-      d.success !== true
+      d &&
+      d.success === false
     ){
 
       throw new Error(
-        d?.error ||
+        d.error ||
         "Players API failed"
       );
 
@@ -2199,14 +2203,19 @@ async function loadPlayers(){
 
 
     allPlayers =
-      Array.isArray(
-        d.players
-      )
-        ? d.players
-        : [];
+      getPlayersFromResponse(data);
+
+
+    if(!Array.isArray(allPlayers)){
+
+      allPlayers =
+        [];
+
+    }
 
 
     renderPlayerGrid();
+
 
   }catch(error){
 
@@ -2216,10 +2225,21 @@ async function loadPlayers(){
     );
 
 
-    $("playerGrid").innerHTML =
+    grid.innerHTML =
       '<div class="empty-results">' +
-      'Could not load players.' +
+      'Could not load players. Tap REFRESH PLAYERS.' +
       '</div>';
+
+
+    showStatus(
+      "Players could not be loaded",
+      "error"
+    );
+
+  }finally{
+
+    loadingPlayers =
+      false;
 
   }
 
@@ -2240,19 +2260,39 @@ function renderPlayerGrid(){
     "";
 
 
+  if(!allPlayers.length){
+
+    grid.innerHTML =
+      '<div class="empty-results">' +
+      'No players found.' +
+      '</div>';
+
+
+    updateSelectedCount();
+
+    return;
+
+  }
+
+
+  let visiblePlayers =
+    0;
+
+
   allPlayers.forEach(function(player){
 
     const id =
-      player["Player ID"] ||
-      player.playerId ||
-      player.id ||
+      player["Player ID"] ??
+      player.playerId ??
+      player.id ??
       "";
 
 
     const name =
-      player["FC Name"] ||
-      player.fcName ||
-      player.name ||
+      player["FC Name"] ??
+      player.fcName ??
+      player.name ??
+      player["Player Name"] ??
       "Unknown";
 
 
@@ -2274,38 +2314,76 @@ function renderPlayerGrid(){
       return;
 
 
+    visiblePlayers++;
+
+
     const label =
-      document.createElement(
-        "label"
-      );
+      document.createElement("label");
 
 
     label.className =
       "player-option";
 
 
-    label.innerHTML =
-
-      '<input ' +
-      'type="checkbox" ' +
-      'value="' +
-      escapeHtml(id) +
-      '">' +
-
-      '<span>' +
-      escapeHtml(name) +
-      '</span>';
+    label.setAttribute(
+      "data-player-id",
+      id
+    );
 
 
     const checkbox =
-      label.querySelector(
-        "input"
-      );
+      document.createElement("input");
 
+
+    checkbox.type =
+      "checkbox";
+
+
+    checkbox.value =
+      id;
+
+
+    const span =
+      document.createElement("span");
+
+
+    span.textContent =
+      name;
+
+
+    label.appendChild(
+      checkbox
+    );
+
+
+    label.appendChild(
+      span
+    );
+
+
+    /*
+      IMPORTANT:
+      We DO NOT manually toggle the checkbox
+      on label click.
+
+      The label element already does that
+      automatically. The previous code toggled it
+      twice on some mobile clicks.
+    */
 
     checkbox.addEventListener(
       "change",
-      updateSelectedCount
+      function(){
+
+        label.classList.toggle(
+          "selected",
+          checkbox.checked
+        );
+
+
+        updateSelectedCount();
+
+      }
     );
 
 
@@ -2316,13 +2394,23 @@ function renderPlayerGrid(){
   });
 
 
+  if(!visiblePlayers){
+
+    grid.innerHTML =
+      '<div class="empty-results">' +
+      'No active players found.' +
+      '</div>';
+
+  }
+
+
   updateSelectedCount();
 
 }
 
 
 /* =========================================================
-   SELECTED
+   SELECTED PLAYERS
 ========================================================= */
 
 function getSelectedPlayerIds(){
@@ -2350,24 +2438,15 @@ function updateSelectedCount(){
     count;
 
 
-  if(activeTournament){
-
-    $("startBtn").disabled =
-      true;
-
-    return;
-
-  }
-
-
   $("startBtn").disabled =
+    Boolean(activeTournament) ||
     count !== 32;
 
 }
 
 
 /* =========================================================
-   START TOURNAMENT
+   START
 ========================================================= */
 
 async function startTournament(){
@@ -2376,59 +2455,6 @@ async function startTournament(){
 
     alert(
       "A LVL is already active. Finish the current LVL first."
-    );
-
-    return;
-
-  }
-
-
-  /*
-    Check server first.
-  */
-
-  try{
-
-    const check =
-      await getAPI(
-        "activeTournament"
-      );
-
-
-    const serverTournament =
-      getTournamentFromResponse(
-        check
-      );
-
-
-    if(
-      serverTournament &&
-      isActive(serverTournament)
-    ){
-
-      showActiveTournament(
-        serverTournament
-      );
-
-
-      alert(
-        "A LVL is already active. Finish the current LVL first."
-      );
-
-
-      return;
-
-    }
-
-  }catch(error){
-
-    console.error(
-      "Server check:",
-      error
-    );
-
-    alert(
-      "Could not verify the server. Please try again."
     );
 
     return;
@@ -2481,6 +2507,49 @@ async function startTournament(){
   }
 
 
+  try{
+
+    const check =
+      await getAPI(
+        "activeTournament"
+      );
+
+
+    const serverTournament =
+      getTournamentFromResponse(
+        check
+      );
+
+
+    if(
+      serverTournament &&
+      isActive(serverTournament)
+    ){
+
+      showActiveTournament(
+        serverTournament
+      );
+
+
+      alert(
+        "A LVL is already active."
+      );
+
+
+      return;
+
+    }
+
+  }catch(error){
+
+    console.log(
+      "Server check failed:",
+      error
+    );
+
+  }
+
+
   if(
     !confirm(
       "Start LVL " +
@@ -2500,16 +2569,12 @@ async function startTournament(){
   btn.disabled =
     true;
 
+
   btn.textContent =
     "STARTING...";
 
 
   try{
-
-    /*
-      Send exactly the fields expected
-      by Code.gs.
-    */
 
     await postAPI({
 
@@ -2530,74 +2595,78 @@ async function startTournament(){
     });
 
 
-    showStatus(
-      "Creating LVL...",
-      "success"
-    );
-
-
     /*
-      Give Apps Script time to finish
-      writing to Google Sheets.
+      IMPORTANT:
+      Don't trust POST response.
+      Wait briefly, then verify that the
+      server actually created the active LVL.
     */
 
-    await new Promise(function(resolve){
-
-      setTimeout(
-        resolve,
-        2500
-      );
-
-    });
+    await sleep(1200);
 
 
-    /*
-      VERY IMPORTANT:
-      Do NOT assume POST succeeded.
-
-      Verify by asking the backend whether
-      an ACTIVE tournament now exists.
-    */
-
-    const verify =
-      await getAPI(
-        "activeTournament"
-      );
+    let verified =
+      false;
 
 
-    console.log(
-      "START VERIFY:",
-      verify
-    );
+    for(let attempt=0; attempt<3; attempt++){
+
+      try{
+
+        const verify =
+          await getAPI(
+            "activeTournament"
+          );
 
 
-    const createdTournament =
-      getTournamentFromResponse(
-        verify
-      );
+        const tournament =
+          getTournamentFromResponse(
+            verify
+          );
 
 
-    if(
-      !createdTournament ||
-      !isActive(createdTournament)
-    ){
+        if(
+          tournament &&
+          isActive(tournament)
+        ){
 
-      /*
-        The backend did not create the LVL.
-        Therefore we show a real error instead
-        of falsely saying it succeeded.
-      */
+          showActiveTournament(
+            tournament
+          );
 
-      throw new Error(
-        "Server did not create an ACTIVE LVL."
-      );
+
+          verified =
+            true;
+
+
+          break;
+
+        }
+
+      }catch(error){
+
+        console.log(
+          "Start verification attempt failed:",
+          attempt + 1,
+          error
+        );
+
+      }
+
+
+      await sleep(800);
 
     }
 
 
-    /*
-      Success.
-    */
+    if(!verified){
+
+      throw new Error(
+        "Server did not create an active LVL."
+      );
+
+    }
+
 
     showStatus(
       "LVL started successfully",
@@ -2605,36 +2674,12 @@ async function startTournament(){
     );
 
 
-    $("newLvl").value =
-      "";
-
-    $("newOpponent").value =
-      "";
-
-
-    document.querySelectorAll(
-      '#playerGrid input[type="checkbox"]'
-    ).forEach(function(input){
-
-      input.checked =
-        false;
-
-    });
-
-
-    updateSelectedCount();
-
-
     /*
-      Immediately render the new LVL.
+      Load full live data.
     */
 
-    showActiveTournament(
-      createdTournament
-    );
-
-
     await loadAdmin();
+
 
   }catch(error){
 
@@ -2645,26 +2690,24 @@ async function startTournament(){
 
 
     showStatus(
-      "Could not start LVL",
+      "LVL was not started",
       "error"
     );
 
 
     alert(
-      "LVL was NOT confirmed by the server.\n\n" +
-      "Please check the Tournaments sheet."
+      "The server did not confirm that the LVL was created.\n\n" +
+      "Please refresh the page and check again."
     );
+
 
   }finally{
 
-    if(!activeTournament){
+    btn.textContent =
+      "START LVL";
 
-      btn.textContent =
-        "START LVL";
 
-      updateSelectedCount();
-
-    }
+    updateSelectedCount();
 
   }
 
@@ -2747,6 +2790,7 @@ async function finishTournament(){
   btn.disabled =
     true;
 
+
   btn.textContent =
     "FINISHING...";
 
@@ -2770,14 +2814,7 @@ async function finishTournament(){
     });
 
 
-    await new Promise(function(resolve){
-
-      setTimeout(
-        resolve,
-        2000
-      );
-
-    });
+    await sleep(1000);
 
 
     showStatus(
@@ -2800,6 +2837,7 @@ async function finishTournament(){
 
 
     await loadAdmin();
+
 
   }catch(error){
 
@@ -2875,6 +2913,7 @@ async function deleteTournament(){
   btn.disabled =
     true;
 
+
   btn.textContent =
     "DELETING...";
 
@@ -2895,10 +2934,7 @@ async function deleteTournament(){
     });
 
 
-    showStatus(
-      "Tournament deleted",
-      "success"
-    );
+    await sleep(1000);
 
 
     activeTournament =
@@ -2914,17 +2950,14 @@ async function deleteTournament(){
       null;
 
 
-    await new Promise(function(resolve){
-
-      setTimeout(
-        resolve,
-        1200
-      );
-
-    });
+    showStatus(
+      "Tournament deleted",
+      "success"
+    );
 
 
     await loadAdmin();
+
 
   }catch(error){
 
@@ -2944,6 +2977,7 @@ async function deleteTournament(){
     btn.disabled =
       false;
 
+
     btn.textContent =
       "DELETE TEST LVL";
 
@@ -2958,12 +2992,29 @@ async function deleteTournament(){
 
 async function manualRefresh(){
 
+  if(
+    Date.now() - lastRefresh < 1000
+  )
+    return;
+
+
+  lastRefresh =
+    Date.now();
+
+
   showStatus(
     "Refreshing..."
   );
 
 
-  await loadAdmin();
+  /*
+    Refresh both independently.
+  */
+
+  await Promise.allSettled([
+    loadAdmin(),
+    loadPlayers()
+  ]);
 
 }
 
@@ -2973,9 +3024,9 @@ async function manualRefresh(){
 ========================================================= */
 
 setInterval(
-  async function(){
+  function(){
 
-    await loadAdmin();
+    loadAdmin();
 
   },
   30000
@@ -2988,11 +3039,17 @@ setInterval(
 
 document.addEventListener(
   "DOMContentLoaded",
-  async function(){
+  function(){
 
-    await loadPlayers();
+    /*
+      They run independently.
+      A slow LVL request cannot prevent
+      the player list from loading.
+    */
 
-    await loadAdmin();
+    loadPlayers();
+
+    loadAdmin();
 
   }
 );
