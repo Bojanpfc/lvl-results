@@ -544,10 +544,7 @@ input:focus{
     <div class="info-grid">
 
       <div class="info-box">
-
-        <div class="info-label">
-          LVL
-        </div>
+        <div class="info-label">LVL</div>
 
         <div
           id="activeLvl"
@@ -555,47 +552,35 @@ input:focus{
         >
           —
         </div>
-
       </div>
 
 
       <div class="info-box">
-
-        <div class="info-label">
-          OUR SCORE
-        </div>
+        <div class="info-label">OUR SCORE</div>
 
         <div
           id="ourScore"
           class="info-value"
         >
-          —
+          0
         </div>
-
       </div>
 
 
       <div class="info-box">
-
-        <div class="info-label">
-          SUBMITTED
-        </div>
+        <div class="info-label">SUBMITTED</div>
 
         <div
           id="submittedCount"
           class="info-value"
         >
-          —
+          0/32
         </div>
-
       </div>
 
 
       <div class="info-box">
-
-        <div class="info-label">
-          TIME LEFT
-        </div>
+        <div class="info-label">TIME LEFT</div>
 
         <div
           id="countdown"
@@ -603,7 +588,6 @@ input:focus{
         >
           —
         </div>
-
       </div>
 
     </div>
@@ -618,7 +602,7 @@ input:focus{
         </span>
 
         <span id="progressText">
-          —
+          0 / 32
         </span>
 
       </div>
@@ -640,7 +624,7 @@ input:focus{
       TOTAL TEAM SCORE:
 
       <span id="teamScoreBox">
-        —
+        0
       </span>
 
     </div>
@@ -1084,6 +1068,7 @@ async function getAPI(action){
       e
     );
 
+
     const response =
       await fetch(
         API_URL +
@@ -1098,9 +1083,11 @@ async function getAPI(action){
 
 
     if(!response.ok){
+
       throw new Error(
         "HTTP " + response.status
       );
+
     }
 
 
@@ -1166,6 +1153,7 @@ function postAPI(data){
       const input =
         document.createElement("input");
 
+
       input.type =
         "hidden";
 
@@ -1176,6 +1164,7 @@ function postAPI(data){
         typeof data[key] === "object"
           ? JSON.stringify(data[key])
           : data[key];
+
 
       form.appendChild(input);
 
@@ -1259,6 +1248,60 @@ function postAPI(data){
 
 
 /* =========================================================
+   NORMALIZE API RESPONSE
+========================================================= */
+
+function unwrap(data){
+
+  if(
+    data &&
+    data.data &&
+    typeof data.data === "object"
+  ){
+
+    return data.data;
+
+  }
+
+  return data || {};
+
+}
+
+
+function getTournamentFromResponse(data){
+
+  const d =
+    unwrap(data);
+
+  return (
+    d.tournament ||
+    d.activeTournament ||
+    null
+  );
+
+}
+
+
+function getPlayersFromResponse(data){
+
+  const d =
+    unwrap(data);
+
+  if(Array.isArray(d.players))
+    return d.players;
+
+  if(
+    d.data &&
+    Array.isArray(d.data.players)
+  )
+    return d.data.players;
+
+  return [];
+
+}
+
+
+/* =========================================================
    TOURNAMENT NORMALIZATION
 ========================================================= */
 
@@ -1272,39 +1315,45 @@ function normalizeTournament(t){
 
     id:
       t.id ??
+      t.tournamentId ??
       t["Tournament ID"] ??
       "",
 
     lvl:
       t.lvl ??
+      t.LVL ??
       t["LVL"] ??
       "",
 
     opponent:
       t.opponent ??
+      t.Opponent ??
       t["Opponent"] ??
       "",
 
     startTime:
       t.startTime ??
+      t.start_time ??
       t["Start Time"] ??
       "",
 
     endTime:
       t.endTime ??
+      t.end_time ??
       t["End Time"] ??
       "",
 
     status:
       String(
         t.status ??
-        t["Status"] ??
+        t.Status ??
         ""
       ).toUpperCase(),
 
     ourScore:
       Number(
         t.ourScore ??
+        t.our_score ??
         t["Our Score"] ??
         0
       )
@@ -1323,12 +1372,44 @@ function isActive(t){
   const status =
     String(
       t.status ??
-      t["Status"] ??
+      t.Status ??
       ""
     ).toUpperCase();
 
 
   return status === "ACTIVE";
+
+}
+
+
+/* =========================================================
+   LOCK / UNLOCK CREATE
+========================================================= */
+
+function setCreateLocked(locked){
+
+  if(locked){
+
+    $("createForm").style.display =
+      "none";
+
+    $("createLocked").style.display =
+      "flex";
+
+    $("startBtn").disabled =
+      true;
+
+  }else{
+
+    $("createForm").style.display =
+      "block";
+
+    $("createLocked").style.display =
+      "none";
+
+    updateSelectedCount();
+
+  }
 
 }
 
@@ -1362,16 +1443,18 @@ function showActiveTournament(t){
 
 
   $("ourScore").textContent =
-    tournament.ourScore;
+    Number.isFinite(tournament.ourScore)
+      ? tournament.ourScore
+      : 0;
 
 
   $("teamScoreBox").textContent =
-    tournament.ourScore;
+    Number.isFinite(tournament.ourScore)
+      ? tournament.ourScore
+      : 0;
 
 
-  if(
-    tournament.status === "ACTIVE"
-  ){
+  if(isActive(tournament)){
 
     $("activeStatus").className =
       "badge";
@@ -1388,27 +1471,30 @@ function showActiveTournament(t){
       false;
 
 
-    /*
-      VERY IMPORTANT:
-      If an ACTIVE LVL exists,
-      creating another LVL is locked.
-    */
+    setCreateLocked(true);
 
-    $("createForm").style.display =
-      "none";
+  }else{
 
-    $("createLocked").style.display =
-      "flex";
+    $("activeStatus").className =
+      "badge red";
 
-  }
+    $("activeStatus").textContent =
+      "● " +
+      (
+        tournament.status ||
+        "FINISHED"
+      );
 
-  else{
 
     $("finishCard").style.display =
       "none";
 
+
     $("finishBtn").disabled =
       true;
+
+
+    setCreateLocked(false);
 
   }
 
@@ -1421,12 +1507,207 @@ function showActiveTournament(t){
 
 
 /* =========================================================
+   RENDER LIVE DATA
+========================================================= */
+
+function renderLiveData(data){
+
+  const d =
+    unwrap(data);
+
+
+  const tournament =
+    getTournamentFromResponse(d);
+
+
+  if(!tournament)
+    return false;
+
+
+  const normalized =
+    normalizeTournament(tournament);
+
+
+  if(!normalized)
+    return false;
+
+
+  showActiveTournament(
+    normalized
+  );
+
+
+  const rows =
+    getPlayersFromResponse(d);
+
+
+  const submittedRows =
+    rows.filter(function(row){
+
+      const status =
+        String(
+          row.status ??
+          row.Status ??
+          row["Status"] ??
+          ""
+        ).toUpperCase();
+
+
+      return (
+        row.submitted === true ||
+        String(row.submitted).toUpperCase() === "TRUE" ||
+        status === "SUBMITTED"
+      );
+
+    });
+
+
+  const waitingRows =
+    rows.filter(function(row){
+
+      const status =
+        String(
+          row.status ??
+          row.Status ??
+          row["Status"] ??
+          ""
+        ).toUpperCase();
+
+
+      return !(
+        row.submitted === true ||
+        String(row.submitted).toUpperCase() === "TRUE" ||
+        status === "SUBMITTED"
+      );
+
+    });
+
+
+  let score =
+    Number(
+      d.ourScore ??
+      d.our_score ??
+      normalized.ourScore ??
+      0
+    );
+
+
+  if(
+    !Number.isFinite(score)
+  )
+    score = 0;
+
+
+  /*
+    If backend sends player scores,
+    calculate the total as a fallback.
+  */
+
+  if(
+    !("ourScore" in d) &&
+    rows.length
+  ){
+
+    const calculated =
+      rows.reduce(function(total,row){
+
+        return total +
+          playerScore(row);
+
+      },0);
+
+
+    if(calculated > 0)
+      score = calculated;
+
+  }
+
+
+  const total =
+    Number(
+      d.total ??
+      d.totalPlayers ??
+      rows.length ??
+      32
+    ) || 32;
+
+
+  const submitted =
+    Number.isFinite(
+      Number(d.submitted)
+    )
+      ? Number(d.submitted)
+      : submittedRows.length;
+
+
+  $("ourScore").textContent =
+    score;
+
+
+  $("teamScoreBox").textContent =
+    score;
+
+
+  $("submittedCount").textContent =
+    submitted + "/" + total;
+
+
+  $("progressText").textContent =
+    submitted + " / " + total;
+
+
+  const percent =
+    total > 0
+      ? Math.min(
+          100,
+          Math.max(
+            0,
+            submitted / total * 100
+          )
+        )
+      : 0;
+
+
+  $("progressBar").style.width =
+    percent + "%";
+
+
+  $("submittedLabel").textContent =
+    submittedRows.length;
+
+
+  $("waitingLabel").textContent =
+    waitingRows.length;
+
+
+  renderPlayerLists(
+    submittedRows,
+    waitingRows
+  );
+
+
+  /*
+    Keep active tournament's score
+    synchronized with live data.
+  */
+
+  activeTournament.ourScore =
+    score;
+
+
+  return true;
+
+}
+
+
+/* =========================================================
    NO ACTIVE
 ========================================================= */
 
 function showNoActive(){
 
-  activeTournament = null;
+  activeTournament =
+    null;
 
 
   clearInterval(
@@ -1434,7 +1715,8 @@ function showNoActive(){
   );
 
 
-  countdownTimer = null;
+  countdownTimer =
+    null;
 
 
   $("activeOpponent").textContent =
@@ -1485,12 +1767,7 @@ function showNoActive(){
     true;
 
 
-  $("createForm").style.display =
-    "block";
-
-
-  $("createLocked").style.display =
-    "none";
+  setCreateLocked(false);
 
 
   clearResultLists();
@@ -1508,45 +1785,45 @@ async function loadAdmin(){
     return;
 
 
-  loadingAdmin = true;
+  loadingAdmin =
+    true;
 
 
   try{
 
     /*
-      LIVE LVL IS THE MAIN SOURCE.
+      IMPORTANT:
+      liveLVL is now the FIRST and
+      AUTHORITATIVE source.
     */
 
-    const data =
+    const live =
       await getAPI(
         "liveLVL"
       );
 
 
     console.log(
-      "LIVE LVL RESPONSE:",
-      data
+      "LIVE LVL:",
+      live
     );
 
 
-    /*
-      ACTIVE LVL FOUND
-    */
-
-    if(
-      data &&
-      data.success === true &&
-      data.tournament &&
-      isActive(data.tournament)
-    ){
-
-      showActiveTournament(
-        data.tournament
+    const liveTournament =
+      getTournamentFromResponse(
+        live
       );
 
 
-      updateLiveStats(
-        data
+    if(liveTournament){
+
+      /*
+        Always render live data if
+        tournament exists.
+      */
+
+      renderLiveData(
+        live
       );
 
 
@@ -1556,8 +1833,8 @@ async function loadAdmin(){
 
 
     /*
-      If liveLVL didn't contain it,
-      check activeTournament directly.
+      Only if liveLVL has no tournament,
+      ask activeTournament.
     */
 
     const active =
@@ -1567,79 +1844,71 @@ async function loadAdmin(){
 
 
     console.log(
-      "ACTIVE TOURNAMENT RESPONSE:",
+      "ACTIVE TOURNAMENT:",
       active
     );
 
 
+    const activeTournamentData =
+      getTournamentFromResponse(
+        active
+      );
+
+
     if(
-      active &&
-      active.success === true &&
-      active.tournament &&
-      isActive(active.tournament)
+      activeTournamentData &&
+      isActive(activeTournamentData)
     ){
 
       showActiveTournament(
-        active.tournament
+        activeTournamentData
       );
 
 
       /*
-        Get player results separately.
+        Keep default stats until
+        liveLVL becomes available.
       */
 
-      try{
+      $("submittedCount").textContent =
+        "0/32";
 
-        const live =
-          await getAPI(
-            "liveLVL"
-          );
-
-
-        if(
-          live &&
-          live.success === true &&
-          live.tournament
-        ){
-
-          updateLiveStats(
-            live
-          );
-
-        }
-
-      }catch(e){
-
-        console.log(
-          "Live player data failed:",
-          e
-        );
-
-      }
-
+      $("progressText").textContent =
+        "0 / 32";
 
       return;
 
     }
 
 
+    /*
+      Only here do we know that there
+      really isn't an active LVL.
+    */
+
     showNoActive();
 
   }catch(error){
 
     console.error(
-      "loadAdmin:",
+      "loadAdmin ERROR:",
       error
     );
 
 
     /*
-      IMPORTANT:
-      Do NOT show NO ACTIVE when the
-      connection itself failed.
+      VERY IMPORTANT:
+      Connection error must NOT
+      unlock Create New LVL.
     */
 
-    if(!activeTournament){
+    if(activeTournament){
+
+      showActiveTournament(
+        activeTournament
+      );
+
+    }else{
 
       $("activeOpponent").textContent =
         "CONNECTION ERROR";
@@ -1649,6 +1918,8 @@ async function loadAdmin(){
 
       $("activeStatus").textContent =
         "● API ERROR";
+
+      setCreateLocked(true);
 
     }
 
@@ -1660,134 +1931,10 @@ async function loadAdmin(){
 
   }finally{
 
-    loadingAdmin = false;
+    loadingAdmin =
+      false;
 
   }
-
-}
-
-
-/* =========================================================
-   LIVE STATS
-========================================================= */
-
-function updateLiveStats(data){
-
-  if(!data)
-    return;
-
-
-  const rows =
-    Array.isArray(data.players)
-      ? data.players
-      : [];
-
-
-  /*
-    Backend already gives submitted.
-  */
-
-  const submittedRows =
-    rows.filter(function(row){
-
-      const status =
-        String(
-          row.status ??
-          row.Status ??
-          ""
-        ).toUpperCase();
-
-
-      return (
-        row.submitted === true ||
-        status === "SUBMITTED"
-      );
-
-    });
-
-
-  const waitingRows =
-    rows.filter(function(row){
-
-      const status =
-        String(
-          row.status ??
-          row.Status ??
-          ""
-        ).toUpperCase();
-
-
-      return !(
-        row.submitted === true ||
-        status === "SUBMITTED"
-      );
-
-    });
-
-
-  const submitted =
-    Number(
-      data.submitted ??
-      submittedRows.length
-    );
-
-
-  const total =
-    Number(
-      data.total ??
-      rows.length ??
-      32
-    );
-
-
-  const score =
-    Number(
-      data.ourScore ??
-      0
-    );
-
-
-  $("submittedCount").textContent =
-    submitted + "/" + total;
-
-
-  $("progressText").textContent =
-    submitted + " / " + total;
-
-
-  $("ourScore").textContent =
-    score;
-
-
-  $("teamScoreBox").textContent =
-    score;
-
-
-  const percent =
-    total > 0
-      ? Math.min(
-          100,
-          submitted / total * 100
-        )
-      : 0;
-
-
-  $("progressBar").style.width =
-    percent + "%";
-
-
-  $("submittedLabel").textContent =
-    submittedRows.length;
-
-
-  $("waitingLabel").textContent =
-    waitingRows.length;
-
-
-  renderPlayerLists(
-    submittedRows,
-    waitingRows
-  );
 
 }
 
@@ -1798,12 +1945,18 @@ function updateLiveStats(data){
 
 function playerId(row){
 
+  const p =
+    row.player ||
+    row;
+
+
   return (
+    p["Player ID"] ??
+    p.playerId ??
+    p.id ??
     row["Player ID"] ??
     row.playerId ??
     row.id ??
-    row.player?.["Player ID"] ??
-    row.player?.id ??
     ""
   );
 
@@ -1819,6 +1972,7 @@ function playerName(row){
 
   return (
     p["FC Name"] ??
+    p.fcName ??
     p.name ??
     p["Player Name"] ??
     p["Name"] ??
@@ -1833,8 +1987,10 @@ function playerScore(row){
   return Number(
     row.score ??
     row.Score ??
+    row.goals ??
+    row.Goals ??
     0
-  );
+  ) || 0;
 
 }
 
@@ -1856,9 +2012,11 @@ function renderPlayerLists(
     $("waitingList");
 
 
-  submittedList.innerHTML = "";
+  submittedList.innerHTML =
+    "";
 
-  waitingList.innerHTML = "";
+  waitingList.innerHTML =
+    "";
 
 
   if(!submittedRows.length){
@@ -1873,7 +2031,9 @@ function renderPlayerLists(
     submittedRows.forEach(function(row){
 
       const item =
-        document.createElement("div");
+        document.createElement(
+          "div"
+        );
 
 
       item.className =
@@ -1934,7 +2094,9 @@ function renderPlayerLists(
     waitingRows.forEach(function(row){
 
       const item =
-        document.createElement("div");
+        document.createElement(
+          "div"
+        );
 
 
       item.className =
@@ -2027,7 +2189,9 @@ function startCountdown(endTime){
   function update(){
 
     const end =
-      new Date(endTime).getTime();
+      new Date(
+        endTime
+      ).getTime();
 
 
     if(isNaN(end)){
@@ -2049,15 +2213,19 @@ function startCountdown(endTime){
       $("countdown").textContent =
         "EXPIRED";
 
+
       $("activeStatus").className =
         "badge red";
+
 
       $("activeStatus").textContent =
         "● EXPIRED";
 
+
       clearInterval(
         countdownTimer
       );
+
 
       return;
 
@@ -2127,13 +2295,17 @@ async function loadPlayers(){
       );
 
 
+    const d =
+      unwrap(data);
+
+
     if(
-      !data ||
-      data.success !== true
+      !d ||
+      d.success !== true
     ){
 
       throw new Error(
-        data?.error ||
+        d?.error ||
         "Players API failed"
       );
 
@@ -2142,9 +2314,9 @@ async function loadPlayers(){
 
     allPlayers =
       Array.isArray(
-        data.players
+        d.players
       )
-        ? data.players
+        ? d.players
         : [];
 
 
@@ -2152,7 +2324,10 @@ async function loadPlayers(){
 
   }catch(error){
 
-    console.error(error);
+    console.error(
+      "loadPlayers:",
+      error
+    );
 
 
     $("playerGrid").innerHTML =
@@ -2175,26 +2350,35 @@ function renderPlayerGrid(){
     $("playerGrid");
 
 
-  grid.innerHTML = "";
+  grid.innerHTML =
+    "";
 
 
   allPlayers.forEach(function(player){
 
     const id =
       player["Player ID"] ||
+      player.playerId ||
       player.id ||
       "";
 
 
     const name =
       player["FC Name"] ||
+      player.fcName ||
       player.name ||
       "Unknown";
 
 
+    const activeValue =
+      player["Active"] ??
+      player.active ??
+      true;
+
+
     const active =
       String(
-        player["Active"] ?? ""
+        activeValue
       )
       .trim()
       .toUpperCase() !== "FALSE";
@@ -2205,7 +2389,9 @@ function renderPlayerGrid(){
 
 
     const label =
-      document.createElement("label");
+      document.createElement(
+        "label"
+      );
 
 
     label.className =
@@ -2226,7 +2412,9 @@ function renderPlayerGrid(){
 
 
     const checkbox =
-      label.querySelector("input");
+      label.querySelector(
+        "input"
+      );
 
 
     checkbox.addEventListener(
@@ -2235,7 +2423,9 @@ function renderPlayerGrid(){
     );
 
 
-    grid.appendChild(label);
+    grid.appendChild(
+      label
+    );
 
   });
 
@@ -2274,6 +2464,21 @@ function updateSelectedCount(){
     count;
 
 
+  /*
+    If there is an active tournament,
+    START must remain disabled.
+  */
+
+  if(activeTournament){
+
+    $("startBtn").disabled =
+      true;
+
+    return;
+
+  }
+
+
   $("startBtn").disabled =
     count !== 32;
 
@@ -2287,7 +2492,22 @@ function updateSelectedCount(){
 async function startTournament(){
 
   /*
-    FINAL SERVER CHECK
+    Absolute frontend protection.
+  */
+
+  if(activeTournament){
+
+    alert(
+      "A LVL is already active. Finish the current LVL first."
+    );
+
+    return;
+
+  }
+
+
+  /*
+    FINAL SERVER CHECK.
   */
 
   const check =
@@ -2296,15 +2516,19 @@ async function startTournament(){
     );
 
 
+  const serverTournament =
+    getTournamentFromResponse(
+      check
+    );
+
+
   if(
-    check &&
-    check.success === true &&
-    check.tournament &&
-    isActive(check.tournament)
+    serverTournament &&
+    isActive(serverTournament)
   ){
 
     showActiveTournament(
-      check.tournament
+      serverTournament
     );
 
 
@@ -2379,7 +2603,8 @@ async function startTournament(){
     $("startBtn");
 
 
-  btn.disabled = true;
+  btn.disabled =
+    true;
 
   btn.textContent =
     "STARTING...";
@@ -2399,7 +2624,9 @@ async function startTournament(){
         opponent,
 
       playerIds:
-        JSON.stringify(playerIds)
+        JSON.stringify(
+          playerIds
+        )
 
     });
 
@@ -2410,16 +2637,19 @@ async function startTournament(){
     );
 
 
-    $("newLvl").value = "";
+    $("newLvl").value =
+      "";
 
-    $("newOpponent").value = "";
+    $("newOpponent").value =
+      "";
 
 
     document.querySelectorAll(
       '#playerGrid input[type="checkbox"]'
     ).forEach(function(input){
 
-      input.checked = false;
+      input.checked =
+        false;
 
     });
 
@@ -2441,7 +2671,11 @@ async function startTournament(){
 
   }catch(error){
 
-    console.error(error);
+    console.error(
+      "startTournament:",
+      error
+    );
+
 
     showStatus(
       "Could not start LVL",
@@ -2450,10 +2684,14 @@ async function startTournament(){
 
   }finally{
 
-    btn.textContent =
-      "START LVL";
+    if(!activeTournament){
 
-    updateSelectedCount();
+      btn.textContent =
+        "START LVL";
+
+      updateSelectedCount();
+
+    }
 
   }
 
@@ -2519,6 +2757,9 @@ async function finishTournament(){
       " vs " +
       activeTournament.opponent +
       "?\n\n" +
+      "Our score: " +
+      activeTournament.ourScore +
+      "\n" +
       "Opponent score: " +
       score
     )
@@ -2530,7 +2771,8 @@ async function finishTournament(){
     $("finishBtn");
 
 
-  btn.disabled = true;
+  btn.disabled =
+    true;
 
   btn.textContent =
     "FINISHING...";
@@ -2561,7 +2803,8 @@ async function finishTournament(){
     );
 
 
-    activeTournament = null;
+    activeTournament =
+      null;
 
 
     clearInterval(
@@ -2569,7 +2812,8 @@ async function finishTournament(){
     );
 
 
-    countdownTimer = null;
+    countdownTimer =
+      null;
 
 
     await new Promise(function(resolve){
@@ -2586,7 +2830,11 @@ async function finishTournament(){
 
   }catch(error){
 
-    console.error(error);
+    console.error(
+      "finishTournament:",
+      error
+    );
+
 
     showStatus(
       "Could not finish LVL",
@@ -2595,7 +2843,8 @@ async function finishTournament(){
 
   }finally{
 
-    btn.disabled = false;
+    btn.disabled =
+      false;
 
     btn.textContent =
       "END LVL";
@@ -2650,7 +2899,8 @@ async function deleteTournament(){
     $("deleteBtn");
 
 
-  btn.disabled = true;
+  btn.disabled =
+    true;
 
   btn.textContent =
     "DELETING...";
@@ -2678,7 +2928,8 @@ async function deleteTournament(){
     );
 
 
-    activeTournament = null;
+    activeTournament =
+      null;
 
 
     clearInterval(
@@ -2686,7 +2937,8 @@ async function deleteTournament(){
     );
 
 
-    countdownTimer = null;
+    countdownTimer =
+      null;
 
 
     await new Promise(function(resolve){
@@ -2703,7 +2955,11 @@ async function deleteTournament(){
 
   }catch(error){
 
-    console.error(error);
+    console.error(
+      "deleteTournament:",
+      error
+    );
+
 
     showStatus(
       "Could not delete tournament",
@@ -2712,7 +2968,8 @@ async function deleteTournament(){
 
   }finally{
 
-    btn.disabled = false;
+    btn.disabled =
+      false;
 
     btn.textContent =
       "DELETE TEST LVL";
