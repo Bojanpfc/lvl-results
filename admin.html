@@ -799,13 +799,15 @@ input:focus{
 <script>
 
 const API_URL =
-"https://script.google.com/macros/s/AKfycby3nXVRE6Z1ZB4kQA4o037qJfwoeqhTq0YOwqxVoye4pAHbp1BuZustn9qmMx-E8d19/exec";
+"https://script.google.com/macros/s/AKfycby3nXVRE6Z1ZB4kQA4o037qJfwoeqhTqY0YOwqxVoye4pAHbp1BuZustn9qmMx-E8d19/exec";
 
 let activeTournament = null;
 let allPlayers = [];
 let countdownTimer = null;
+
 let loadingAdmin = false;
 let loadingPlayers = false;
+
 let lastRefresh = 0;
 
 
@@ -842,22 +844,30 @@ function showStatus(message,type=""){
 
   el.textContent = message;
 
-  el.className = "status show " + type;
+  el.className =
+    "status show " + type;
 
   clearTimeout(showStatus.timer);
 
   showStatus.timer =
     setTimeout(function(){
-      el.className = "status";
+
+      el.className =
+        "status";
+
     },3000);
 
 }
 
 
 function sleep(ms){
+
   return new Promise(function(resolve){
+
     setTimeout(resolve,ms);
+
   });
+
 }
 
 
@@ -867,6 +877,11 @@ function sleep(ms){
 
 async function getAPI(action){
 
+  /*
+    First try normal GET.
+    If browser blocks it, JSONP is used.
+  */
+
   const url =
     API_URL +
     "?action=" +
@@ -875,18 +890,16 @@ async function getAPI(action){
     Date.now();
 
 
-  /*
-    Try normal GET first.
-    Short timeout prevents the page from hanging.
-  */
-
   const controller =
     new AbortController();
 
+
   const timeout =
     setTimeout(function(){
+
       controller.abort();
-    },7000);
+
+    },5000);
 
 
   try{
@@ -903,9 +916,11 @@ async function getAPI(action){
 
 
     if(!response.ok){
+
       throw new Error(
         "HTTP " + response.status
       );
+
     }
 
 
@@ -913,36 +928,27 @@ async function getAPI(action){
       await response.text();
 
 
-    if(!text){
-      throw new Error(
-        "Empty API response"
-      );
-    }
+    if(text){
 
+      try{
 
-    try{
+        return JSON.parse(text);
 
-      return JSON.parse(text);
+      }catch(error){
 
-    }catch(error){
+        console.log(
+          "Normal GET was not JSON:",
+          action
+        );
 
-      /*
-        If Apps Script returned something
-        other than JSON, use JSONP below.
-      */
-
-      console.log(
-        "GET JSON parse failed:",
-        action,
-        text
-      );
+      }
 
     }
 
   }catch(error){
 
     console.log(
-      "GET fetch failed:",
+      "Normal GET failed:",
       action,
       error
     );
@@ -956,7 +962,6 @@ async function getAPI(action){
 
   /*
     JSONP fallback.
-    Only 3 seconds, not 12.
   */
 
   return getJSONP(action);
@@ -978,7 +983,7 @@ function getJSONP(action){
       "_" +
       Math.random()
         .toString(36)
-        .slice(2);
+        .substring(2);
 
 
     const script =
@@ -994,13 +999,23 @@ function getJSONP(action){
       clearTimeout(timer);
 
       try{
+
         delete window[callbackName];
+
       }catch(e){
-        window[callbackName] = null;
+
+        window[callbackName] =
+          null;
+
       }
 
+
       if(script.parentNode){
-        script.parentNode.removeChild(script);
+
+        script.parentNode.removeChild(
+          script
+        );
+
       }
 
     }
@@ -1012,9 +1027,13 @@ function getJSONP(action){
         if(finished)
           return;
 
-        finished = true;
+
+        finished =
+          true;
+
 
         cleanup();
+
 
         reject(
           new Error(
@@ -1022,7 +1041,7 @@ function getJSONP(action){
           )
         );
 
-      },3000);
+      },5000);
 
 
     window[callbackName] =
@@ -1031,9 +1050,13 @@ function getJSONP(action){
         if(finished)
           return;
 
-        finished = true;
+
+        finished =
+          true;
+
 
         cleanup();
+
 
         resolve(data);
 
@@ -1046,9 +1069,13 @@ function getJSONP(action){
         if(finished)
           return;
 
-        finished = true;
+
+        finished =
+          true;
+
 
         cleanup();
+
 
         reject(
           new Error(
@@ -1069,7 +1096,9 @@ function getJSONP(action){
       Date.now();
 
 
-    document.body.appendChild(script);
+    document.body.appendChild(
+      script
+    );
 
   });
 
@@ -1080,13 +1109,12 @@ function getJSONP(action){
    POST API
 ========================================================= */
 
-/*
-  Apps Script POST response is cross-origin.
-  Therefore we send the request and VERIFY
-  the result afterwards instead of trusting iframe.onload.
-*/
-
 async function postAPI(data){
+
+  /*
+    Apps Script receives these values through
+    e.parameter because we send URL encoded data.
+  */
 
   const body =
     new URLSearchParams();
@@ -1117,12 +1145,6 @@ async function postAPI(data){
   });
 
 
-  /*
-    no-cors allows the browser to send
-    the Apps Script request even when the
-    response cannot be read.
-  */
-
   try{
 
     await fetch(
@@ -1136,9 +1158,15 @@ async function postAPI(data){
     );
 
 
+    /*
+      no-cors intentionally prevents us from
+      reading the response.
+
+      The caller verifies the result with GET.
+    */
+
     return {
-      success:true,
-      sent:true
+      success:true
     };
 
   }catch(error){
@@ -1201,23 +1229,13 @@ function getPlayersFromResponse(data){
     return d.players;
 
 
-  if(
-    d.data &&
-    Array.isArray(d.data.players)
-  ){
-
-    return d.data.players;
-
-  }
-
-
   return [];
 
 }
 
 
 /* =========================================================
-   TOURNAMENT
+   TOURNAMENT NORMALIZE
 ========================================================= */
 
 function normalizeTournament(t){
@@ -1328,7 +1346,7 @@ function setCreateLocked(locked){
 
 
 /* =========================================================
-   ACTIVE
+   ACTIVE TOURNAMENT
 ========================================================= */
 
 function showActiveTournament(t){
@@ -1375,6 +1393,7 @@ function showActiveTournament(t){
     $("finishCard").style.display =
       "block";
 
+
     $("finishBtn").disabled =
       false;
 
@@ -1396,6 +1415,7 @@ function showActiveTournament(t){
 
     $("finishCard").style.display =
       "none";
+
 
     $("finishBtn").disabled =
       true;
@@ -1432,11 +1452,9 @@ function renderLiveData(data){
 
 
   const normalized =
-    normalizeTournament(tournament);
-
-
-  if(!normalized)
-    return false;
+    normalizeTournament(
+      tournament
+    );
 
 
   showActiveTournament(
@@ -1503,39 +1521,11 @@ function renderLiveData(data){
     score = 0;
 
 
-  /*
-    Fallback calculation.
-  */
-
-  if(
-    !Object.prototype.hasOwnProperty.call(
-      d,
-      "ourScore"
-    ) &&
-    rows.length
-  ){
-
-    const calculated =
-      rows.reduce(function(total,row){
-
-        return total +
-          playerScore(row);
-
-      },0);
-
-
-    if(calculated > 0)
-      score = calculated;
-
-  }
-
-
   const total =
     Number(
       d.total ??
       d.totalPlayers ??
-      rows.length ??
-      32
+      rows.length
     ) || 32;
 
 
@@ -1688,21 +1678,6 @@ async function loadAdmin(){
     true;
 
 
-  /*
-    Show loading only the first time.
-  */
-
-  if(
-    $("activeOpponent").textContent ===
-    "LOADING..."
-  ){
-
-    $("activeStatus").textContent =
-      "● CONNECTING";
-
-  }
-
-
   try{
 
     const live =
@@ -1754,7 +1729,9 @@ async function loadAdmin(){
 
     if(
       activeTournamentData &&
-      isActive(activeTournamentData)
+      isActive(
+        activeTournamentData
+      )
     ){
 
       showActiveTournament(
@@ -1878,6 +1855,7 @@ function renderPlayerLists(
 
   submittedList.innerHTML =
     "";
+
 
   waitingList.innerHTML =
     "";
@@ -2085,11 +2063,6 @@ function startCountdown(endTime){
       );
 
 
-      /*
-        Refresh after expiration so backend
-        can mark the tournament expired.
-      */
-
       setTimeout(
         loadAdmin,
         1000
@@ -2215,7 +2188,6 @@ async function loadPlayers(){
 
 
     renderPlayerGrid();
-
 
   }catch(error){
 
@@ -2362,13 +2334,8 @@ function renderPlayerGrid(){
 
 
     /*
-      IMPORTANT:
-      We DO NOT manually toggle the checkbox
-      on label click.
-
-      The label element already does that
-      automatically. The previous code toggled it
-      twice on some mobile clicks.
+      Native label behavior handles tapping
+      the entire player row.
     */
 
     checkbox.addEventListener(
@@ -2446,7 +2413,7 @@ function updateSelectedCount(){
 
 
 /* =========================================================
-   START
+   START TOURNAMENT
 ========================================================= */
 
 async function startTournament(){
@@ -2506,6 +2473,10 @@ async function startTournament(){
 
   }
 
+
+  /*
+    Check server before starting.
+  */
 
   try{
 
@@ -2576,6 +2547,12 @@ async function startTournament(){
 
   try{
 
+    /*
+      IMPORTANT:
+      playerIds is deliberately sent as JSON string.
+      Code.gs parses this value.
+    */
+
     await postAPI({
 
       action:
@@ -2596,20 +2573,25 @@ async function startTournament(){
 
 
     /*
-      IMPORTANT:
-      Don't trust POST response.
-      Wait briefly, then verify that the
-      server actually created the active LVL.
+      Give Apps Script a moment to write Sheets.
     */
 
     await sleep(1200);
 
 
-    let verified =
-      false;
+    /*
+      Verify that the tournament REALLY exists.
+    */
+
+    let verifiedTournament =
+      null;
 
 
-    for(let attempt=0; attempt<3; attempt++){
+    for(
+      let attempt = 0;
+      attempt < 5;
+      attempt++
+    ){
 
       try{
 
@@ -2630,14 +2612,8 @@ async function startTournament(){
           isActive(tournament)
         ){
 
-          showActiveTournament(
-            tournament
-          );
-
-
-          verified =
-            true;
-
+          verifiedTournament =
+            tournament;
 
           break;
 
@@ -2646,7 +2622,7 @@ async function startTournament(){
       }catch(error){
 
         console.log(
-          "Start verification attempt failed:",
+          "Verification attempt:",
           attempt + 1,
           error
         );
@@ -2654,18 +2630,23 @@ async function startTournament(){
       }
 
 
-      await sleep(800);
+      await sleep(1000);
 
     }
 
 
-    if(!verified){
+    if(!verifiedTournament){
 
       throw new Error(
         "Server did not create an active LVL."
       );
 
     }
+
+
+    showActiveTournament(
+      verifiedTournament
+    );
 
 
     showStatus(
@@ -2675,7 +2656,7 @@ async function startTournament(){
 
 
     /*
-      Load full live data.
+      Now load complete live data.
     */
 
     await loadAdmin();
@@ -2699,7 +2680,6 @@ async function startTournament(){
       "The server did not confirm that the LVL was created.\n\n" +
       "Please refresh the page and check again."
     );
-
 
   }finally{
 
@@ -2814,13 +2794,7 @@ async function finishTournament(){
     });
 
 
-    await sleep(1000);
-
-
-    showStatus(
-      "LVL finished successfully",
-      "success"
-    );
+    await sleep(1200);
 
 
     activeTournament =
@@ -2834,6 +2808,12 @@ async function finishTournament(){
 
     countdownTimer =
       null;
+
+
+    showStatus(
+      "LVL finished successfully",
+      "success"
+    );
 
 
     await loadAdmin();
@@ -2856,6 +2836,7 @@ async function finishTournament(){
 
     btn.disabled =
       false;
+
 
     btn.textContent =
       "END LVL";
@@ -2934,7 +2915,7 @@ async function deleteTournament(){
     });
 
 
-    await sleep(1000);
+    await sleep(1200);
 
 
     activeTournament =
@@ -3007,13 +2988,12 @@ async function manualRefresh(){
   );
 
 
-  /*
-    Refresh both independently.
-  */
-
   await Promise.allSettled([
+
     loadAdmin(),
+
     loadPlayers()
+
   ]);
 
 }
@@ -3040,12 +3020,6 @@ setInterval(
 document.addEventListener(
   "DOMContentLoaded",
   function(){
-
-    /*
-      They run independently.
-      A slow LVL request cannot prevent
-      the player list from loading.
-    */
 
     loadPlayers();
 
